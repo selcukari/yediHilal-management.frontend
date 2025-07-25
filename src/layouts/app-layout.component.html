@@ -1,0 +1,25 @@
+<p-toast />
+<div class="app-layout">
+  <header class="app-header">
+    <h2>Uygulama Menüsü</h2>
+    <nav>
+      @if (!isAuthenticated) {
+        <a routerLink="/login" routerLinkActive="active">Login</a>
+      } @else {
+        <span class="user-info">Hoş geldiniz, {{ currentUser?.fullName }}</span>
+        <button pButton severity="danger" size="small" (click)="onLogout()">
+          <span pButtonLabel>Çıkış</span>
+        </button>
+      }
+      <!-- Gelecekte eklenecek diğer menü öğeleri -->
+    </nav>
+  </header>
+
+  <main class="app-main">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="app-footer">
+    <p>© 2025 Tüm hakları saklıdır.</p>
+  </footer>
+</div>

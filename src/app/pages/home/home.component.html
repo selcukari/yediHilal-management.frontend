@@ -1,0 +1,110 @@
+<p-toast />
+
+<div class="home-container">
+  <div class="header-section">
+    <h2>Duyurular</h2>
+    <p-button
+      pButton
+      type="button"
+      label="Yenile"
+      icon="pi pi-refresh"
+      (click)="refreshData()"
+      [disabled]="isLoading">
+    </p-button>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-container">
+      <p-progressSpinner></p-progressSpinner>
+      <p>Veriler yükleniyor...</p>
+    </div>
+  } @else {
+    <div class="announcements-section">
+      <p-table
+        #dt
+        [value]="resultData"
+        [columns]="cols"
+        [paginator]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Gösterilen: {first} - {last} / Toplam: {totalRecords}"
+        [globalFilterFields]="['title', 'category', 'message', 'owner.name']">
+
+        <ng-template pTemplate="caption">
+          <div class="table-header">
+            <span class="table-title">Aktif Duyurular ({{ resultData.length }})</span>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                placeholder="Duyuru ara..."
+                (input)="onGlobalFilter($event)" />
+            </span>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+              {{ col.header }}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+            <th>İşlemler</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+              @switch (col.field) {
+                @case ('date') {
+                  {{ formatDate(rowData[col.field]) }}
+                }
+                @case ('owner.name') {
+                  {{ rowData.owner?.name || 'Bilinmiyor' }}
+                }
+                @case ('message') {
+                  <div class="message-cell" [title]="rowData[col.field]">
+                    {{ rowData[col.field] | slice:0:100 }}
+                    @if (rowData[col.field]?.length > 100) {
+                      <span>...</span>
+                    }
+                  </div>
+                }
+                @case ('link') {
+                  @if (rowData[col.field] && rowData[col.field].startsWith('http')) {
+                    <a [href]="rowData[col.field]" target="_blank" class="link-cell">
+                      <i class="pi pi-external-link"></i>
+                      Link
+                    </a>
+                  } @else {
+                    <span class="no-link">-</span>
+                  }
+                }
+                @default {
+                  {{ rowData[col.field] || '-' }}
+                }
+              }
+            </td>
+            <td>
+              <div class="action-buttons">
+                @if (rowData.link && rowData.link.startsWith('http')) {
+                  <button
+                    pButton
+                    type="button"
+                    icon="pi pi-external-link"
+                    class="p-button-text p-button-sm"
+                    (click)="openLink(rowData.link)"
+                    pTooltip="Linki aç">
+                  </button>
+                }
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+      </p-table>
+    </div>
+  }
+</div>
