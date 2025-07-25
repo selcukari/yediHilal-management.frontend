@@ -4,7 +4,11 @@ import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { Button } from 'primeng/button';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Listbox } from 'primeng/listbox';
 import { ProgressSpinner } from 'primeng/progressspinner';
+import { CountryComponent } from '../../components/country/country.component';
 import { AuthService } from '../../../services/auth.service';
 import { Table } from 'primeng/table';
 
@@ -36,10 +40,16 @@ interface AnnouncementData {
   sancaktarlar: ISancaktarlar;
 }
 
+interface City {
+    name: string,
+    code: string
+}
+
 @Component({
   selector: 'app-pages-home',
   standalone: true,
-  imports: [TableModule, CommonModule, Button, ToastModule, ProgressSpinner],
+  imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, Listbox,
+    CountryComponent, ProgressSpinner],
   providers: [MessageService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -49,6 +59,9 @@ export class HomeComponent implements OnInit {
 
   messageService = inject(MessageService);
   private authService = inject(AuthService);
+
+  private router = inject(Router);
+  pages!: City[];
 
   resultData: ValueData[] = [];
   cols: Column[] = [];
@@ -63,6 +76,12 @@ export class HomeComponent implements OnInit {
 
       // Tablo kolonlarını tanımla
       this.initializeColumns();
+
+      this.pages = [
+            { name: 'Kullanıcı Yönetimi', code: '/' },
+            { name: 'Üye Yönetimi', code: 'members' },
+            { name: 'Sayfa-3', code: 'LDN' },
+        ];
 
     } catch (error) {
       console.error('Initialization error:', error);
@@ -99,6 +118,15 @@ export class HomeComponent implements OnInit {
     } catch {
       return dateString;
     }
+  }
+
+  onPageSelect(route: any): void {
+    console.log('Selected route:', route);
+
+    if(route && route.code) {
+      this.router.navigate([`/${route.code}`]);
+    }
+
   }
 
   openLink(link: string): void {

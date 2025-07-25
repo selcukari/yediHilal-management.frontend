@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { AppLayoutComponent } from '../layouts/app-layout.component';
 import { HomeComponent } from './pages/home/home.component';
+import { MemberComponent } from './pages/member/member.component';
 import { AuthGuard, NoAuthGuard } from '../services/auth.guard';
 
 export const routes: Routes = [
@@ -17,7 +18,9 @@ export const routes: Routes = [
         component: LoginComponent,
         canActivate: [NoAuthGuard] // Giriş yapmış kullanıcılar login sayfasına giremez
       },
-      // Gelecekte eklenecek diğer sayfalar
+       {
+        path: 'members', component: MemberComponent, canActivate: [AuthGuard]
+      },
     ]
   },
   { path: '**', redirectTo: '/' } // Geçersiz rotalar için yönlendirme
