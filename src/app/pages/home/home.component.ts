@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Listbox } from 'primeng/listbox';
 import { ProgressSpinner } from 'primeng/progressspinner';
+import { AreaComponent } from '../../components/area/area.component';
+import { ProvinceComponent } from '../../components/province/province.component';
 import { CountryComponent } from '../../components/country/country.component';
 import { AuthService } from '../../../services/auth.service';
 import { Table } from 'primeng/table';
@@ -49,7 +51,7 @@ interface City {
   selector: 'app-pages-home',
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, Listbox,
-    CountryComponent, ProgressSpinner],
+    CountryComponent, AreaComponent, ProvinceComponent, ProgressSpinner],
   providers: [MessageService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -66,6 +68,8 @@ export class HomeComponent implements OnInit {
   resultData: ValueData[] = [];
   cols: Column[] = [];
   isLoading = false;
+  selectedCountry?: number = 1;
+  selectedArea?: number = undefined;
 
   async ngOnInit() {
     this.isLoading = true;
@@ -98,6 +102,15 @@ export class HomeComponent implements OnInit {
 
   private async fetchUserData(): Promise<void> {
 
+  }
+
+   onCountrySelected(countryCode: any): void {
+    console.log('Selected countryCode11:', countryCode);
+    this.selectedCountry = countryCode;
+  }
+   onAreaSelected(areaCode: any): void {
+    console.log('Selected areaCode1:', areaCode);
+    this.selectedArea = areaCode;
   }
 
   private initializeColumns(): void {

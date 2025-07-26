@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import axios from 'axios';
 import { BehaviorSubject } from 'rxjs';
-import { setWithExpiry, getWithExpiry } from '../composables/useLocalStorage';
+import { setWithExpiry, getWithExpiry } from '../app/composables/useLocalStorage';
 import { EnvironmentService } from './environment.service';
 
 @Injectable({

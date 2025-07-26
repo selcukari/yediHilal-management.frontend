@@ -1,3 +1,4 @@
 <div class="card flex justify-center">
-    <p-select [options]="countries" (onChange)="onCountrySelect($event.value)" optionLabel="name" placeholder="Select a Country" class="w-full md:w-56" />
+    <p-select [options]="countries" optionLabel="name" optionValue="code" [(ngModel)]="defaultCountryCode"
+    (onChange)="onCountrySelect($event.value)" optionLabel="name" placeholder="Select a Country" class="w-full md:w-56" />
 </div>

@@ -20,8 +20,15 @@
       <!-- Toolbar Content Area (Column-8) -->
       <div>
           <h2>Toolbar</h2>
-          <app-component-country></app-component-country>
-        </div>
+          <app-component-country (countrySelected)="onCountrySelected($event)"></app-component-country>
+          @if (selectedCountry == 1) {
+            <app-component-area (areaSelected)="onAreaSelected($event)"></app-component-area>
+
+          }
+          <app-component-province [countryCode]="selectedCountry"
+          [areaCode]="selectedArea"></app-component-province>
+
+      </div>
 
       <div class="header-section">
         <h2>Duyurular</h2>
