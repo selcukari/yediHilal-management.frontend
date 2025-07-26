@@ -21,10 +21,11 @@ constructor() {
     try {
       const { countryId, areaId } = params;
 
+
       const getProvinces = await axios.get(`${this.envService.apiUrl}/getProvincesByCountryOrArea`,{
         params: {
           ...(countryId !== undefined ? {countryId } : {}),
-        ...(areaId !== undefined ? {areaId } : {})
+          ...((areaId == undefined || countryId != 1) ? { } : {areaId})
         }});
       if (!getProvinces.data.data) {
         throw new Error('getProvinces bulunamadı.');

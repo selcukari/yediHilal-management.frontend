@@ -107,6 +107,7 @@ export class HomeComponent implements OnInit {
    onCountrySelected(countryCode: any): void {
     console.log('Selected countryCode11:', countryCode);
     this.selectedCountry = countryCode;
+    this.selectedArea = undefined;
   }
    onAreaSelected(areaCode: any): void {
     console.log('Selected areaCode1:', areaCode);
