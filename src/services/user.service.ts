@@ -24,7 +24,6 @@ constructor() {
     try {
       const { countryId, areaId, provinceId, fullName, districtId } = params;
 
-
       const getUsers = await axios.get(`${this.envService.apiUrl}/getUsersBy`,{
         params: {
           countryId ,
@@ -39,6 +38,19 @@ constructor() {
       return getUsers.data.data;
     } catch (error: any) {
       this.envService.logDebug('getUsers error', error);
+    }
+  }
+
+  async deleteUser(userId: number): Promise<any | null> {
+    console.log('deleteUser userId:', userId);
+    try {
+      const deleteUser = await axios.put(`${this.envService.apiUrl}/deleteUser?id=${userId}`);
+      if (!deleteUser.data.data) {
+        throw new Error('Kullanıcı silinemedi.');
+      }
+      return deleteUser.data.data;
+    } catch (error: any) {
+      this.envService.logDebug('deleteUser error', error);
     }
   }
 }

@@ -141,8 +141,18 @@ export class HomeComponent implements OnInit {
             severity: 'danger',
         },
 
-        accept: () => {
-            this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt Silindi' });
+        accept: async () => {
+          console.log('Silme işlemi onaylandı, ID:', event);
+          console.log('Silme işlemi onaylandı, ID-1:', typeof event);
+           const result = await this.userService.deleteUser(event as unknown as number);
+           if (result) {
+              this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt Silindi' });
+              await this.refreshData();
+
+              return;
+           }
+
+          this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kayıt silinemedi.' });
         },
         reject: () => {
             this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
@@ -282,6 +292,6 @@ export class HomeComponent implements OnInit {
 
   // Refresh fonksiyonu
   async refreshData(): Promise<void> {
-    // await this.fetchUserData();
+    await this.fetchUserData();
   }
 }
