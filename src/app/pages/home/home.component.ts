@@ -6,51 +6,44 @@ import { ToastModule } from 'primeng/toast';
 import { Button } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Listbox } from 'primeng/listbox';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { AreaComponent } from '../../components/area/area.component';
 import { ProvinceComponent } from '../../components/province/province.component';
 import { CountryComponent } from '../../components/country/country.component';
-import { AuthService } from '../../../services/auth.service';
+import { UserService } from '../../../services/user.service';
 import { Table } from 'primeng/table';
 
 interface Column {
     field: string;
     header: string;
 }
-
+interface UserParams {
+  countryId: number;
+  areaId?: number;
+  districtId?: number;
+  fullName?: string;
+  provinceId?: number;
+}
 interface ValueData {
-  isActive: boolean;
-  date: string;
-  title: string;
-  message: string;
-  link: string;
-  category: string;
-  owner: {
-    name: string;
-    key: string;
-  };
-  [subgroup: string]: any;
+  id: number;
+  fullName: string;
+  identificationNumber?: string;
+  telephone?: string;
+  email?: string;
+  createdDate: string;
+  updateDate?: string;
+  countryName: string;
+  provinceName?: string;
+  districtName?: string;
+  dateOfBirth?: number;
+  areaName?: string
 }
 
-interface ISancaktarlar {
-  announcements: { [key: string]: ValueData };
-  [subgroup: string]: any;
-}
-
-interface AnnouncementData {
-  sancaktarlar: ISancaktarlar;
-}
-
-interface City {
-    name: string,
-    code: string
-}
 
 @Component({
   selector: 'app-pages-home',
   standalone: true,
-  imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, Listbox,
+  imports: [TableModule, CommonModule, Button, FormsModule, ToastModule,
     CountryComponent, AreaComponent, ProvinceComponent, ProgressSpinner],
   providers: [MessageService],
   templateUrl: './home.component.html',
@@ -60,10 +53,9 @@ export class HomeComponent implements OnInit {
   @ViewChild('dt') dt!: Table;
 
   messageService = inject(MessageService);
-  private authService = inject(AuthService);
+  private userService = inject(UserService);
 
   private router = inject(Router);
-  pages!: City[];
 
   resultData: ValueData[] = [];
   cols: Column[] = [];
@@ -76,16 +68,10 @@ export class HomeComponent implements OnInit {
 
     try {
       // Announcements verilerini yükle
-      await this.fetchUserData();
+      await this.fetchUserData({countryId: this.selectedCountry || 1});
 
       // Tablo kolonlarını tanımla
       this.initializeColumns();
-
-      this.pages = [
-            { name: 'Kullanıcı Yönetimi', code: '/' },
-            { name: 'Üye Yönetimi', code: 'members' },
-            { name: 'Sayfa-3', code: 'LDN' },
-        ];
 
     } catch (error) {
       console.error('Initialization error:', error);
@@ -100,14 +86,55 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private async fetchUserData(): Promise<void> {
+  private async fetchUserData(params: UserParams): Promise<void> {
+     try {
 
+      const getUsers = await this.userService.users(params);
+      console.log('getUsers:', getUsers);
+      if (getUsers) {
+        this.resultData = getUsers;
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Başarılı',
+          detail: `${getUsers.length} duyuru yüklendi.`,
+          life: 3000
+        });
+      } else {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Bilgi',
+          detail: 'Henüz duyuru bulunmamaktadır.',
+          life: 3000
+        });
+      }
+    } catch (error: any) {
+      console.error('Error fetching getUsers:', error.message);
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Veri Hatası',
+        detail: `Duyurular yüklenirken hata: ${error.message}`,
+        life: 5000
+      });
+    }
   }
 
    onCountrySelected(countryCode: any): void {
     console.log('Selected countryCode11:', countryCode);
     this.selectedCountry = countryCode;
     this.selectedArea = undefined;
+
+      // Önce varsa alanları çıkar
+    this.cols = this.cols.filter(col =>
+      col.field !== 'areaName' && col.field !== 'districtName'
+    );
+
+    if (countryCode == 1) {
+      // Türkiye için alan kodunu ekle
+      this.cols.splice(7, 0, { field: 'areaName', header: 'Bölge' });
+      this.cols.splice(9, 0, { field: 'districtName', header: 'İlçe' });
+
+    }
   }
    onAreaSelected(areaCode: any): void {
     console.log('Selected areaCode1:', areaCode);
@@ -116,12 +143,16 @@ export class HomeComponent implements OnInit {
 
   private initializeColumns(): void {
     this.cols = [
-      { field: 'title', header: 'Duyuru Başlığı' },
-      { field: 'category', header: 'Kategori' },
-      { field: 'message', header: 'Mesaj' },
-      { field: 'link', header: 'Link' },
-      { field: 'date', header: 'Tarih' },
-      { field: 'owner.name', header: 'Duyuru Sahibi' }
+      { field: 'id', header: 'id' },
+      { field: 'fullName', header: 'Ad Soyad' },
+      { field: 'telephone', header: 'Telefon' },
+      { field: 'email', header: 'E-mail' },
+      { field: 'identificationNumber', header: 'Tarih' },
+      { field: 'dateOfBirth', header: 'Yaşı' },
+      { field: 'countryName', header: 'Ülke' },
+      { field: 'provinceName', header: 'İl' },
+      { field: 'createdDate', header: 'İlk Oluşturulma Tarihi' },
+      { field: 'updateDate', header: 'Güncelleme Tarihi' },
     ];
   }
 
@@ -157,6 +188,6 @@ export class HomeComponent implements OnInit {
 
   // Refresh fonksiyonu
   async refreshData(): Promise<void> {
-    await this.fetchUserData();
+    // await this.fetchUserData();
   }
 }

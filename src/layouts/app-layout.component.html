@@ -16,7 +16,20 @@
   </header>
 
   <main class="app-main">
-    <router-outlet></router-outlet>
+    <!-- Left Sidebar (33.33% width) -->
+      <div class="left-menü">
+        <h3>Menü Seçimi</h3>
+        <p-listbox
+          [options]="pages"
+          (onChange)="onPageSelect($event.value)"
+          optionLabel="name"
+          class="w-full" />
+      </div>
+
+    <!-- Body Content (66.67% width) -->
+    <div class="content-body">
+      <router-outlet></router-outlet>
+    </div>
   </main>
 
   <footer class="app-footer">

@@ -2,18 +2,6 @@
 
 <div class="home-container">
   <div class="layout-grid">
-    <!-- Left Sidebar (Column-4) -->
-    <div class="sidebar">
-      <div class="sidebar-content">
-        <h3>Menü Seçimi</h3>
-        <p-listbox
-          [options]="pages"
-          (onChange)="onPageSelect($event.value)"
-          optionLabel="name"
-          class="w-full" />
-      </div>
-    </div>
-
 
     <!-- Main Content Area (Column-8) -->
     <div class="main-content">
@@ -31,7 +19,7 @@
       </div>
 
       <div class="header-section">
-        <h2>Duyurular</h2>
+        <h2>Kullanıcılar</h2>
         <p-button
           pButton
           type="button"
@@ -61,7 +49,7 @@
 
             <ng-template pTemplate="caption">
               <div class="table-header">
-                <span class="table-title">Aktif Duyurular ({{ resultData.length }})</span>
+                <span class="table-title">Aktif Kullanıcılar ({{ resultData.length }})</span>
                 <span class="p-input-icon-left">
                   <i class="pi pi-search"></i>
                   <input
