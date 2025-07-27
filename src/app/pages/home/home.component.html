@@ -1,6 +1,6 @@
-<p-toast />
-
-<div class="home-container">
+<div class="card flex justify-center gap-2">
+  <p-toast />
+    <p-confirmdialog />
 
     <!-- Main Content Area (Column-8) -->
       <div>
@@ -73,47 +73,22 @@
               <tr>
                 <td *ngFor="let col of columns">
                   @switch (col.field) {
-                    @case ('date') {
+                    @case ('createdDate') {
                       {{ formatDate(rowData[col.field]) }}
                     }
-                    @case ('owner.name') {
-                      {{ rowData.owner?.name || 'Bilinmiyor' }}
+                    @case ('updateDate') {
+                      {{rowData[col.field] ? formatDate(rowData[col.field]) : "-" }}
                     }
-                    @case ('message') {
-                      <div class="message-cell" [title]="rowData[col.field]">
-                        {{ rowData[col.field] | slice:0:100 }}
-                        @if (rowData[col.field]?.length > 100) {
-                          <span>...</span>
-                        }
-                      </div>
-                    }
-                    @case ('link') {
-                      @if (rowData[col.field] && rowData[col.field].startsWith('http')) {
-                        <a [href]="rowData[col.field]" target="_blank" class="link-cell">
-                          <i class="pi pi-external-link"></i>
-                          Link
-                        </a>
-                      } @else {
-                        <span class="no-link">-</span>
-                      }
-                    }
+
                     @default {
                       {{ rowData[col.field] || '-' }}
                     }
                   }
                 </td>
                 <td>
-                  <div class="action-buttons">
-                    @if (rowData.link && rowData.link.startsWith('http')) {
-                      <button
-                        pButton
-                        type="button"
-                        icon="pi pi-external-link"
-                        class="p-button-text p-button-sm"
-                        (click)="openLink(rowData.link)"
-                        pTooltip="Linki aç">
-                      </button>
-                    }
+                  <div class="flex justify-center">
+                      <p-button (click)="onDelete($event)" icon="pi pi-trash" [raised]="true" severity="danger" pTooltip="Sil" tooltipPosition="top" />
+                      <p-button (click)="onEdit($event)" icon="pi pi-pencil" [raised]="true" severity="warn" pTooltip="Güncelle" tooltipPosition="top" />
                   </div>
                 </td>
               </tr>

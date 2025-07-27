@@ -1,7 +1,8 @@
-import { Component, inject, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
-import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { Button } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +10,7 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { Tooltip } from 'primeng/tooltip';
 import { Router } from '@angular/router';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { AreaComponent } from '../../components/area/area.component';
@@ -47,15 +49,14 @@ interface ValueData {
   selector: 'app-pages-home',
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
-    CountryComponent, AreaComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
-  providers: [MessageService],
+    ConfirmDialog, CountryComponent, AreaComponent,Tooltip , IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
+  providers: [MessageService, ConfirmationService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
   @ViewChild('dt') dt!: Table;
 
-  messageService = inject(MessageService);
   private userService = inject(UserService);
 
   private router = inject(Router);
@@ -67,6 +68,8 @@ export class HomeComponent implements OnInit {
   selectedArea?: number = undefined;
   selectedProvince?: number = undefined;
   searchFullName: string = '';
+
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   async ngOnInit() {
     this.isLoading = true;
@@ -91,7 +94,61 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  onEdit(event: Event) {
+        this.confirmationService.confirm({
+            target: event.target as EventTarget,
+            message: 'Are you sure that you want to proceed?',
+            header: 'Confirmation',
+            closable: true,
+            closeOnEscape: true,
+            icon: 'pi pi-exclamation-triangle',
+            rejectButtonProps: {
+                label: 'Cancel',
+                severity: 'secondary',
+                outlined: true,
+            },
+            acceptButtonProps: {
+                label: 'Save',
+            },
+            accept: () => {
+                this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
+            },
+            reject: () => {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Rejected',
+                    detail: 'You have rejected',
+                    life: 3000,
+                });
+            },
+        });
+    }
 
+  onDelete(event: Event) {
+    this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'Bu kaydı silmek istiyor musunuz?',
+        header: 'Tehlikeli Bölge',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Cancel',
+        rejectButtonProps: {
+            label: 'İptal',
+            severity: 'secondary',
+            outlined: true,
+        },
+        acceptButtonProps: {
+            label: 'Sil',
+            severity: 'danger',
+        },
+
+        accept: () => {
+            this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt Silindi' });
+        },
+        reject: () => {
+            this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
+        },
+    });
+  }
 
   private async fetchUserData(): Promise<void> {
     const params: UserParams = {
