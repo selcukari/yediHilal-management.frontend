@@ -17,7 +17,8 @@
 
   <main class="app-main">
     <!-- Left Sidebar (33.33% width) -->
-      <div class="left-menü">
+    @if (isAuthenticated) {
+      <div>
         <h3>Menü Seçimi</h3>
         <p-listbox
           [options]="pages"
@@ -25,7 +26,7 @@
           optionLabel="name"
           class="w-full" />
       </div>
-
+    }
     <!-- Body Content (66.67% width) -->
     <div class="content-body">
       <router-outlet></router-outlet>
