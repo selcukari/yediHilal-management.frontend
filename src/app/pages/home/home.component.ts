@@ -132,25 +132,25 @@ export class HomeComponent implements OnInit {
         icon: 'pi pi-info-circle',
         rejectLabel: 'Cancel',
         rejectButtonProps: {
-            label: 'İptal',
-            severity: 'secondary',
-            outlined: true,
+          label: 'İptal',
+          severity: 'secondary',
+          outlined: true,
         },
         acceptButtonProps: {
-            label: 'Sil',
-            severity: 'danger',
+          label: 'Sil',
+          severity: 'danger',
         },
 
         accept: async () => {
           console.log('Silme işlemi onaylandı, ID:', event);
           console.log('Silme işlemi onaylandı, ID-1:', typeof event);
-           const result = await this.userService.deleteUser(event as unknown as number);
-           if (result) {
-              this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt Silindi' });
-              await this.refreshData();
+          const result = await this.userService.deleteUser(event as unknown as number);
+          if (result) {
+            this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt Silindi' });
+            await this.refreshData();
 
-              return;
-           }
+            return;
+          }
 
           this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kayıt silinemedi.' });
         },
