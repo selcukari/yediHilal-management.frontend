@@ -16,6 +16,7 @@ import { ProgressSpinner } from 'primeng/progressspinner';
 import { AreaComponent } from '../../components/area/area.component';
 import { ProvinceComponent } from '../../components/province/province.component';
 import { CountryComponent } from '../../components/country/country.component';
+import { UserComponent } from '../../components/user/user.component';
 import { UserService } from '../../../services/user.service';
 import { Table } from 'primeng/table';
 
@@ -49,17 +50,19 @@ interface ValueData {
   selector: 'app-pages-home',
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
-    ConfirmDialog, CountryComponent, AreaComponent,Tooltip , IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
+    ConfirmDialog, CountryComponent, AreaComponent, Tooltip, UserComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
   providers: [MessageService, ConfirmationService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit {
+export class HomePageComponent implements OnInit {
   @ViewChild('dt') dt!: Table;
 
   private userService = inject(UserService);
-
   private router = inject(Router);
+
+  @ViewChild(UserComponent) userComponentRef!: UserComponent;
+
 
   resultData: ValueData[] = [];
   cols: Column[] = [];
@@ -94,34 +97,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  onEdit(event: Event) {
-        this.confirmationService.confirm({
-            target: event.target as EventTarget,
-            message: 'Are you sure that you want to proceed?',
-            header: 'Confirmation',
-            closable: true,
-            closeOnEscape: true,
-            icon: 'pi pi-exclamation-triangle',
-            rejectButtonProps: {
-                label: 'Cancel',
-                severity: 'secondary',
-                outlined: true,
-            },
-            acceptButtonProps: {
-                label: 'Save',
-            },
-            accept: () => {
-                this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
-            },
-            reject: () => {
-                this.messageService.add({
-                    severity: 'error',
-                    summary: 'Rejected',
-                    detail: 'You have rejected',
-                    life: 3000,
-                });
-            },
-        });
+    onEdit (value: any) {
+      this.userComponentRef.addOrEdit(value);
     }
 
   onDelete(event: Event) {

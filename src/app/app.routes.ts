@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
+import { LoginPageComponent } from './pages/login/login.component';
 import { AppLayoutComponent } from '../layouts/app-layout.component';
-import { HomeComponent } from './pages/home/home.component';
-import { MemberComponent } from './pages/member/member.component';
+import { HomePageComponent } from './pages/home/home.component';
+import { MemberPageComponent } from './pages/member/member.component';
 import { AuthGuard, NoAuthGuard } from '../services/auth.guard';
 
 export const routes: Routes = [
@@ -11,15 +11,15 @@ export const routes: Routes = [
     component: AppLayoutComponent,
     children: [
       {
-        path: '', component: HomeComponent, canActivate: [AuthGuard]
+        path: '', component: HomePageComponent, canActivate: [AuthGuard]
       }, // Ana sayfa yönlendirmesi
       {
         path: 'login',
-        component: LoginComponent,
+        component: LoginPageComponent,
         canActivate: [NoAuthGuard] // Giriş yapmış kullanıcılar login sayfasına giremez
       },
        {
-        path: 'members', component: MemberComponent, canActivate: [AuthGuard]
+        path: 'members', component: MemberPageComponent, canActivate: [AuthGuard]
       },
     ]
   },

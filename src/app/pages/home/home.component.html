@@ -88,7 +88,7 @@
                 <td>
                   <div class="flex justify-center">
                       <p-button (click)="onDelete(rowData.id)" icon="pi pi-trash" [raised]="true" severity="danger" pTooltip="Sil" tooltipPosition="top" />
-                      <p-button (click)="onEdit(rowData.id)" icon="pi pi-pencil" [raised]="true" severity="warn" pTooltip="Güncelle" tooltipPosition="top" />
+                      <p-button (click)="onEdit(rowData)" icon="pi pi-pencil" [raised]="true" severity="warn" pTooltip="Güncelle" tooltipPosition="top" />
                   </div>
                 </td>
               </tr>
@@ -98,3 +98,4 @@
         </div>
       }
 </div>
+<app-component-user></app-component-user>

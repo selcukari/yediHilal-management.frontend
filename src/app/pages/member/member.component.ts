@@ -19,7 +19,7 @@ interface City {
   templateUrl: './member.component.html',
   styleUrl: './member.component.scss'
 })
-export class MemberComponent implements OnInit {
+export class MemberPageComponent implements OnInit {
   private router = inject(Router);
 
     pages!: City[];

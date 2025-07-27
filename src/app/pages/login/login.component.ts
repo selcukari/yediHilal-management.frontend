@@ -14,7 +14,7 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginPageComponent {
   messageService = inject(MessageService);
   private authService = inject(AuthService);
   private router = inject(Router);
