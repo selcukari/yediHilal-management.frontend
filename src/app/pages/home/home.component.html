@@ -44,17 +44,18 @@
             currentPageReportTemplate="Gösterilen: {first} - {last} / Toplam: {totalRecords}"
             [globalFilterFields]="['title', 'category', 'message', 'owner.name']">
 
-            <ng-template pTemplate="caption">
-              <div class="table-header">
+
+
+            <ng-template #caption>
+              <div class="flex">
                 <span class="table-title">Aktif Kullanıcılar ({{ resultData.length }})</span>
-                <span class="p-input-icon-left">
-                  <i class="pi pi-search"></i>
-                  <input
-                    pInputText
-                    type="text"
-                    placeholder="Duyuru ara..."
-                    (input)="onGlobalFilter($event)" />
-                </span>
+                <p-floatlabel variant="on">
+                  <p-iconfield>
+                    <p-inputicon class="pi pi-search" />
+                    <input pInputText id="on_label" (ngModelChange)="onSearchChange($event)"  [(ngModel)]="searchFullName" pSize="large" autocomplete="off" />
+                  </p-iconfield>
+                  <label for="on_label">Kullanıcı Ara...</label>
+                </p-floatlabel>
               </div>
             </ng-template>
 

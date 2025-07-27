@@ -1,10 +1,14 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { Button } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
+import { FloatLabel } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 import { Router } from '@angular/router';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { AreaComponent } from '../../components/area/area.component';
@@ -39,12 +43,11 @@ interface ValueData {
   areaName?: string
 }
 
-
 @Component({
   selector: 'app-pages-home',
   standalone: true,
-  imports: [TableModule, CommonModule, Button, FormsModule, ToastModule,
-    CountryComponent, AreaComponent, ProvinceComponent, ProgressSpinner],
+  imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
+    CountryComponent, AreaComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
   providers: [MessageService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -63,6 +66,7 @@ export class HomeComponent implements OnInit {
   selectedCountry?: number = 1;
   selectedArea?: number = undefined;
   selectedProvince?: number = undefined;
+  searchFullName: string = '';
 
   async ngOnInit() {
     this.isLoading = true;
@@ -87,13 +91,15 @@ export class HomeComponent implements OnInit {
     }
   }
 
+
+
   private async fetchUserData(): Promise<void> {
     const params: UserParams = {
       countryId: this.selectedCountry || 1,
       areaId: this.selectedArea,
       districtId: undefined, // İlçe kodu henüz kullanılmıyor
-      fullName: undefined, // Arama yapılmadı
-      provinceId: this.selectedProvince // İl kodu henüz kullanılmıyor
+      provinceId: this.selectedProvince, // İl kodu henüz kullanılmıyor
+      fullName: this.searchFullName || undefined
     }
      try {
 
@@ -124,6 +130,16 @@ export class HomeComponent implements OnInit {
         detail: `Duyurular yüklenirken hata: ${error.message}`,
         life: 5000
       });
+    }
+  }
+
+  async onSearchChange(value: string) {
+    if (value.length > 3) {
+      console.log('Search term changed:', value);
+      console.log('Selected countryCode:', this.searchFullName);
+      // burada API çağrısı vs. yapılabilir
+      this.searchFullName = value;
+      await this.fetchUserData();
     }
   }
 
