@@ -2,19 +2,31 @@
     <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '25rem' }">
         <ng-template #header>
             <div class="inline-flex items-center justify-center gap-2">
-                <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
-                <span class="font-bold whitespace-nowrap">Amy Elsner</span>
+                <p-avatar icon="pi pi-user" class="mr-2" size="large"  shape="circle" />
+                <span class="font-bold whitespace-nowrap">{{userData?.fullName}}</span>
             </div>
         </ng-template>
         <span class="text-surface-500 dark:text-surface-400 block mb-8">Update your information.</span>
-        <div class="flex items-center gap-4 mb-4">
-            <label for="username" class="font-semibold w-24">Username</label>
-            <input pInputText id="username" class="flex-auto" autocomplete="off" />
-        </div>
-        <div class="flex items-center gap-4 mb-2">
-            <label for="email" class="font-semibold w-24">Email</label>
-            <input pInputText id="email" class="flex-auto" autocomplete="off" />
-        </div>
+      <form #userAddOrEditForm="ngForm" (ngSubmit)="onSubmit(userAddOrEditForm)" class="flex flex-col gap-4 w-full sm:w-56">
+
+          <div class="flex items-center gap-4 mb-4">
+              <p-floatlabel variant="on">
+                    <p-iconfield>
+                      <p-inputicon class="pi pi-user" />
+                      <input pInputText id="fullName" name="fullName"  [(ngModel)]="userData.fullName" #fullName="ngModel" pSize="large" required
+                        [class.ng-invalid]="fullName.invalid && (fullName.touched || userAddOrEditForm.submitted)"autocomplete="off" />
+                        @if (fullName.invalid && (fullName.touched || userAddOrEditForm.submitted)) {
+                          <p-message severity="error" variant="simple">fullName is required.</p-message>
+                        }
+                    </p-iconfield>
+                    <label for="on_label">Ad Soyad</label>
+                  </p-floatlabel>
+          </div>
+          <div class="flex items-center gap-4 mb-2">
+              <label for="email" class="font-semibold w-24">Email</label>
+              <input pInputText id="email" class="flex-auto" autocomplete="off" />
+          </div>
+        </form>
         <ng-template #footer>
             <p-button label="Cancel" [text]="true" severity="secondary" (click)="visible = false" />
             <p-button label="Save" [outlined]="true" severity="secondary" (click)="visible = false" />
