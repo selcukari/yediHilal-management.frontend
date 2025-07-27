@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, inject, OnInit, Input, EventEmitter, Output, SimpleChanges } from '@angular/core';
 import { Select } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { ProvinceService } from '../../../services/province.service';
@@ -25,8 +25,13 @@ export class ProvinceComponent implements OnInit {
   private provinceService = inject(ProvinceService);
   provinces!: Province[];
 
-   @Input() countryCode?: number;
+  @Input() countryCode?: number;
   @Input() areaCode?: number;
+
+  @Output() provinceSelected = new EventEmitter<string>();
+
+  modelValueCode?: string | null = null;
+
 
   async ngOnInit() {
     // await this.fetchProvinceData({});
@@ -39,6 +44,9 @@ export class ProvinceComponent implements OnInit {
         ...(this.countryCode !== undefined ? {countryId: this.countryCode } : {}),
         ...(this.areaCode !== undefined ? {areaId: this.areaCode } : {})
       });
+
+      this.modelValueCode = null;
+      console.log('Selected countryCode111:', this.countryCode);
     }
   }
 
@@ -59,8 +67,8 @@ export class ProvinceComponent implements OnInit {
     }
   }
 
-  onProvinceSelect(provinceCode: number): void {
+  onProvinceSelect(provinceCode: any): void {
     console.log('Selected getProvinces:', provinceCode);
-    // Implement any additional logic needed when a country is selected
+    this.provinceSelected.emit(provinceCode);
   }
 }

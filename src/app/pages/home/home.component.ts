@@ -62,13 +62,14 @@ export class HomeComponent implements OnInit {
   isLoading = false;
   selectedCountry?: number = 1;
   selectedArea?: number = undefined;
+  selectedProvince?: number = undefined;
 
   async ngOnInit() {
     this.isLoading = true;
 
     try {
       // Announcements verilerini yükle
-      await this.fetchUserData({countryId: this.selectedCountry || 1});
+      await this.fetchUserData();
 
       // Tablo kolonlarını tanımla
       this.initializeColumns();
@@ -86,7 +87,14 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private async fetchUserData(params: UserParams): Promise<void> {
+  private async fetchUserData(): Promise<void> {
+    const params: UserParams = {
+      countryId: this.selectedCountry || 1,
+      areaId: this.selectedArea,
+      districtId: undefined, // İlçe kodu henüz kullanılmıyor
+      fullName: undefined, // Arama yapılmadı
+      provinceId: this.selectedProvince // İl kodu henüz kullanılmıyor
+    }
      try {
 
       const getUsers = await this.userService.users(params);
@@ -119,7 +127,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-   onCountrySelected(countryCode: any): void {
+   async onCountrySelected(countryCode: any): Promise<void> {
     console.log('Selected countryCode11:', countryCode);
     this.selectedCountry = countryCode;
     this.selectedArea = undefined;
@@ -135,10 +143,23 @@ export class HomeComponent implements OnInit {
       this.cols.splice(9, 0, { field: 'districtName', header: 'İlçe' });
 
     }
+
+    this.selectedArea = undefined;
+    this.selectedProvince = undefined;
+
+    await this.fetchUserData();
   }
-   onAreaSelected(areaCode: any): void {
+   async onAreaSelected(areaCode: any): Promise<void> {
     console.log('Selected areaCode1:', areaCode);
     this.selectedArea = areaCode;
+
+    await this.fetchUserData();
+  }
+     async onProvinceSelected(provinceCode: any): Promise<void> {
+    console.log('Selected province1:', provinceCode);
+    this.selectedProvince = provinceCode;
+
+    await this.fetchUserData();
   }
 
   private initializeColumns(): void {
@@ -147,7 +168,7 @@ export class HomeComponent implements OnInit {
       { field: 'fullName', header: 'Ad Soyad' },
       { field: 'telephone', header: 'Telefon' },
       { field: 'email', header: 'E-mail' },
-      { field: 'identificationNumber', header: 'Tarih' },
+      { field: 'identificationNumber', header: 'Kimlik Numarası' },
       { field: 'dateOfBirth', header: 'Yaşı' },
       { field: 'countryName', header: 'Ülke' },
       { field: 'provinceName', header: 'İl' },
