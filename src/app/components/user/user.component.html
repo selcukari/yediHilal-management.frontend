@@ -64,9 +64,13 @@
               </p-floatlabel>
           </div>
           <div class="flex items-center gap-4 mb-2">
+            <app-component-country [model]="userData.countryId"
+              (countrySelected)="onCountrySelected($event)"></app-component-country>
+          </div>
+          <div class="flex items-center gap-4 mb-2">
             <p-floatlabel variant="on">
                 <p-iconfield>
-                  <p-inputicon class="pi pi-id-card" />
+                  <p-inputicon class="pi pi-calendar" />
                   <input pInputText id="dateOfBirth" name="dateOfBirth"  [(ngModel)]="userData.dateOfBirth" #dateOfBirth="ngModel" pSize="large"/>
 
                 </p-iconfield>

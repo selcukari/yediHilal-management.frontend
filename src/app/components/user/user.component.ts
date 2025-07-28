@@ -8,12 +8,13 @@ import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AvatarModule } from 'primeng/avatar';
+import { CountryComponent } from '../../components/country/country.component';
 
 
 @Component({
   selector: 'app-component-user',
   standalone: true,
-  imports: [Dialog, MessageModule, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
+  imports: [Dialog, MessageModule, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
   templateUrl: './user.component.html',
 })
 
@@ -54,5 +55,10 @@ export class UserComponent {
     console.log('Form validity:', form.valid);
     if (form.valid) {
     }
+  }
+
+  onCountrySelected(countryCode: any): void {
+    console.log('Selected country code:', countryCode);
+    this.userData.countryId = countryCode;
   }
 }

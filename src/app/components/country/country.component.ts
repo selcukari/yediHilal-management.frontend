@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, inject, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Select } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { CountryService } from '../../../services/country.service';
@@ -19,13 +19,15 @@ export class CountryComponent implements OnInit {
 
   private countryService = inject(CountryService);
   countries!: Country[];
-  defaultCountryCode: number = 1;
+  // model: number = 1;
   @Output() countrySelected = new EventEmitter<string>();
+
+  @Input() model?: number = 1;
 
   async ngOnInit() {
     await this.fetchCountryData();
 
-    this.countrySelected.emit(this.defaultCountryCode.toString());
+    this.countrySelected.emit(this.model !== undefined ? String(this.model) : undefined);
 
   }
 
