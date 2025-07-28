@@ -23,6 +23,7 @@ export class CountryComponent implements OnInit {
   @Output() countrySelected = new EventEmitter<string>();
 
   @Input() model?: number = 1;
+  @Input() isDisabled: boolean = false;
 
   async ngOnInit() {
     await this.fetchCountryData();

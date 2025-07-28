@@ -9,12 +9,13 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AvatarModule } from 'primeng/avatar';
 import { CountryComponent } from '../../components/country/country.component';
-
+import { ProvinceComponent } from '../province/province.component';
+import { AreaComponent } from '../area/area.component';
 
 @Component({
   selector: 'app-component-user',
   standalone: true,
-  imports: [Dialog, MessageModule, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
+  imports: [Dialog, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
   templateUrl: './user.component.html',
 })
 
@@ -50,15 +51,36 @@ export class UserComponent {
     };
   }
 
-   async onSubmit(form: any) {
+   async onSave(form: any) {
     console.log('Form submitted with value:', this.userData);
     console.log('Form validity:', form.valid);
     if (form.valid) {
+
+
+
+      this.visible = false;
     }
+
+  }
+
+  async onCancel(form: any) {
+    console.log('Form cancelled');
+    this.visible = false;
   }
 
   onCountrySelected(countryCode: any): void {
     console.log('Selected country code:', countryCode);
     this.userData.countryId = countryCode;
+  }
+
+  onProvinceSelected(provinceCode: any): void {
+    console.log('Selected provinceCode code:', provinceCode);
+    this.userData.provinceId = provinceCode;
+  }
+  onAreaSelected(areaCode: any): void {
+    console.log('Selected area code:', areaCode);
+    this.userData.areaId = areaCode;
+
+    this.userData.provinceId = undefined; // Reset province when area changes
   }
 }

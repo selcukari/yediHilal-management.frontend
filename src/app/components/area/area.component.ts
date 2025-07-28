@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, inject, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Select } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { AreaService } from '../../../services/area.service';
@@ -20,6 +20,7 @@ export class AreaComponent implements OnInit {
   private areaService = inject(AreaService);
   areas!: Area[];
    @Output() areaSelected = new EventEmitter<string>();
+   @Input() model?: number = undefined;
 
   async ngOnInit() {
     await this.fetchAreaData();

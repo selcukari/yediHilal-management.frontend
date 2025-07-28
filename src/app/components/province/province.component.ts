@@ -28,13 +28,14 @@ export class ProvinceComponent implements OnInit {
   @Input() countryCode?: number;
   @Input() areaCode?: number;
 
-  @Output() provinceSelected = new EventEmitter<string>();
+  @Output() provinceSelected = new EventEmitter<string | undefined>();
 
-  modelValueCode?: string | null = null;
+  @Input() model?: number = undefined;
 
 
   async ngOnInit() {
-    // await this.fetchProvinceData({});
+    console.log('Selected countryCode:', this.countryCode);
+    await this.fetchProvinceData({ countryId: this.countryCode });
   }
 
    async ngOnChanges(changes: SimpleChanges): Promise<void> {
@@ -45,7 +46,9 @@ export class ProvinceComponent implements OnInit {
         ...(this.areaCode !== undefined ? {areaId: this.areaCode } : {})
       });
 
-      this.modelValueCode = null;
+      this.model = undefined;
+      this.provinceSelected.emit(undefined);
+
       console.log('Selected countryCode111:', this.countryCode);
     }
   }

@@ -7,7 +7,7 @@
             </div>
         </ng-template>
         <span class="text-surface-500 dark:text-surface-400 block mb-8">Update your information.</span>
-      <form #userAddOrEditForm="ngForm" (ngSubmit)="onSubmit(userAddOrEditForm)" class="flex flex-col gap-4 w-full sm:w-56">
+      <form #userAddOrEditForm="ngForm"  class="flex flex-col gap-4 w-full sm:w-56">
 
           <div class="flex items-center gap-4 mb-2">
               <p-floatlabel variant="on">
@@ -64,10 +64,6 @@
               </p-floatlabel>
           </div>
           <div class="flex items-center gap-4 mb-2">
-            <app-component-country [model]="userData.countryId"
-              (countrySelected)="onCountrySelected($event)"></app-component-country>
-          </div>
-          <div class="flex items-center gap-4 mb-2">
             <p-floatlabel variant="on">
                 <p-iconfield>
                   <p-inputicon class="pi pi-calendar" />
@@ -77,10 +73,24 @@
                 <label for="on_label">Doğum Tarih</label>
               </p-floatlabel>
           </div>
+          <div class="flex items-center gap-4 mb-2">
+            <app-component-country [model]="userData.countryId" [isDisabled]="true"
+              (countrySelected)="onCountrySelected($event)"></app-component-country>
+          </div>
+          @if (userData.countryId == 1) {
+            <div class="flex items-center gap-4 mb-2">
+              <app-component-area [model]="userData.areaId"
+                (areaSelected)="onAreaSelected($event)"></app-component-area>
+            </div>
+          }
+          <div class="flex items-center gap-4 mb-2">
+            <app-component-province [model]="userData.provinceId"
+              (countrySelected)="onProvinceSelected($event)"></app-component-province>
+          </div>
         </form>
         <ng-template #footer>
-            <p-button label="Cancel" [text]="true" severity="secondary" (click)="visible = false" />
-            <p-button label="Save" [outlined]="true" severity="secondary" (click)="visible = false" />
+            <p-button label="Cancel" [text]="true" severity="secondary" (click)="onCancel(userAddOrEditForm)" />
+            <p-button label="Save" [outlined]="true" severity="secondary" (click)="onSave(userAddOrEditForm)" />
         </ng-template>
     </p-dialog>
 </div>
