@@ -4,7 +4,7 @@ import { EnvironmentService } from './environment.service';
 
 
 interface ProvinceParams {
-  countryId?: number;
+  countryId: number;
   areaId?: number;
 }
 
@@ -20,11 +20,11 @@ constructor() {
   async provinces(params: ProvinceParams): Promise<any| null> {
     try {
       const { countryId, areaId } = params;
-
+      console.log('Fetching provinces with params:', params);
 
       const getProvinces = await axios.get(`${this.envService.apiUrl}/getProvincesByCountryOrArea`,{
         params: {
-          ...(countryId !== undefined ? {countryId } : {}),
+          countryId,
           ...((areaId == undefined || countryId != 1) ? { } : {areaId})
         }});
       if (!getProvinces.data.data) {

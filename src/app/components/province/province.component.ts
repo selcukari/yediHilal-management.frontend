@@ -9,7 +9,7 @@ interface Province {
 }
 
 interface ProvinceParams {
-  countryId?: number;
+  countryId: number;
   areaId?: number;
 }
 
@@ -27,6 +27,8 @@ export class ProvinceComponent implements OnInit {
 
   @Input() countryCode?: number;
   @Input() areaCode?: number;
+  @Input() isRequired?: boolean = false;
+  @Input() formSubmitted: boolean = false;
 
   @Output() provinceSelected = new EventEmitter<string | undefined>();
 
@@ -35,15 +37,17 @@ export class ProvinceComponent implements OnInit {
 
   async ngOnInit() {
     console.log('Selected countryCode:', this.countryCode);
-    await this.fetchProvinceData({ countryId: this.countryCode });
+    await this.fetchProvinceData({ countryId: this.countryCode || 1 });
   }
 
    async ngOnChanges(changes: SimpleChanges): Promise<void> {
+    console.log("ngOnChanges called with changes1:", changes, this.areaCode);
     if (changes['countryCode'] || changes['areaCode']) {
+    console.log("ngOnChanges called with changes:", changes, this.areaCode);
 
       await this.fetchProvinceData({
-        ...(this.countryCode !== undefined ? {countryId: this.countryCode } : {}),
-        ...(this.areaCode !== undefined ? {areaId: this.areaCode } : {})
+        ...({countryId: this.countryCode || this.model || 1 }),
+        ...(this.areaCode != undefined ? {areaId: this.areaCode } : {})
       });
 
       this.model = undefined;

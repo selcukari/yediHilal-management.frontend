@@ -22,6 +22,7 @@ import { AreaComponent } from '../area/area.component';
 export class UserComponent {
   visible: boolean = false;
   userData: any;
+  changeAreaCode?: number;
 
 
   ngOnInit() {
@@ -81,6 +82,7 @@ export class UserComponent {
     console.log('Selected area code:', areaCode);
     this.userData.areaId = areaCode;
 
-    this.userData.provinceId = undefined; // Reset province when area changes
+    this.userData.provinceId = undefined;
+    this.changeAreaCode = areaCode;
   }
 }

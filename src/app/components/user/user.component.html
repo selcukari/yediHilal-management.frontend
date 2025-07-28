@@ -84,7 +84,8 @@
             </div>
           }
           <div class="flex items-center gap-4 mb-2">
-            <app-component-province [model]="userData.provinceId"
+            <app-component-province [model]="userData.provinceId" [areaCode]="changeAreaCode"  [isRequired]="true"
+
               (countrySelected)="onProvinceSelected($event)"></app-component-province>
           </div>
         </form>
