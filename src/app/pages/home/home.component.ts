@@ -1,4 +1,5 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { clone } from 'ramda';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { TableModule } from 'primeng/table';
@@ -98,7 +99,7 @@ export class HomePageComponent implements OnInit {
   }
 
     onEdit (value: any) {
-      this.userComponentRef.addOrEdit(value);
+      this.userComponentRef.addOrEdit(clone(value));
     }
 
   onDelete(event: Event) {

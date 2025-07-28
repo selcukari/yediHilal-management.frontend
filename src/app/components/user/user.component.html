@@ -1,5 +1,5 @@
 <div class="card flex justify-center">
-    <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '25rem' }">
+    <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '50rem' }">
         <ng-template #header>
             <div class="inline-flex items-center justify-center gap-2">
                 <p-avatar icon="pi pi-user" class="mr-2" size="large"  shape="circle" />
@@ -9,7 +9,7 @@
         <span class="text-surface-500 dark:text-surface-400 block mb-8">Update your information.</span>
       <form #userAddOrEditForm="ngForm" (ngSubmit)="onSubmit(userAddOrEditForm)" class="flex flex-col gap-4 w-full sm:w-56">
 
-          <div class="flex items-center gap-4 mb-4">
+          <div class="flex items-center gap-4 mb-2">
               <p-floatlabel variant="on">
                     <p-iconfield>
                       <p-inputicon class="pi pi-user" />
@@ -23,8 +23,55 @@
                   </p-floatlabel>
           </div>
           <div class="flex items-center gap-4 mb-2">
-              <label for="email" class="font-semibold w-24">Email</label>
-              <input pInputText id="email" class="flex-auto" autocomplete="off" />
+              <p-floatlabel variant="on">
+                    <p-iconfield>
+                      <p-inputicon class="pi pi-phone" />
+                      <input pInputText id="telephone" name="telephone"  [(ngModel)]="userData.telephone" #telephone="ngModel" pSize="large" required
+                        [class.ng-invalid]="telephone.invalid && (telephone.touched || userAddOrEditForm.submitted)"autocomplete="off" />
+                        @if (telephone.invalid && (telephone.touched || userAddOrEditForm.submitted)) {
+                          <p-message severity="error" variant="simple">telephone is required.</p-message>
+                        }
+                    </p-iconfield>
+                    <label for="on_label">Telefon</label>
+                  </p-floatlabel>
+          </div>
+          <div class="flex items-center gap-4 mb-2">
+            <p-floatlabel variant="on">
+                <p-iconfield>
+                  <p-inputicon class="pi pi-envelope" />
+                  <input pInputText id="email" name="email"  [(ngModel)]="userData.email" #email="ngModel" pSize="large" email
+                    [class.ng-invalid]="email.invalid && (email.touched || userAddOrEditForm.submitted)"autocomplete="off" />
+                    @if (email.invalid && (email.touched || userAddOrEditForm.submitted)) {
+                      <p-message severity="error" variant="simple">
+
+                        @if (email.hasError('email')) {
+                          Please enter a valid email.
+                        }
+                      </p-message>
+                    }
+                </p-iconfield>
+                <label for="on_label">Email</label>
+              </p-floatlabel>
+          </div>
+          <div class="flex items-center gap-4 mb-2">
+            <p-floatlabel variant="on">
+                <p-iconfield>
+                  <p-inputicon class="pi pi-id-card" />
+                  <input pInputText id="identificationNumber" name="identificationNumber"  [(ngModel)]="userData.identificationNumber" #identificationNumber="ngModel" pSize="large"/>
+
+                </p-iconfield>
+                <label for="on_label">Kimlik Numara</label>
+              </p-floatlabel>
+          </div>
+          <div class="flex items-center gap-4 mb-2">
+            <p-floatlabel variant="on">
+                <p-iconfield>
+                  <p-inputicon class="pi pi-id-card" />
+                  <input pInputText id="dateOfBirth" name="dateOfBirth"  [(ngModel)]="userData.dateOfBirth" #dateOfBirth="ngModel" pSize="large"/>
+
+                </p-iconfield>
+                <label for="on_label">Doğum Tarih</label>
+              </p-floatlabel>
           </div>
         </form>
         <ng-template #footer>
