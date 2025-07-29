@@ -11,11 +11,12 @@ import { AvatarModule } from 'primeng/avatar';
 import { CountryComponent } from '../../components/country/country.component';
 import { ProvinceComponent } from '../province/province.component';
 import { AreaComponent } from '../area/area.component';
+import { DistrictComponent } from '../district/district.component';
 
 @Component({
   selector: 'app-component-user',
   standalone: true,
-  imports: [Dialog, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
+  imports: [Dialog, DistrictComponent, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
   templateUrl: './user.component.html',
 })
 
@@ -23,6 +24,7 @@ export class UserComponent {
   visible: boolean = false;
   userData: any;
   changeAreaCode?: number;
+  changeProvinceCode?: number;
 
 
   ngOnInit() {
@@ -57,7 +59,7 @@ export class UserComponent {
     console.log('Form validity:', form.valid);
     if (form.valid) {
 
-
+      // district undefiald ise ilk deger ata
 
       this.visible = false;
     }
@@ -77,6 +79,7 @@ export class UserComponent {
   onProvinceSelected(provinceCode: any): void {
     console.log('Selected provinceCode code:', provinceCode);
     this.userData.provinceId = provinceCode;
+    this.changeProvinceCode = provinceCode;
   }
   onAreaSelected(areaCode: any): void {
     console.log('Selected area code:', areaCode);
@@ -84,5 +87,10 @@ export class UserComponent {
 
     this.userData.provinceId = undefined;
     this.changeAreaCode = areaCode;
+  }
+
+   onDistrictSelected(districtCode: any): void {
+    console.log('Selected districtCode code:', districtCode);
+    this.userData.districtId = districtCode;
   }
 }
