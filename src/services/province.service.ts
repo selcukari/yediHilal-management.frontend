@@ -20,7 +20,6 @@ constructor() {
   async provinces(params: ProvinceParams): Promise<any| null> {
     try {
       const { countryId, areaId } = params;
-      console.log('Fetching provinces with params:', params);
 
       const getProvinces = await axios.get(`${this.envService.apiUrl}/getProvincesByCountryOrArea`,{
         params: {

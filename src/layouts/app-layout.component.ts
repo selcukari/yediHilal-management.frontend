@@ -33,7 +33,6 @@ export class AppLayoutComponent {
   ngOnInit() {
     // Auth state değişikliklerini dinle
     this.authService.currentMember$.subscribe((user: any) => {
-      console.log('Current user:', user);
       this.isAuthenticated = !!user;
       this.currentUser = user;
     });
@@ -46,7 +45,6 @@ export class AppLayoutComponent {
   }
 
     onPageSelect(route: any): void {
-    console.log('Selected route:', route);
 
     if(route && route.code) {
       this.router.navigate([`/${route.code}`]);

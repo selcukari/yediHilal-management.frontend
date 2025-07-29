@@ -120,8 +120,6 @@ export class HomePageComponent implements OnInit {
         },
 
         accept: async () => {
-          console.log('Silme işlemi onaylandı, ID:', event);
-          console.log('Silme işlemi onaylandı, ID-1:', typeof event);
           const result = await this.userService.deleteUser(event as unknown as number);
           if (result) {
             this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt Silindi' });
@@ -149,7 +147,6 @@ export class HomePageComponent implements OnInit {
      try {
 
       const getUsers = await this.userService.users(params);
-      console.log('getUsers:', getUsers);
       if (getUsers) {
         this.resultData = getUsers;
 
@@ -180,8 +177,6 @@ export class HomePageComponent implements OnInit {
 
   async onSearchChange(value: string) {
     if (value.length > 3) {
-      console.log('Search term changed:', value);
-      console.log('Selected countryCode:', this.searchFullName);
       // burada API çağrısı vs. yapılabilir
       this.searchFullName = value;
       await this.fetchUserData();
@@ -189,7 +184,6 @@ export class HomePageComponent implements OnInit {
   }
 
    async onCountrySelected(countryCode: any): Promise<void> {
-    console.log('Selected countryCode11:', countryCode);
     this.selectedCountry = countryCode;
     this.selectedArea = undefined;
 
@@ -211,13 +205,11 @@ export class HomePageComponent implements OnInit {
     await this.fetchUserData();
   }
    async onAreaSelected(areaCode: any): Promise<void> {
-    console.log('Selected areaCode1:', areaCode);
     this.selectedArea = areaCode;
 
     await this.fetchUserData();
   }
      async onProvinceSelected(provinceCode: any): Promise<void> {
-    console.log('Selected province1:', provinceCode);
     this.selectedProvince = provinceCode;
 
     await this.fetchUserData();
@@ -248,7 +240,6 @@ export class HomePageComponent implements OnInit {
   }
 
   onPageSelect(route: any): void {
-    console.log('Selected route:', route);
 
     if(route && route.code) {
       this.router.navigate([`/${route.code}`]);

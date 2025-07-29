@@ -31,7 +31,7 @@ constructor() {
       // User'ı state'e kaydet
       this.setCurrentMember(getMember.data.data);
 
-      setWithExpiry('currentMember', JSON.stringify(getMember.data.data), 3600000 * 3);
+      setWithExpiry('currentMember', JSON.stringify(getMember.data.data), 86400000 * 7); // 7 gün TTL
       return getMember.data.data;
     } catch (error: any) {
       this.envService.logDebug('Login error', error);

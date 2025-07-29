@@ -12,7 +12,6 @@ export class AuthGuard implements CanActivate {
   private router = inject(Router);
 
   canActivate(): Observable<boolean | UrlTree> {
-    console.log('NoAuthGuard activated', this.authService.getCurrentMember());
 
     return this.authService.currentMember$.pipe(
       take(1),
@@ -37,7 +36,6 @@ export class NoAuthGuard implements CanActivate {
   private router = inject(Router);
 
   canActivate(): Observable<boolean | UrlTree> {
-    console.log('NoAuthGuard activated', this.authService.getCurrentMember());
 
     return this.authService.currentMember$.pipe(
       take(1),

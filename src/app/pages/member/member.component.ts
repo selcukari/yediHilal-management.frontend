@@ -34,7 +34,6 @@ export class MemberPageComponent implements OnInit {
   }
 
    onPageSelect(city: any): void {
-    console.log('Selected city:', city);
     this.router.navigate([`/${city.code}`]);
   }
 }

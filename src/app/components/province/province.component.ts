@@ -36,14 +36,11 @@ export class ProvinceComponent implements OnInit {
 
 
   async ngOnInit() {
-    console.log('Selected countryCode:', this.countryCode);
     await this.fetchProvinceData({ countryId: this.countryCode || 1 });
   }
 
    async ngOnChanges(changes: SimpleChanges): Promise<void> {
-    console.log("ngOnChanges called with changes1:", changes, this.areaCode);
     if (changes['countryCode'] || changes['areaCode']) {
-    console.log("ngOnChanges called with changes:", changes, this.areaCode);
 
       await this.fetchProvinceData({
         ...({countryId: this.countryCode || this.model || 1 }),
@@ -53,7 +50,6 @@ export class ProvinceComponent implements OnInit {
       this.model = undefined;
       this.provinceSelected.emit(undefined);
 
-      console.log('Selected countryCode111:', this.countryCode);
     }
   }
 
@@ -75,7 +71,6 @@ export class ProvinceComponent implements OnInit {
   }
 
   onProvinceSelect(provinceCode: any): void {
-    console.log('Selected getProvinces:', provinceCode);
     this.provinceSelected.emit(provinceCode);
   }
 }

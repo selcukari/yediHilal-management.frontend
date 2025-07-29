@@ -19,7 +19,6 @@ constructor() {
   async districts(params: DistrictParams): Promise<any| null> {
     try {
       const { provinceId } = params;
-      console.log('Fetching districts with params:', params);
 
       const getDistricts = await axios.get(`${this.envService.apiUrl}/getDistrictsByProvince`,{
         params: {

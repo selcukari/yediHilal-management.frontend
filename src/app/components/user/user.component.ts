@@ -11,12 +11,13 @@ import { AvatarModule } from 'primeng/avatar';
 import { CountryComponent } from '../../components/country/country.component';
 import { ProvinceComponent } from '../province/province.component';
 import { AreaComponent } from '../area/area.component';
+import { ToggleSwitch } from 'primeng/toggleswitch';
 import { DistrictComponent } from '../district/district.component';
 
 @Component({
   selector: 'app-component-user',
   standalone: true,
-  imports: [Dialog, DistrictComponent, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
+  imports: [Dialog, DistrictComponent, ToggleSwitch, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
   templateUrl: './user.component.html',
 })
 
@@ -25,6 +26,7 @@ export class UserComponent {
   userData: any;
   changeAreaCode?: number;
   changeProvinceCode?: number;
+  firstDistrctId?: number;
 
 
   ngOnInit() {
@@ -35,7 +37,7 @@ export class UserComponent {
   addOrEdit(newValue: any) {
   this.visible = true;
   this.userData = newValue || this.defaultUserData();
-  console.log('New value:', newValue);
+  this.firstDistrctId = this.userData.districtId;
   }
 
   defaultUserData(): any {
@@ -60,6 +62,7 @@ export class UserComponent {
     if (form.valid) {
 
       // district undefiald ise ilk deger ata
+      this.userData.districtId = this.firstDistrctId;
 
       this.visible = false;
     }
@@ -67,22 +70,18 @@ export class UserComponent {
   }
 
   async onCancel(form: any) {
-    console.log('Form cancelled');
     this.visible = false;
   }
 
   onCountrySelected(countryCode: any): void {
-    console.log('Selected country code:', countryCode);
     this.userData.countryId = countryCode;
   }
 
   onProvinceSelected(provinceCode: any): void {
-    console.log('Selected provinceCode code:', provinceCode);
     this.userData.provinceId = provinceCode;
     this.changeProvinceCode = provinceCode;
   }
   onAreaSelected(areaCode: any): void {
-    console.log('Selected area code:', areaCode);
     this.userData.areaId = areaCode;
 
     this.userData.provinceId = undefined;
@@ -90,7 +89,6 @@ export class UserComponent {
   }
 
    onDistrictSelected(districtCode: any): void {
-    console.log('Selected districtCode code:', districtCode);
     this.userData.districtId = districtCode;
   }
 }

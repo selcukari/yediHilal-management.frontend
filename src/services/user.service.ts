@@ -42,7 +42,6 @@ constructor() {
   }
 
   async deleteUser(userId: number): Promise<any | null> {
-    console.log('deleteUser userId:', userId);
     try {
       const deleteUser = await axios.put(`${this.envService.apiUrl}/deleteUser?id=${userId}`);
       if (!deleteUser.data.data) {

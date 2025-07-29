@@ -1,5 +1,5 @@
-<div class="card flex justify-center">
-    <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '50rem' }">
+
+    <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '40rem' }">
         <ng-template #header>
             <div class="inline-flex items-center justify-center gap-2">
                 <p-avatar icon="pi pi-user" class="mr-2" size="large"  shape="circle" />
@@ -7,97 +7,109 @@
             </div>
         </ng-template>
         <span class="text-surface-500 dark:text-surface-400 block mb-8">Update your information.</span>
-      <form #userAddOrEditForm="ngForm"  class="flex flex-col gap-4 w-full sm:w-56">
+      <form #userAddOrEditForm="ngForm"  class="formgrid grid">
 
-          <div class="flex items-center gap-4 mb-2">
-              <p-floatlabel variant="on">
-                    <p-iconfield>
-                      <p-inputicon class="pi pi-user" />
-                      <input pInputText id="fullName" name="fullName"  [(ngModel)]="userData.fullName" #fullName="ngModel" pSize="large" required
-                        [class.ng-invalid]="fullName.invalid && (fullName.touched || userAddOrEditForm.submitted)"autocomplete="off" />
-                        @if (fullName.invalid && (fullName.touched || userAddOrEditForm.submitted)) {
-                          <p-message severity="error" variant="simple">fullName is required.</p-message>
-                        }
-                    </p-iconfield>
-                    <label for="on_label">Ad Soyad</label>
-                  </p-floatlabel>
-          </div>
-          <div class="flex items-center gap-4 mb-2">
-              <p-floatlabel variant="on">
-                    <p-iconfield>
-                      <p-inputicon class="pi pi-phone" />
-                      <input pInputText id="telephone" name="telephone"  [(ngModel)]="userData.telephone" #telephone="ngModel" pSize="large" required
-                        [class.ng-invalid]="telephone.invalid && (telephone.touched || userAddOrEditForm.submitted)"autocomplete="off" />
-                        @if (telephone.invalid && (telephone.touched || userAddOrEditForm.submitted)) {
-                          <p-message severity="error" variant="simple">telephone is required.</p-message>
-                        }
-                    </p-iconfield>
-                    <label for="on_label">Telefon</label>
-                  </p-floatlabel>
-          </div>
-          <div class="flex items-center gap-4 mb-2">
-            <p-floatlabel variant="on">
-                <p-iconfield>
-                  <p-inputicon class="pi pi-envelope" />
-                  <input pInputText id="email" name="email"  [(ngModel)]="userData.email" #email="ngModel" pSize="large" email
-                    [class.ng-invalid]="email.invalid && (email.touched || userAddOrEditForm.submitted)"autocomplete="off" />
-                    @if (email.invalid && (email.touched || userAddOrEditForm.submitted)) {
-                      <p-message severity="error" variant="simple">
+        <div class="field col-12 md:col-6">
+          <p-floatlabel variant="on">
+            <p-iconfield>
+              <p-inputicon class="pi pi-user" />
+              <input pInputText id="fullName" name="fullName"  [(ngModel)]="userData.fullName" #fullName="ngModel" pSize="large" required
+                [class.ng-invalid]="fullName.invalid && (fullName.touched || userAddOrEditForm.submitted)"autocomplete="off" />
+                @if (fullName.invalid && (fullName.touched || userAddOrEditForm.submitted)) {
+                  <p-message severity="error" variant="simple">fullName is required.</p-message>
+                }
+            </p-iconfield>
+            <label for="fullName">Ad Soyad</label>
+          </p-floatlabel>
+        </div>
 
-                        @if (email.hasError('email')) {
-                          Please enter a valid email.
-                        }
-                      </p-message>
-                    }
-                </p-iconfield>
-                <label for="on_label">Email</label>
-              </p-floatlabel>
-          </div>
-          <div class="flex items-center gap-4 mb-2">
-            <p-floatlabel variant="on">
-                <p-iconfield>
-                  <p-inputicon class="pi pi-id-card" />
-                  <input pInputText id="identificationNumber" name="identificationNumber"  [(ngModel)]="userData.identificationNumber" #identificationNumber="ngModel" pSize="large"/>
+        <div class="field col-12 md:col-6">
+          <p-floatlabel variant="on">
+            <p-iconfield>
+              <p-inputicon class="pi pi-phone" />
+              <input pInputText id="telephone" name="telephone"  [(ngModel)]="userData.telephone" #telephone="ngModel" pSize="large" required
+                [class.ng-invalid]="telephone.invalid && (telephone.touched || userAddOrEditForm.submitted)"autocomplete="off" />
+                @if (telephone.invalid && (telephone.touched || userAddOrEditForm.submitted)) {
+                  <p-message severity="error" variant="simple">telephone is required.</p-message>
+                }
+            </p-iconfield>
+            <label for="telephone">Telefon</label>
+          </p-floatlabel>
+        </div>
 
-                </p-iconfield>
-                <label for="on_label">Kimlik Numara</label>
-              </p-floatlabel>
-          </div>
-          <div class="flex items-center gap-4 mb-2">
-            <p-floatlabel variant="on">
-                <p-iconfield>
-                  <p-inputicon class="pi pi-calendar" />
-                  <input pInputText id="dateOfBirth" name="dateOfBirth"  [(ngModel)]="userData.dateOfBirth" #dateOfBirth="ngModel" pSize="large"/>
+        <div class="field col-12 md:col-6">
+          <p-floatlabel variant="on">
+              <p-iconfield>
+                <p-inputicon class="pi pi-envelope" />
+                <input pInputText id="email" name="email"  [(ngModel)]="userData.email" #email="ngModel" pSize="large" email
+                  [class.ng-invalid]="email.invalid && (email.touched || userAddOrEditForm.submitted)"autocomplete="off" />
+                  @if (email.invalid && (email.touched || userAddOrEditForm.submitted)) {
+                    <p-message severity="error" variant="simple">
+                      @if (email.hasError('email')) {
+                        Please enter a valid email.
+                      }
+                    </p-message>
+                  }
+              </p-iconfield>
+              <label for="email">Email</label>
+          </p-floatlabel>
+        </div>
 
-                </p-iconfield>
-                <label for="on_label">Doğum Tarih</label>
-              </p-floatlabel>
-          </div>
-          <div class="flex items-center gap-4 mb-2">
-            <app-component-country [model]="userData.countryId" [isDisabled]="true"
-              (countrySelected)="onCountrySelected($event)"></app-component-country>
-          </div>
-          @if (userData.countryId == 1) {
-            <div class="flex items-center gap-4 mb-2">
-              <app-component-area [model]="userData.areaId"
-                (areaSelected)="onAreaSelected($event)"></app-component-area>
-            </div>
-          }
-          <div class="flex items-center gap-4 mb-2">
-            <app-component-province [model]="userData.provinceId" [areaCode]="changeAreaCode"  [isRequired]="true"
+        <div class="field col-12 md:col-6">
+          <p-floatlabel variant="on">
+              <p-iconfield>
+                <p-inputicon class="pi pi-id-card" />
+                <input pInputText id="identificationNumber" name="identificationNumber"  [(ngModel)]="userData.identificationNumber" #identificationNumber="ngModel" pSize="large"/>
+              </p-iconfield>
+              <label for="identificationNumber">Kimlik Numara</label>
+          </p-floatlabel>
+        </div>
 
-              (provinceSelected)="onProvinceSelected($event)"></app-component-province>
+        <div class="field col-12 md:col-6 col-offset-3">
+          <p-floatlabel variant="on">
+            <p-iconfield>
+              <p-inputicon class="pi pi-calendar" />
+              <input pInputText id="dateOfBirth" name="dateOfBirth"  [(ngModel)]="userData.dateOfBirth" #dateOfBirth="ngModel" pSize="large"/>
+            </p-iconfield>
+            <label for="dateOfBirth">Doğum Tarih</label>
+          </p-floatlabel>
+        </div>
+        <div class=" col-offset-3"></div>
+
+
+        <div class="field col-12 md:col-3">
+          <app-component-country [model]="userData.countryId" [isDisabled]="true"
+            (countrySelected)="onCountrySelected($event)"></app-component-country>
+        </div>
+
+        @if (userData.countryId == 1) {
+          <div class="field col-12 md:col-3">
+            <app-component-area [model]="userData.areaId"
+              (areaSelected)="onAreaSelected($event)"></app-component-area>
           </div>
-          @if (userData.countryId == 1 && (userData.provinceId || changeProvinceCode)) {
-            <div class="flex items-center gap-4 mb-2">
-              <app-component-district [model]="userData.districtId" [provinceCode]="changeProvinceCode" [firstProvinceCode]="userData.provinceId"
-                (districtSelected)="onDistrictSelected($event)"></app-component-district>
-            </div>
-          }
+        }
+
+        <div class="field col-12 md:col-3">
+          <app-component-province [model]="userData.provinceId" [areaCode]="changeAreaCode"  [isRequired]="true"
+            (provinceSelected)="onProvinceSelected($event)"></app-component-province>
+        </div>
+
+        @if (userData.countryId == 1 && (userData.provinceId || changeProvinceCode)) {
+          <div class="field col-12 md:col-3">
+            <app-component-district [model]="userData.districtId" [provinceCode]="changeProvinceCode" [firstProvinceCode]="userData.provinceId"
+              (districtSelected)="onDistrictSelected($event)"></app-component-district>
+          </div>
+        }
+
+        <div class="field col-12 md:col-6">
+          <label for="isActive" class="mr-2">Aktif Durumu:</label>
+          <p-toggleswitch id="isActive" name="isActive" [(ngModel)]="userData.isActive" />
+        </div>
+
         </form>
         <ng-template #footer>
-            <p-button label="Cancel" [text]="true" severity="secondary" (click)="onCancel(userAddOrEditForm)" />
-            <p-button label="Save" [outlined]="true" severity="secondary" (click)="onSave(userAddOrEditForm)" />
+            <p-button label="Cancel" [text]="true" severity="secondary" [raised]="true" severity="danger" (click)="onCancel(userAddOrEditForm)" />
+            <p-button label="Save" [outlined]="true" severity="secondary" [raised]="true" severity="success" icon="pi pi-check" iconPos="left" (click)="onSave(userAddOrEditForm)" />
         </ng-template>
     </p-dialog>
-</div>
+
