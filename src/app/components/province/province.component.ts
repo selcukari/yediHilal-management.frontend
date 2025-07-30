@@ -40,8 +40,32 @@ export class ProvinceComponent implements OnInit {
   }
 
    async ngOnChanges(changes: SimpleChanges): Promise<void> {
-    if (changes['countryCode'] || changes['areaCode']) {
+      let shouldFetchData = false;
 
+    // countryCode değişikliği kontrolü
+    if (changes['countryCode']) {
+      const currentCountryCode = changes['countryCode'].currentValue;
+      const previousCountryCode = changes['countryCode'].previousValue;
+
+      // Sadece gerçekten değiştiyse işlem yap
+      if (currentCountryCode !== previousCountryCode) {
+        shouldFetchData = true;
+      }
+    }
+
+    // areaCode değişikliği kontrolü
+    if (changes['areaCode']) {
+      const currentAreaCode = changes['areaCode'].currentValue;
+      const previousAreaCode = changes['areaCode'].previousValue;
+
+      // Sadece gerçekten değiştiyse işlem yap
+      if (currentAreaCode !== previousAreaCode) {
+        shouldFetchData = true;
+      }
+    }
+
+    // Sadece gerçek bir değişiklik varsa veri çek ve model'i temizle
+    if (shouldFetchData) {
       await this.fetchProvinceData({
         ...({countryId: this.countryCode || this.model || 1 }),
         ...(this.areaCode != undefined ? {areaId: this.areaCode } : {})
@@ -49,7 +73,6 @@ export class ProvinceComponent implements OnInit {
 
       this.model = undefined;
       this.provinceSelected.emit(undefined);
-
     }
   }
 
