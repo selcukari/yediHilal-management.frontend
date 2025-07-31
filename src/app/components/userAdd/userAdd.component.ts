@@ -10,26 +10,27 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AvatarModule } from 'primeng/avatar';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CountryComponent } from '../../components/country/country.component';
+import { CountryComponent } from '../country/country.component';
 import { ProvinceComponent } from '../province/province.component';
 import { AreaComponent } from '../area/area.component';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { DistrictComponent } from '../district/district.component';
 import { UserService } from '../../../services/user.service';
 @Component({
-  selector: 'app-component-user',
+  selector: 'app-component-userAdd',
   standalone: true,
   imports: [Dialog, DistrictComponent, ToggleSwitch, ToastModule, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
   providers: [MessageService, ConfirmationService],
-  templateUrl: './user.component.html',
+  templateUrl: './userAdd.component.html',
 })
 
-export class UserComponent {
+export class UserAddComponent {
   visible: boolean = false;
   userData: any;
   changeAreaCode?: number;
   changeProvinceCode?: number;
   firstDistrctId?: number;
+  changeCountryCode?: number;
 
   constructor(private userService: UserService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
@@ -39,11 +40,9 @@ export class UserComponent {
     }
   }
 
-  edit(newValue: any) {
-    console.log('Add or Edit User:', newValue);
+  add() {
     this.visible = true;
-    this.userData = newValue || this.defaultUserData();
-    this.firstDistrctId = this.userData.districtId;
+    this.userData = this.defaultUserData();
   }
 
   defaultUserData(): any {
@@ -96,7 +95,6 @@ private isFormDataValid(): boolean {
 
 
       const updateUserValue = {
-        Id: this.userData.id,
         fullName: this.userData.fullName,
         identificationNumber: this.userData.identificationNumber,
         telephone: this.userData.telephone,
@@ -107,19 +105,17 @@ private isFormDataValid(): boolean {
         provinceId: this.userData.provinceId,
         districtId: this.userData.districtId,
         isActive: this.userData.isActive,
-        createdDate: this.userData.createdDate,
-        ...(this.userData.id ? {updateDate: new Date().toISOString() } : {})
       }
-      const result = await this.userService.updateUser(updateUserValue);
-      console.log('Update result:', result);
+      const result = await this.userService.addUser(updateUserValue);
+      console.log('add result:', result);
       if (result) {
-        this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kullanıcı Güncellendi' });
+        this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Yeni Kullanıcı Eklendi' });
 
         this.visible = false;
 
         return;
       } else {
-        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kullanıcı Güncellenemedi' });
+        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Yeni Kullanıcı Eklenirken ha oluştu' });
       }
 
 
@@ -132,6 +128,7 @@ private isFormDataValid(): boolean {
 
   onCountrySelected(countryCode: any): void {
     this.userData.countryId = countryCode;
+    this.changeCountryCode = countryCode;
   }
 
   onProvinceSelected(provinceCode: any): void {

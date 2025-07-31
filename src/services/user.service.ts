@@ -12,7 +12,6 @@ interface UserParams {
 }
 
 interface UserData {
-  Id?: number;
   fullName: string;
   isActive: boolean;
   countryId: number;
@@ -78,6 +77,18 @@ constructor() {
       return updatedUser.data.data;
     } catch (error: any) {
       this.envService.logDebug('updatedUser error', error);
+    }
+  }
+
+  async addUser(params: UserData): Promise<any | null> {
+    try {
+      const addeddUser = await axios.put(`${this.envService.apiUrl}/addUser`, params);
+      if (!addeddUser.data.data) {
+        throw new Error('Kullanıcı eklenemedi.');
+      }
+      return addeddUser.data.data;
+    } catch (error: any) {
+      this.envService.logDebug('addeddUser error', error);
     }
   }
 }

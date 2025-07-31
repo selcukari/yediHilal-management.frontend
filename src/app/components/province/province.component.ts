@@ -60,7 +60,7 @@ export class ProvinceComponent implements OnInit {
       const previousAreaCode = changes['areaCode'].previousValue;
 
       // Sadece gerçekten değiştiyse işlem yap
-      if (currentAreaCode !== previousAreaCode) {
+      if (currentAreaCode != previousAreaCode) {
         shouldFetchData = true;
       }
     }

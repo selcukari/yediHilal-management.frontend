@@ -20,15 +20,17 @@ export class CountryComponent implements OnInit {
   private countryService = inject(CountryService);
   countries!: Country[];
   // model: number = 1;
-  @Output() countrySelected = new EventEmitter<string>();
+  @Output() countrySelected = new EventEmitter<number>();
 
   @Input() model?: number = 1;
   @Input() isDisabled: boolean = false;
 
   async ngOnInit() {
+    console.log('CountryComponent initialized with isDisabled:', this.isDisabled);
+    console.log('CountryComponent initialized with model:', this.model);
     await this.fetchCountryData();
 
-    this.countrySelected.emit(this.model !== undefined ? String(this.model) : undefined);
+    this.countrySelected.emit(this.model != null ? this.model : undefined);
 
   }
 
@@ -49,6 +51,6 @@ export class CountryComponent implements OnInit {
   }
 
   onCountrySelect(countryCode: any): void {
-    this.countrySelected.emit(countryCode);
+    this.countrySelected.emit(countryCode as number);
   }
 }

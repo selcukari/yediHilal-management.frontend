@@ -13,13 +13,14 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { Tooltip } from 'primeng/tooltip';
 import { Router } from '@angular/router';
+import { Table } from 'primeng/table';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { AreaComponent } from '../../components/area/area.component';
 import { ProvinceComponent } from '../../components/province/province.component';
 import { CountryComponent } from '../../components/country/country.component';
 import { UserComponent } from '../../components/user/user.component';
 import { UserService } from '../../../services/user.service';
-import { Table } from 'primeng/table';
+import { UserAddComponent } from '../../components/userAdd/userAdd.component';
 
 interface Column {
     field: string;
@@ -51,7 +52,7 @@ interface ValueData {
   selector: 'app-pages-home',
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
-    ConfirmDialog, CountryComponent, AreaComponent, Tooltip, UserComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
+    ConfirmDialog, UserAddComponent, CountryComponent, AreaComponent, Tooltip, UserComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
   providers: [MessageService, ConfirmationService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -63,6 +64,7 @@ export class HomePageComponent implements OnInit {
   private router = inject(Router);
 
   @ViewChild(UserComponent) userComponentRef!: UserComponent;
+  @ViewChild(UserAddComponent) userAddComponentRef!: UserAddComponent;
 
 
   resultData: ValueData[] = [];
@@ -98,9 +100,13 @@ export class HomePageComponent implements OnInit {
     }
   }
 
-    async onEdit (value: any) {
-      this.userComponentRef.addOrEdit(clone(value));
-    }
+  async onEdit (value: any) {
+    this.userComponentRef.edit(clone(value));
+  }
+
+  async onAdd () {
+    this.userAddComponentRef.add();
+  }
 
   onDelete(event: Event) {
     this.confirmationService.confirm({
