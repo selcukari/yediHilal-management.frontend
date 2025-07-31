@@ -20,9 +20,9 @@
         <p-button
           pButton
           type="button"
-          label="Yenile"
-          icon="pi pi-refresh"
-          (click)="refreshData()"
+          label="Yeni Kullanıcı"
+          icon="pi pi-plus"
+          (click)="onEdit(undefined)"
           [disabled]="isLoading">
         </p-button>
       </div>
@@ -47,7 +47,7 @@
 
 
             <ng-template #caption>
-              <div class="flex">
+              <div class="flex items-center justify-between">
                 <span class="table-title">Aktif Kullanıcılar ({{ resultData.length }})</span>
                 <p-floatlabel variant="on">
                   <p-iconfield>
@@ -56,6 +56,7 @@
                   </p-iconfield>
                   <label for="on_label">Kullanıcı Ara...</label>
                 </p-floatlabel>
+                <p-button icon="pi pi-refresh" icon="pi pi-refresh" (click)="refreshData()" [disabled]="isLoading" rounded raised />
               </div>
             </ng-template>
 

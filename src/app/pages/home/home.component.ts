@@ -261,7 +261,6 @@ export class HomePageComponent implements OnInit {
 
   // Refresh fonksiyonu
   async refreshData(): Promise<void> {
-    console.log('Update -Refreshing data...');
     await this.fetchUserData();
   }
 }

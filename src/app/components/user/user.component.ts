@@ -39,9 +39,10 @@ export class UserComponent {
     }
   }
   addOrEdit(newValue: any) {
-  this.visible = true;
-  this.userData = newValue || this.defaultUserData();
-  this.firstDistrctId = this.userData.districtId;
+    console.log('Add or Edit User:', newValue);
+    this.visible = true;
+    this.userData = newValue || this.defaultUserData();
+    this.firstDistrctId = this.userData.districtId;
   }
 
   defaultUserData(): any {
@@ -76,10 +77,22 @@ private isFormDataValid(): boolean {
     const isCustomDataValid = this.isFormDataValid();
     const isOverallValid = isAngularFormValid && isCustomDataValid;
 
-    if (isOverallValid) {
+     if (!isOverallValid) {
+      console.log('Form is invalid:', form);
+      if (form.control?.markAllAsTouched) {
+      form.control.markAllAsTouched();
+    }
 
-      // district undefiald ise ilk deger ata
-      // this.userData.districtId = this.firstDistrctId;
+      // Manuel olarak touched durumu da ayarlanabilir (isteğe bağlı)
+      Object.keys(form.controls).forEach(field => {
+        const control = form.controls[field];
+        control.markAsTouched({ onlySelf: true });
+      });
+
+      this.messageService.add({ severity: 'warn', summary: 'Eksik Alan', detail: 'Lütfen gerekli alanları doldurunuz.' });
+      return;
+    }
+
 
       const updateUserValue = {
         Id: this.userData.id,
@@ -108,10 +121,7 @@ private isFormDataValid(): boolean {
         this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kullanıcı Güncellenemedi' });
       }
 
-      // this.visible = false;
 
-      return;
-    }
 
   }
 
