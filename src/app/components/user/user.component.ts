@@ -1,23 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IconFieldModule } from 'primeng/iconfield';
 import { FloatLabel } from 'primeng/floatlabel';
 import { FormsModule } from '@angular/forms';
 import { MessageModule } from 'primeng/message';
 import { InputIconModule } from 'primeng/inputicon';
 import { Dialog } from 'primeng/dialog';
+import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AvatarModule } from 'primeng/avatar';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { CountryComponent } from '../../components/country/country.component';
 import { ProvinceComponent } from '../province/province.component';
 import { AreaComponent } from '../area/area.component';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { DistrictComponent } from '../district/district.component';
-
+import { UserService } from '../../../services/user.service';
 @Component({
   selector: 'app-component-user',
   standalone: true,
-  imports: [Dialog, DistrictComponent, ToggleSwitch, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
+  imports: [Dialog, DistrictComponent, ToggleSwitch, ToastModule, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
+  providers: [MessageService, ConfirmationService],
   templateUrl: './user.component.html',
 })
 
@@ -28,6 +31,7 @@ export class UserComponent {
   changeProvinceCode?: number;
   firstDistrctId?: number;
 
+  constructor(private userService: UserService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   ngOnInit() {
     if (!this.userData) {
@@ -56,15 +60,57 @@ export class UserComponent {
     };
   }
 
+  // Validasyon fonksiyonu
+private isFormDataValid(): boolean {
+  const requiredFields = {
+    provinceId: !!this.userData.provinceId,
+    districtId: this.userData.countryId == 1 ? !!this.userData.districtId : true,
+  };
+
+  return Object.values(requiredFields).every(isValid => isValid);
+}
+
    async onSave(form: any) {
     console.log('Form submitted with value:', this.userData);
-    console.log('Form validity:', form.valid);
-    if (form.valid) {
+    const isAngularFormValid = form.valid;
+    const isCustomDataValid = this.isFormDataValid();
+    const isOverallValid = isAngularFormValid && isCustomDataValid;
+
+    if (isOverallValid) {
 
       // district undefiald ise ilk deger ata
-      this.userData.districtId = this.firstDistrctId;
+      // this.userData.districtId = this.firstDistrctId;
 
-      this.visible = false;
+      const updateUserValue = {
+        Id: this.userData.id,
+        fullName: this.userData.fullName,
+        identificationNumber: this.userData.identificationNumber,
+        telephone: this.userData.telephone,
+        email: this.userData.email,
+        dateOfBirth: this.userData.dateOfBirth,
+        countryId: this.userData.countryId,
+        areaId: this.userData.areaId,
+        provinceId: this.userData.provinceId,
+        districtId: this.userData.districtId,
+        isActive: this.userData.isActive,
+        createdDate: this.userData.createdDate,
+        ...(this.userData.id ? {updateDate: new Date().toISOString() } : {})
+      }
+      const result = await this.userService.updateUser(updateUserValue);
+      console.log('Update result:', result);
+      if (result) {
+        this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kullanıcı Güncellendi' });
+
+        this.visible = false;
+
+        return;
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kullanıcı Güncellenemedi' });
+      }
+
+      // this.visible = false;
+
+      return;
     }
 
   }

@@ -3,4 +3,8 @@
     optionLabel="name" optionValue="code" [(ngModel)]="model"
     optionLabel="name" placeholder="Select a Province"
     class="w-full md:w-56" />
+
+     @if (isRequired && !model) {
+        <p-message severity="error" variant="simple" class="mt-1">İl is required.</p-message>
+    }
 </div>

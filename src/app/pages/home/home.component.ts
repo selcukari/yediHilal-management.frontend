@@ -98,7 +98,7 @@ export class HomePageComponent implements OnInit {
     }
   }
 
-    onEdit (value: any) {
+    async onEdit (value: any) {
       this.userComponentRef.addOrEdit(clone(value));
     }
 
@@ -261,6 +261,7 @@ export class HomePageComponent implements OnInit {
 
   // Refresh fonksiyonu
   async refreshData(): Promise<void> {
+    console.log('Update -Refreshing data...');
     await this.fetchUserData();
   }
 }

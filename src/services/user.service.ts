@@ -11,6 +11,22 @@ interface UserParams {
   provinceId?: number;
 }
 
+interface UserData {
+  Id?: number;
+  fullName: string;
+  isActive: boolean;
+  countryId: number;
+  areaId?: number;
+  provinceId: number;
+  districtId?: number;
+  identificationNumber?: string;
+  telephone?: string;
+  email?: string;
+  dateOfBirth?: Date;
+  createdDate?: string;
+  updateDate?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -50,6 +66,18 @@ constructor() {
       return deleteUser.data.data;
     } catch (error: any) {
       this.envService.logDebug('deleteUser error', error);
+    }
+  }
+
+   async updateUser(params: UserData): Promise<any | null> {
+    try {
+      const updatedUser = await axios.put(`${this.envService.apiUrl}/updateUser`, params);
+      if (!updatedUser.data.data) {
+        throw new Error('Kullanıcı güncellenemedi.');
+      }
+      return updatedUser.data.data;
+    } catch (error: any) {
+      this.envService.logDebug('updatedUser error', error);
     }
   }
 }

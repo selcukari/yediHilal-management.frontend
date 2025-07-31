@@ -1,4 +1,5 @@
 
+    <p-toast />
     <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '40rem' }">
         <ng-template #header>
             <div class="inline-flex items-center justify-center gap-2">
@@ -90,7 +91,7 @@
         }
 
         <div class="field col-12 md:col-3">
-          <app-component-province [model]="userData.provinceId" [areaCode]="changeAreaCode"  [isRequired]="true"
+          <app-component-province [model]="userData.provinceId" [areaCode]="changeAreaCode" [isRequired]="true"
             (provinceSelected)="onProvinceSelected($event)"></app-component-province>
         </div>
 
