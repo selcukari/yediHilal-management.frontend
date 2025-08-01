@@ -29,7 +29,6 @@ export class ProvinceComponent implements OnInit {
   @Input() countryCode?: number;
   @Input() areaCode?: number;
   @Input() isRequired?: boolean = false;
-  @Input() formSubmitted: boolean = false;
 
   @Output() provinceSelected = new EventEmitter<string | undefined>();
 

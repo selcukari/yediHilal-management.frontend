@@ -22,7 +22,7 @@ export class RoleComponent implements OnInit {
   roles!: Role[];
 
   @Output() roleSelected = new EventEmitter<string | undefined>();
-
+  @Input() model?: number = 1;
 
   async ngOnInit() {
     await this.fetchRoleData();

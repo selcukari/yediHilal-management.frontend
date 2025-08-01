@@ -18,7 +18,7 @@ import { ProgressSpinner } from 'primeng/progressspinner';
 import { AreaComponent } from '../../components/area/area.component';
 import { ProvinceComponent } from '../../components/province/province.component';
 import { CountryComponent } from '../../components/country/country.component';
-import { UserComponent } from '../../components/user/user.component';
+import { MemberComponent } from '../../components/member/member.component';
 import { MemberService } from '../../../services/member.service';
 import { UserAddComponent } from '../../components/userAdd/userAdd.component';
 import { RoleComponent } from '../../components/role/role.component';
@@ -53,7 +53,7 @@ interface ValueData {
   selector: 'app-pages-member',
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
-    ConfirmDialog, RoleComponent, UserAddComponent, CountryComponent, AreaComponent, Tooltip, UserComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
+    ConfirmDialog, RoleComponent, UserAddComponent, CountryComponent, AreaComponent, Tooltip, MemberComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
   providers: [MessageService, ConfirmationService],
   templateUrl: './member.component.html',
   styleUrl: './member.component.scss'
@@ -64,7 +64,7 @@ export class MemberPageComponent implements OnInit {
   private memberService = inject(MemberService);
   private router = inject(Router);
 
-  @ViewChild(UserComponent) userComponentRef!: UserComponent;
+  @ViewChild(MemberComponent) memberComponentRef!: MemberComponent;
   @ViewChild(UserAddComponent) userAddComponentRef!: UserAddComponent;
 
 
@@ -103,7 +103,7 @@ export class MemberPageComponent implements OnInit {
   }
 
   async onEdit (value: any) {
-    this.userComponentRef.edit(clone(value));
+    this.memberComponentRef.edit(clone(value));
   }
 
   async onAdd () {

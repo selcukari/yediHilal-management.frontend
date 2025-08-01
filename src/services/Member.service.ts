@@ -73,7 +73,7 @@ constructor() {
 
    async updateMember(params: UserData): Promise<any | null> {
     try {
-      const updatedUser = await axios.put(`${this.envService.apiUrl}/managementMember/updateUser`, params);
+      const updatedUser = await axios.put(`${this.envService.apiUrl}/managementMember/updateMember`, params);
       if (!updatedUser.data.data) {
         throw new Error('Kullanıcı güncellenemedi.');
       }
