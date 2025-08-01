@@ -42,7 +42,6 @@ interface ValueData {
   updateDate?: string;
   countryName: string;
   provinceName?: string;
-  districtName?: string;
   dateOfBirth?: number;
   areaName?: string
 }
@@ -192,15 +191,11 @@ export class HomePageComponent implements OnInit {
     this.selectedArea = undefined;
 
       // Önce varsa alanları çıkar
-    this.cols = this.cols.filter(col =>
-      col.field !== 'areaName' && col.field !== 'districtName'
-    );
+    this.cols = this.cols.filter(col => col.field !== 'areaName');
 
     if (countryCode == 1) {
       // Türkiye için alan kodunu ekle
       this.cols.splice(7, 0, { field: 'areaName', header: 'Bölge' });
-      this.cols.splice(9, 0, { field: 'districtName', header: 'İlçe' });
-
     }
 
     this.selectedArea = undefined;

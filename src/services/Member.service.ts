@@ -6,7 +6,6 @@ import { EnvironmentService } from './environment.service';
 interface MemberParams {
   countryId: number;
   areaId?: number;
-  districtId?: number;
   fullName?: string;
   provinceId?: number;
   roleId?: number;
@@ -19,7 +18,6 @@ interface UserData {
   areaId: number;
   provinceId: number;
   roleId: number;
-  districtId?: number;
   identificationNumber?: string;
   telephone?: string;
   email?: string;
@@ -39,14 +37,13 @@ constructor() {
 
   async members(params: MemberParams): Promise<any| null> {
     try {
-      const { countryId, areaId, provinceId, fullName, districtId, roleId } = params;
+      const { countryId, areaId, provinceId, fullName, roleId } = params;
 
       const getMembers = await axios.get(`${this.envService.apiUrl}/managementMember/getMembersBy`,{
         params: {
           countryId ,
           ...(provinceId !== undefined ? {provinceId } : {}),
           ...((fullName == undefined || fullName?.length < 2) ? {} : {fullName}),
-          ...((districtId == undefined || countryId != 1) ? {} : {districtId}),
           ...((areaId == undefined || countryId != 1) ? { } : {areaId}),
           ...(roleId !== undefined ? {roleId } : {}),
         }});

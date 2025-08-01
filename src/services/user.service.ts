@@ -16,7 +16,6 @@ interface UserData {
   countryId: number;
   areaId: number;
   provinceId: number;
-  districtId?: number;
   identificationNumber?: string;
   telephone?: string;
   email?: string;

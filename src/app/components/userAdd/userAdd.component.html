@@ -96,12 +96,6 @@
               (provinceSelected)="onProvinceSelected($event)"></app-component-province>
           </div>
         }
-        @if (userData.countryId == 1 && (userData.provinceId || changeProvinceCode)) {
-          <div class="field col-12 md:col-3">
-            <app-component-district [model]="userData.districtId" [provinceCode]="changeProvinceCode" [firstProvinceCode]="userData.provinceId"
-              (districtSelected)="onDistrictSelected($event)"></app-component-district>
-          </div>
-        }
 
         <div class="field col-12 md:col-6">
           <label for="isActive" class="mr-2">Aktif Durumu:</label>

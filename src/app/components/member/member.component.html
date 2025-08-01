@@ -100,13 +100,6 @@
             (provinceSelected)="onProvinceSelected($event)"></app-component-province>
         </div>
 
-        @if (memberData.countryId == 1 && (memberData.provinceId || changeProvinceCode)) {
-          <div class="field col-12 md:col-3">
-            <app-component-district [model]="memberData.districtId" [provinceCode]="changeProvinceCode" [areaCode]="changeAreaCode" [firstProvinceCode]="memberData.provinceId" [isRequired]="true"
-              (districtSelected)="onDistrictSelected($event)"></app-component-district>
-          </div>
-        }
-
         <div class="field col-12 md:col-6">
           <label for="isActive" class="mr-2">Aktif Durumu:</label>
           <p-toggleswitch id="isActive" name="isActive" [(ngModel)]="memberData.isActive" />

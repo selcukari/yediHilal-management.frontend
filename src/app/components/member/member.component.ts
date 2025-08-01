@@ -14,14 +14,13 @@ import { CountryComponent } from '../country/country.component';
 import { ProvinceComponent } from '../province/province.component';
 import { AreaComponent } from '../area/area.component';
 import { ToggleSwitch } from 'primeng/toggleswitch';
-import { DistrictComponent } from '../district/district.component';
 import { MemberService } from '../../../services/member.service';
 import { RoleComponent } from '../role/role.component';
 
 @Component({
   selector: 'app-component-member',
   standalone: true,
-  imports: [Dialog, RoleComponent, DistrictComponent, ToggleSwitch, ToastModule, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
+  imports: [Dialog, RoleComponent, ToggleSwitch, ToastModule, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
   providers: [MessageService, ConfirmationService],
   templateUrl: './member.component.html',
 })
@@ -31,7 +30,6 @@ export class MemberComponent {
   memberData: any;
   changeAreaCode?: number;
   changeProvinceCode?: number;
-  firstDistrctId?: number;
 
   constructor(private memberService: MemberService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
@@ -45,7 +43,6 @@ export class MemberComponent {
     console.log('Add or Edit User:', newValue);
     this.visible = true;
     this.memberData = newValue || this.defaultmemberData();
-    this.firstDistrctId = this.memberData.districtId;
   }
 
   defaultmemberData(): any {
@@ -56,7 +53,6 @@ export class MemberComponent {
       countryId: null,
       areaId: null,
       provinceId: null,
-      districtId: null,
       identificationNumber: null,
       telephone: null,
       email: null,
@@ -68,7 +64,6 @@ export class MemberComponent {
 private isFormDataValid(): boolean {
   const requiredFields = {
     provinceId: !!this.memberData.provinceId,
-    districtId: this.memberData.countryId == 1 ? !!this.memberData.districtId : true,
   };
 
   return Object.values(requiredFields).every(isValid => isValid);
@@ -107,7 +102,6 @@ private isFormDataValid(): boolean {
         countryId: this.memberData.countryId,
         areaId: this.memberData.areaId,
         provinceId: this.memberData.provinceId,
-        districtId: this.memberData.districtId,
         isActive: this.memberData.isActive,
         createdDate: this.memberData.createdDate,
         roleId: this.memberData.roleId,
@@ -150,9 +144,5 @@ private isFormDataValid(): boolean {
 
     this.memberData.provinceId = undefined;
     this.changeAreaCode = areaCode;
-  }
-
-   onDistrictSelected(districtCode: any): void {
-    this.memberData.districtId = districtCode;
   }
 }
