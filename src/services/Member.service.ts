@@ -31,7 +31,7 @@ interface UserData {
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class MemberService {
   private envService = inject(EnvironmentService);
 
 constructor() {
@@ -61,7 +61,7 @@ constructor() {
 
   async deleteMember(userId: number): Promise<any | null> {
     try {
-      const deleteUser = await axios.put(`${this.envService.apiUrl}/managementMember/deleteUser?id=${userId}`);
+      const deleteUser = await axios.put(`${this.envService.apiUrl}/managementMember/deleteMember?id=${userId}`);
       if (!deleteUser.data.data) {
         throw new Error('Kullanıcı silinemedi.');
       }

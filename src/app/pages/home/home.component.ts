@@ -157,14 +157,14 @@ export class HomePageComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: 'Başarılı',
-          detail: `${getUsers.length} duyuru yüklendi.`,
+          detail: `${getUsers.length} kullanıcı yüklendi.`,
           life: 3000
         });
       } else {
         this.messageService.add({
           severity: 'info',
           summary: 'Bilgi',
-          detail: 'Henüz duyuru bulunmamaktadır.',
+          detail: 'Henüz kullanıcı bulunmamaktadır.',
           life: 3000
         });
       }
@@ -173,7 +173,7 @@ export class HomePageComponent implements OnInit {
       this.messageService.add({
         severity: 'error',
         summary: 'Veri Hatası',
-        detail: `Duyurular yüklenirken hata: ${error.message}`,
+        detail: `KullanıcıLar yüklenirken hata: ${error.message}`,
         life: 5000
       });
     }

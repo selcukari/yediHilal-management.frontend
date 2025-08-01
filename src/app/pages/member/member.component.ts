@@ -19,7 +19,7 @@ import { AreaComponent } from '../../components/area/area.component';
 import { ProvinceComponent } from '../../components/province/province.component';
 import { CountryComponent } from '../../components/country/country.component';
 import { UserComponent } from '../../components/user/user.component';
-import { UserService } from '../../../services/user.service';
+import { MemberService } from '../../../services/member.service';
 import { UserAddComponent } from '../../components/userAdd/userAdd.component';
 import { RoleComponent } from '../../components/role/role.component';
 
@@ -61,7 +61,7 @@ interface ValueData {
 export class MemberPageComponent implements OnInit {
   @ViewChild('dt') dt!: Table;
 
-  private userService = inject(UserService);
+  private memberService = inject(MemberService);
   private router = inject(Router);
 
   @ViewChild(UserComponent) userComponentRef!: UserComponent;
@@ -128,7 +128,7 @@ export class MemberPageComponent implements OnInit {
         },
 
         accept: async () => {
-          const result = await this.userService.deleteUser(event as unknown as number);
+          const result = await this.memberService.deleteMember(event as unknown as number);
           if (result) {
             this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt Silindi' });
             await this.refreshData();
@@ -154,26 +154,26 @@ export class MemberPageComponent implements OnInit {
     }
      try {
 
-      const getUsers = await this.userService.users(params);
-      if (getUsers) {
-        this.resultData = getUsers;
+      const getMember = await this.memberService.members(params);
+      if (getMember) {
+        this.resultData = getMember;
 
         this.messageService.add({
           severity: 'success',
           summary: 'Başarılı',
-          detail: `${getUsers.length} duyuru yüklendi.`,
+          detail: `${getMember.length} üye yüklendi.`,
           life: 3000
         });
       } else {
         this.messageService.add({
           severity: 'info',
           summary: 'Bilgi',
-          detail: 'Henüz duyuru bulunmamaktadır.',
+          detail: 'Henüz üye bulunmamaktadır.',
           life: 3000
         });
       }
     } catch (error: any) {
-      console.error('Error fetching getUsers:', error.message);
+      console.error('Error fetching getMember:', error.message);
       this.messageService.add({
         severity: 'error',
         summary: 'Veri Hatası',
@@ -202,8 +202,8 @@ export class MemberPageComponent implements OnInit {
 
     if (countryCode == 1) {
       // Türkiye için alan kodunu ekle
-      this.cols.splice(7, 0, { field: 'areaName', header: 'Bölge' });
-      this.cols.splice(9, 0, { field: 'districtName', header: 'İlçe' });
+      this.cols.splice(8, 0, { field: 'areaName', header: 'Bölge' });
+      this.cols.splice(10, 0, { field: 'districtName', header: 'İlçe' });
 
     }
 
@@ -235,6 +235,7 @@ export class MemberPageComponent implements OnInit {
     this.cols = [
       { field: 'id', header: 'id' },
       { field: 'fullName', header: 'Ad Soyad' },
+      { field: 'roleName', header: 'Rolü' },
       { field: 'telephone', header: 'Telefon' },
       { field: 'email', header: 'E-mail' },
       { field: 'identificationNumber', header: 'Kimlik Numarası' },
