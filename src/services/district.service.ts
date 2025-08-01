@@ -20,7 +20,7 @@ constructor() {
     try {
       const { provinceId } = params;
 
-      const getDistricts = await axios.get(`${this.envService.apiUrl}/getDistrictsByProvince`,{
+      const getDistricts = await axios.get(`${this.envService.apiUrl}/management/getDistrictsByProvince`,{
         params: {
           provinceId
         }});

@@ -21,7 +21,7 @@ constructor() {
     try {
       const { countryId, areaId } = params;
 
-      const getProvinces = await axios.get(`${this.envService.apiUrl}/getProvincesByCountryOrArea`,{
+      const getProvinces = await axios.get(`${this.envService.apiUrl}/management/getProvincesByCountryOrArea`,{
         params: {
           countryId,
           ...((areaId == undefined || countryId != 1) ? { } : {areaId})

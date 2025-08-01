@@ -29,7 +29,6 @@ interface Column {
 interface UserParams {
   countryId: number;
   areaId?: number;
-  districtId?: number;
   fullName?: string;
   provinceId?: number;
 }
@@ -146,7 +145,6 @@ export class HomePageComponent implements OnInit {
     const params: UserParams = {
       countryId: this.selectedCountry || 1,
       areaId: this.selectedArea,
-      districtId: undefined, // İlçe kodu henüz kullanılmıyor
       provinceId: this.selectedProvince, // İl kodu henüz kullanılmıyor
       fullName: this.searchFullName || undefined
     }

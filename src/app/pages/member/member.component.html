@@ -1,25 +1,104 @@
-<p-toast />
-
-<div class="home-container">
-  <div class="layout-grid">
-    <!-- Left Sidebar (Column-4) -->
-    <div class="sidebar">
-      <div class="sidebar-content">
-        <h3>Menü Seçimi</h3>
-        <p-listbox
-          [options]="pages"
-          (onChange)="onPageSelect($event.value)"
-          optionLabel="name"
-          class="w-full" />
-      </div>
-    </div>
+<div class="card flex justify-center gap-2">
+  <p-toast />
+    <p-confirmdialog />
 
     <!-- Main Content Area (Column-8) -->
-    <div class="main-content">
-      <div class="header-section">
-        <h2>Duyurular</h2>
+      <div>
+          <h2>Toolbar</h2>
+          <app-component-country (countrySelected)="onCountrySelected($event)"></app-component-country>
+          @if (selectedCountry == 1) {
+            <app-component-area (areaSelected)="onAreaSelected($event)"></app-component-area>
 
+          }
+          <app-component-province [countryCode]="selectedCountry" [areaCode]="selectedArea"
+            (provinceSelected)="onProvinceSelected($event)"></app-component-province>
+
+          <app-component-role (roleSelected)="onRoleSelected($event)"></app-component-role>
       </div>
-    </div>
-  </div>
+
+      <div class="header-section">
+        <h2>Üyeler</h2>
+        <p-button
+          pButton
+          type="button"
+          label="Yeni Üye"
+          icon="pi pi-plus"
+          (click)="onAdd()"
+          [disabled]="isLoading">
+        </p-button>
+      </div>
+
+      @if (isLoading) {
+        <div class="loading-container">
+          <p-progressSpinner></p-progressSpinner>
+          <p>Veriler yükleniyor...</p>
+        </div>
+      } @else {
+        <div class="announcements-section">
+          <p-table
+            #dt
+            [value]="resultData"
+            [columns]="cols"
+            [paginator]="true"
+            [rows]="10"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Gösterilen: {first} - {last} / Toplam: {totalRecords}"
+            [globalFilterFields]="['title', 'category', 'message', 'owner.name']">
+
+
+
+            <ng-template #caption>
+              <div class="flex items-center justify-between">
+                <span class="table-title">Aktif Üyeler ({{ resultData.length }})</span>
+                <p-floatlabel variant="on">
+                  <p-iconfield>
+                    <p-inputicon class="pi pi-search" />
+                    <input pInputText id="on_label" (ngModelChange)="onSearchChange($event)"  [(ngModel)]="searchFullName" pSize="large" autocomplete="off" />
+                  </p-iconfield>
+                  <label for="on_label">Üye Ara...</label>
+                </p-floatlabel>
+                <p-button icon="pi pi-refresh" icon="pi pi-refresh" (click)="refreshData()" [disabled]="isLoading" pTooltip="Yenile" tooltipPosition="right" rounded raised />
+              </div>
+            </ng-template>
+
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                  {{ col.header }}
+                  <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+                <th>İşlemler</th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr>
+                <td *ngFor="let col of columns">
+                  @switch (col.field) {
+                    @case ('createdDate') {
+                      {{ formatDate(rowData[col.field]) }}
+                    }
+                    @case ('updateDate') {
+                      {{rowData[col.field] ? formatDate(rowData[col.field]) : "-" }}
+                    }
+
+                    @default {
+                      {{ rowData[col.field] || '-' }}
+                    }
+                  }
+                </td>
+                <td>
+                  <div class="flex justify-center">
+                      <p-button (click)="onDelete(rowData.id)" icon="pi pi-trash" [raised]="true" severity="danger" pTooltip="Sil" tooltipPosition="top" />
+                      <p-button (click)="onEdit(rowData)" icon="pi pi-pencil" [raised]="true" severity="warn" pTooltip="Güncelle" tooltipPosition="top" />
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+
+          </p-table>
+        </div>
+      }
 </div>
+<app-component-user></app-component-user>
+<app-component-userAdd></app-component-userAdd>

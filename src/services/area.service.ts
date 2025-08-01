@@ -13,7 +13,7 @@ constructor() {
 
   async areas(): Promise<any| null> {
     try {
-      const getAreas = await axios.get(`${this.envService.apiUrl}/getAreas`);
+      const getAreas = await axios.get(`${this.envService.apiUrl}/management/getAreas`);
       if (!getAreas.data.data) {
         throw new Error('getAreas bulunamadı.');
       }

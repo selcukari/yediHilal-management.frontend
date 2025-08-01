@@ -24,7 +24,7 @@ constructor() {
   // Email ile giriş yap
   async loginWithEmail(email: string, password: string): Promise<any| null> {
     try {
-      const getMember = await axios.get(`${this.envService.apiUrl}/login?email=${email}&password=${password}`);
+      const getMember = await axios.get(`${this.envService.apiUrl}/managementMember/login?email=${email}&password=${password}`);
       if (!getMember.data.data) {
         throw new Error('Kullanıcı bulunamadı veya şifre yanlış.');
       }

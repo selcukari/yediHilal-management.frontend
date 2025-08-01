@@ -4,7 +4,7 @@ export const environment = {
   appName: 'MyApp Development',
   version: '1.0.0',
   enableDebug: true,
-  apiUrl: 'http://localhost:5225/api/management',
+  apiUrl: 'http://localhost:5225/api',
   firebaseConfig: {
     databaseURL: 'https://yedihilalbildirim-default-rtdb.firebaseio.com',
     apiKey: 'AIzaSyDsj7z6LRzYH4_AhjlXKH4tZ2Jw60wavNU',

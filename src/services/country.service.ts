@@ -13,7 +13,7 @@ constructor() {
 
   async countries(): Promise<any| null> {
     try {
-      const getCountries = await axios.get(`${this.envService.apiUrl}/getCountries`);
+      const getCountries = await axios.get(`${this.envService.apiUrl}/management/getCountries`);
       if (!getCountries.data.data) {
         throw new Error('getCountries bulunamadı.');
       }

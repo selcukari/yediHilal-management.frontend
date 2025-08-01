@@ -94,19 +94,19 @@ private isFormDataValid(): boolean {
     }
 
 
-      const updateUserValue = {
+      const newUserValue = {
         fullName: this.userData.fullName,
         identificationNumber: this.userData.identificationNumber,
         telephone: this.userData.telephone,
         email: this.userData.email,
         dateOfBirth: this.userData.dateOfBirth,
         countryId: this.userData.countryId,
-        areaId: this.userData.areaId,
         provinceId: this.userData.provinceId,
         districtId: this.userData.districtId,
         isActive: this.userData.isActive,
+        areaId: (this.userData.areaId || 8)
       }
-      const result = await this.userService.addUser(updateUserValue);
+      const result = await this.userService.addUser(newUserValue);
       console.log('add result:', result);
       if (result) {
         this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Yeni Kullanıcı Eklendi' });
