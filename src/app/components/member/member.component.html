@@ -102,7 +102,7 @@
 
         @if (memberData.countryId == 1 && (memberData.provinceId || changeProvinceCode)) {
           <div class="field col-12 md:col-3">
-            <app-component-district [model]="memberData.districtId" [provinceCode]="changeProvinceCode" [firstProvinceCode]="memberData.provinceId" [isRequired]="true"
+            <app-component-district [model]="memberData.districtId" [provinceCode]="changeProvinceCode" [areaCode]="changeAreaCode" [firstProvinceCode]="memberData.provinceId" [isRequired]="true"
               (districtSelected)="onDistrictSelected($event)"></app-component-district>
           </div>
         }

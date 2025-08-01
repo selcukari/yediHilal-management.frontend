@@ -26,6 +26,7 @@ export class DistrictComponent implements OnInit {
   districts!: District[];
 
   @Input() provinceCode?: number;
+  @Input() areaCode?: number;
   @Input() isRequired: boolean = false;
   @Output() districtSelected = new EventEmitter<string | undefined>();
 
@@ -52,6 +53,8 @@ export class DistrictComponent implements OnInit {
       if (currentProvinceCode && currentProvinceCode !== previousProvinceCode) {
         await this.fetchDistrictData({ provinceId: currentProvinceCode });
           console.log('54');
+          this.model = undefined;
+          this.districtSelected.emit(undefined);
 
 
         // Yalnızca province değiştiğinde model'i temizle
@@ -62,6 +65,14 @@ export class DistrictComponent implements OnInit {
           this.districtSelected.emit(undefined);
         }
       }
+    }
+
+    // Area değişikliği kontrolü
+    if (changes['areaCode'] && !this.isInitialLoad) {
+               console.log('72');
+
+      this.model = undefined;
+          this.districtSelected.emit(undefined);
     }
 
     // firstProvinceCode değişikliği kontrolü
