@@ -15,21 +15,21 @@
     </nav>
   </header>
 
-  <main class="app-main">
-    <!-- Left Sidebar (33.33% width) -->
-    @if (isAuthenticated) {
-      <div>
-        <h3>Menü Seçimi</h3>
-        <p-listbox
-          [options]="pages"
-          (onChange)="onPageSelect($event.value)"
-          optionLabel="name"
-          class="w-full" />
+  <main>
+    <div class="flex overflow-hidden">
+      @if (isAuthenticated) {
+        <div class="flex-none flex align-items-center justify-content-center font-bold m-2 px-5 py-3 border-round">
+          <h3>Menü Seçimi</h3>
+          <p-listbox
+            [options]="pages"
+            (onChange)="onPageSelect($event.value)"
+            optionLabel="name"
+            class="w-full" />
+        </div>
+      }
+      <div class="flex-grow-1 flex align-items-center justify-content-center font-bold m-2 px-5 py-3 border-round">
+        <router-outlet></router-outlet>
       </div>
-    }
-    <!-- Body Content (66.67% width) -->
-    <div class="content-body">
-      <router-outlet></router-outlet>
     </div>
   </main>
 

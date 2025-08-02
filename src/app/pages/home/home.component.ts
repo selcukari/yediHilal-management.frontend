@@ -21,6 +21,7 @@ import { CountryComponent } from '../../components/country/country.component';
 import { UserEditComponent } from '../../components/userEdit/userEdit.component';
 import { UserService } from '../../../services/user.service';
 import { UserAddComponent } from '../../components/userAdd/userAdd.component';
+import { SpeedDialComponent } from '../../components/speedDial/speedDial.component';
 
 interface Column {
     field: string;
@@ -50,7 +51,7 @@ interface ValueData {
   selector: 'app-pages-home',
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
-    ConfirmDialog, UserAddComponent, CountryComponent, AreaComponent, Tooltip, UserEditComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
+    ConfirmDialog, SpeedDialComponent, UserAddComponent, CountryComponent, AreaComponent, Tooltip, UserEditComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
   providers: [MessageService, ConfirmationService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

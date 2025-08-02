@@ -1,4 +1,4 @@
-<div class="card flex justify-center gap-2">
+<div class="flex justify-content-center flex-wrap">
   <p-toast />
     <p-confirmdialog />
 
@@ -26,6 +26,8 @@
           [disabled]="isLoading">
         </p-button>
       </div>
+
+      <app-component-speedDial></app-component-speedDial>
 
       @if (isLoading) {
         <div class="loading-container">
