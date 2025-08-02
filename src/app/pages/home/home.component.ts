@@ -18,7 +18,7 @@ import { ProgressSpinner } from 'primeng/progressspinner';
 import { AreaComponent } from '../../components/area/area.component';
 import { ProvinceComponent } from '../../components/province/province.component';
 import { CountryComponent } from '../../components/country/country.component';
-import { UserComponent } from '../../components/user/user.component';
+import { UserEditComponent } from '../../components/userEdit/userEdit.component';
 import { UserService } from '../../../services/user.service';
 import { UserAddComponent } from '../../components/userAdd/userAdd.component';
 
@@ -50,7 +50,7 @@ interface ValueData {
   selector: 'app-pages-home',
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
-    ConfirmDialog, UserAddComponent, CountryComponent, AreaComponent, Tooltip, UserComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
+    ConfirmDialog, UserAddComponent, CountryComponent, AreaComponent, Tooltip, UserEditComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
   providers: [MessageService, ConfirmationService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -61,7 +61,7 @@ export class HomePageComponent implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
 
-  @ViewChild(UserComponent) userComponentRef!: UserComponent;
+  @ViewChild(UserEditComponent) userEditComponentRef!: UserEditComponent;
   @ViewChild(UserAddComponent) userAddComponentRef!: UserAddComponent;
 
 
@@ -99,7 +99,7 @@ export class HomePageComponent implements OnInit {
   }
 
   async onEdit (value: any) {
-    this.userComponentRef.edit(clone(value));
+    this.userEditComponentRef.edit(clone(value));
   }
 
   async onAdd () {

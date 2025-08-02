@@ -18,10 +18,11 @@ import { ProgressSpinner } from 'primeng/progressspinner';
 import { AreaComponent } from '../../components/area/area.component';
 import { ProvinceComponent } from '../../components/province/province.component';
 import { CountryComponent } from '../../components/country/country.component';
-import { MemberComponent } from '../../components/member/member.component';
+import { MemberEditComponent } from '../../components/memberEdit/memberEdit.component';
 import { MemberService } from '../../../services/member.service';
-import { UserAddComponent } from '../../components/userAdd/userAdd.component';
+import { MemberAddComponent } from '../../components/memberAdd/memberAdd.component';
 import { RoleComponent } from '../../components/role/role.component';
+import { AuthService } from '../../../services/auth.service';
 
 interface Column {
     field: string;
@@ -52,7 +53,7 @@ interface ValueData {
   selector: 'app-pages-member',
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
-    ConfirmDialog, RoleComponent, UserAddComponent, CountryComponent, AreaComponent, Tooltip, MemberComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
+    ConfirmDialog, RoleComponent, MemberAddComponent, CountryComponent, AreaComponent, Tooltip, MemberEditComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
   providers: [MessageService, ConfirmationService],
   templateUrl: './member.component.html',
   styleUrl: './member.component.scss'
@@ -61,10 +62,11 @@ export class MemberPageComponent implements OnInit {
   @ViewChild('dt') dt!: Table;
 
   private memberService = inject(MemberService);
+  private authService = inject(AuthService);
   private router = inject(Router);
 
-  @ViewChild(MemberComponent) memberComponentRef!: MemberComponent;
-  @ViewChild(UserAddComponent) userAddComponentRef!: UserAddComponent;
+  @ViewChild(MemberEditComponent) memberEditComponentRef!: MemberEditComponent;
+  @ViewChild(MemberAddComponent) memberAddComponentRef!: MemberAddComponent;
 
 
   resultData: ValueData[] = [];
@@ -75,10 +77,15 @@ export class MemberPageComponent implements OnInit {
   selectedProvince?: number = undefined;
   selectedRole?: number = undefined;
   searchFullName: string = '';
+  isDisabledOnlyJunior: boolean = false;
 
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   async ngOnInit() {
+
+    this.isDisabledOnlyJunior = this.authService.getCurrentMember()?.roleId == 3; // 3 is Junior role
+    console.log('Current Member:', this.authService.getCurrentMember());
+
     this.isLoading = true;
 
     try {
@@ -102,14 +109,44 @@ export class MemberPageComponent implements OnInit {
   }
 
   async onEdit (value: any) {
-    this.memberComponentRef.edit(clone(value));
+    if (this.isDisabledOnlyJunior){
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Uyarı',
+        detail: 'Yetkisiz işlem',
+        life: 3000
+      });
+      return;
+    }
+
+    this.memberEditComponentRef.edit(clone(value));
   }
 
   async onAdd () {
-    this.userAddComponentRef.add();
+    if (this.isDisabledOnlyJunior){
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Uyarı',
+        detail: 'Yetkisiz işlem',
+        life: 3000
+      });
+      return;
+    }
+
+    this.memberAddComponentRef.add();
   }
 
   onDelete(event: Event) {
+    if (this.isDisabledOnlyJunior){
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Uyarı',
+        detail: 'Yetkisiz işlem',
+        life: 3000
+      });
+      return;
+    }
+
     this.confirmationService.confirm({
         target: event.target as EventTarget,
         message: 'Bu kaydı silmek istiyor musunuz?',

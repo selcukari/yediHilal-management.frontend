@@ -8,15 +8,15 @@
             </div>
         </ng-template>
         <span class="text-surface-500 dark:text-surface-400 block mb-8">Update your information.</span>
-      <form #memberOrEditForm="ngForm"  class="formgrid grid">
+      <form #memberEditForm="ngForm"  class="formgrid grid">
 
         <div class="field col-12 md:col-6">
           <p-floatlabel variant="on">
             <p-iconfield>
               <p-inputicon class="pi pi-user" />
               <input pInputText id="fullName" name="fullName"  [(ngModel)]="memberData.fullName" #fullName="ngModel" pSize="large" required
-                [class.ng-invalid]="fullName.invalid && (fullName.touched || memberOrEditForm.submitted)"autocomplete="off" />
-                @if (fullName.invalid && (fullName.touched || memberOrEditForm.submitted)) {
+                [class.ng-invalid]="fullName.invalid && (fullName.touched || memberEditForm.submitted)"autocomplete="off" />
+                @if (fullName.invalid && (fullName.touched || memberEditForm.submitted)) {
                   <p-message severity="error" variant="simple">fullName is required.</p-message>
                 }
             </p-iconfield>
@@ -29,8 +29,8 @@
             <p-iconfield>
               <p-inputicon class="pi pi-phone" />
               <input pInputText id="telephone" name="telephone"  [(ngModel)]="memberData.telephone" #telephone="ngModel" pSize="large" required
-                [class.ng-invalid]="telephone.invalid && (telephone.touched || memberOrEditForm.submitted)"autocomplete="off" />
-                @if (telephone.invalid && (telephone.touched || memberOrEditForm.submitted)) {
+                [class.ng-invalid]="telephone.invalid && (telephone.touched || memberEditForm.submitted)"autocomplete="off" />
+                @if (telephone.invalid && (telephone.touched || memberEditForm.submitted)) {
                   <p-message severity="error" variant="simple">telephone is required.</p-message>
                 }
             </p-iconfield>
@@ -43,8 +43,8 @@
               <p-iconfield>
                 <p-inputicon class="pi pi-envelope" />
                 <input pInputText id="email" name="email"  [(ngModel)]="memberData.email" #email="ngModel" pSize="large" email
-                  [class.ng-invalid]="email.invalid && (email.touched || memberOrEditForm.submitted)"autocomplete="off" />
-                  @if (email.invalid && (email.touched || memberOrEditForm.submitted)) {
+                  [class.ng-invalid]="email.invalid && (email.touched || memberEditForm.submitted)"autocomplete="off" />
+                  @if (email.invalid && (email.touched || memberEditForm.submitted)) {
                     <p-message severity="error" variant="simple">
                       @if (email.hasError('email')) {
                         Please enter a valid email.
@@ -107,8 +107,8 @@
 
         </form>
         <ng-template #footer>
-            <p-button label="Cancel" [text]="true" severity="secondary" [raised]="true" severity="danger" (click)="onCancel(memberOrEditForm)" />
-            <p-button label="Save" [outlined]="true" severity="secondary" [raised]="true" severity="success" icon="pi pi-check" iconPos="left" (click)="onSave(memberOrEditForm)" />
+            <p-button label="Cancel" [text]="true" severity="secondary" [raised]="true" severity="danger" (click)="onCancel(memberEditForm)" />
+            <p-button label="Save" [outlined]="true" severity="secondary" [raised]="true" severity="success" icon="pi pi-check" iconPos="left" (click)="onSave(memberEditForm)" />
         </ng-template>
     </p-dialog>
 

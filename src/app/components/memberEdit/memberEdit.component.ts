@@ -10,40 +10,42 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AvatarModule } from 'primeng/avatar';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CountryComponent } from '../../components/country/country.component';
+import { CountryComponent } from '../country/country.component';
 import { ProvinceComponent } from '../province/province.component';
 import { AreaComponent } from '../area/area.component';
 import { ToggleSwitch } from 'primeng/toggleswitch';
-import { UserService } from '../../../services/user.service';
+import { MemberService } from '../../../services/member.service';
+import { RoleComponent } from '../role/role.component';
+
 @Component({
-  selector: 'app-component-user',
+  selector: 'app-component-memberEdit',
   standalone: true,
-  imports: [Dialog, ToggleSwitch, ToastModule, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
+  imports: [Dialog, RoleComponent, ToggleSwitch, ToastModule, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
   providers: [MessageService, ConfirmationService],
-  templateUrl: './user.component.html',
+  templateUrl: './memberEdit.component.html',
 })
 
-export class UserComponent {
+export class MemberEditComponent {
   visible: boolean = false;
-  userData: any;
+  memberData: any;
   changeAreaCode?: number;
   changeProvinceCode?: number;
 
-  constructor(private userService: UserService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
+  constructor(private memberService: MemberService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   ngOnInit() {
-    if (!this.userData) {
-      this.userData = this.defaultUserData();
+    if (!this.memberData) {
+      this.memberData = this.defaultmemberData();
     }
   }
 
   edit(newValue: any) {
     console.log('Add or Edit User:', newValue);
     this.visible = true;
-    this.userData = newValue || this.defaultUserData();
+    this.memberData = newValue || this.defaultmemberData();
   }
 
-  defaultUserData(): any {
+  defaultmemberData(): any {
     return {
       id: null,
       fullName: "",
@@ -61,14 +63,14 @@ export class UserComponent {
   // Validasyon fonksiyonu
 private isFormDataValid(): boolean {
   const requiredFields = {
-    provinceId: !!this.userData.provinceId,
+    provinceId: !!this.memberData.provinceId,
   };
 
   return Object.values(requiredFields).every(isValid => isValid);
 }
 
    async onSave(form: any) {
-    console.log('Form submitted with value:', this.userData);
+    console.log('Form submitted with value:', this.memberData);
     const isAngularFormValid = form.valid;
     const isCustomDataValid = this.isFormDataValid();
     const isOverallValid = isAngularFormValid && isCustomDataValid;
@@ -90,21 +92,22 @@ private isFormDataValid(): boolean {
     }
 
 
-      const updateUserValue = {
-        Id: this.userData.id,
-        fullName: this.userData.fullName,
-        identificationNumber: this.userData.identificationNumber,
-        telephone: this.userData.telephone,
-        email: this.userData.email,
-        dateOfBirth: this.userData.dateOfBirth,
-        countryId: this.userData.countryId,
-        areaId: this.userData.areaId,
-        provinceId: this.userData.provinceId,
-        isActive: this.userData.isActive,
-        createdDate: this.userData.createdDate,
-        ...(this.userData.id ? {updateDate: new Date().toISOString() } : {})
+      const updateMemberValue = {
+        Id: this.memberData.id,
+        fullName: this.memberData.fullName,
+        identificationNumber: this.memberData.identificationNumber,
+        telephone: this.memberData.telephone,
+        email: this.memberData.email,
+        dateOfBirth: this.memberData.dateOfBirth,
+        countryId: this.memberData.countryId,
+        areaId: this.memberData.areaId,
+        provinceId: this.memberData.provinceId,
+        isActive: this.memberData.isActive,
+        createdDate: this.memberData.createdDate,
+        roleId: this.memberData.roleId,
+        ...(this.memberData.id ? {updateDate: new Date().toISOString() } : {})
       }
-      const result = await this.userService.updateUser(updateUserValue);
+      const result = await this.memberService.updateMember(updateMemberValue);
       console.log('Update result:', result);
       if (result) {
         this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kullanıcı Güncellendi' });
@@ -125,17 +128,21 @@ private isFormDataValid(): boolean {
   }
 
   onCountrySelected(countryCode: any): void {
-    this.userData.countryId = countryCode;
+    this.memberData.countryId = countryCode;
+  }
+
+  onRoleSelected(roleCode: any): void {
+    this.memberData.roleId = roleCode;
   }
 
   onProvinceSelected(provinceCode: any): void {
-    this.userData.provinceId = provinceCode;
+    this.memberData.provinceId = provinceCode;
     this.changeProvinceCode = provinceCode;
   }
   onAreaSelected(areaCode: any): void {
-    this.userData.areaId = areaCode;
+    this.memberData.areaId = areaCode;
 
-    this.userData.provinceId = undefined;
+    this.memberData.provinceId = undefined;
     this.changeAreaCode = areaCode;
   }
 }
