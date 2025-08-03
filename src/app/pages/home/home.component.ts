@@ -185,8 +185,7 @@ export class HomePageComponent implements OnInit {
           provinceName: user.provinceName,
           areaName: user.areaName,
           roleName: user.roleName,
-          createdDate: this.formatDate(user.createdDate),
-          updateDate: user.updateDate ? this.formatDate(user.updateDate) : '',
+          createdDate: this.formatDate(user.createdDate)
         }));
 
         this.messageService.add({
@@ -267,7 +266,7 @@ export class HomePageComponent implements OnInit {
       { field: 'telephone', header: 'Telefon' },
       { field: 'email', header: 'E-mail' },
       { field: 'identificationNumber', header: 'Kimlik Numarası' },
-      { field: 'dateOfBirth', header: 'Yaşı' },
+      { field: 'dateOfBirth', header: 'Doğum Yılı' },
       { field: 'countryName', header: 'Ülke' },
       { field: 'provinceName', header: 'İl' },
       { field: 'createdDate', header: 'İlk Oluşturulma Tarihi' },
