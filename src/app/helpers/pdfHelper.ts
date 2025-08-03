@@ -39,9 +39,10 @@ export class PdfHelperService {
 
     const doc = new jsPDF({
       orientation: config.orientation || 'portrait',
-    unit: 'mm',
-    format: config.pageSize || 'a4',
-    filters: ['ASCIIHexEncode']
+      unit: 'mm',
+      format: config.pageSize || 'a4',
+      filters: ['ASCIIHexEncode'],
+      compress: true
     });
 
     // doc.useUnicode(true); // Removed: jsPDF does not have useUnicode method
@@ -101,7 +102,7 @@ export class PdfHelperService {
    * Başlık ekle
    */
   private addTitle(doc: jsPDF, title: string, pageWidth: number): void {
-    doc.setFontSize(18);
+    doc.setFontSize(16);
     doc.setFont('Roboto', 'bold');
     doc.setTextColor(44, 62, 80); // Koyu mavi
 
@@ -147,54 +148,66 @@ export class PdfHelperService {
   /**
    * Tabloyu ekle
    */
-  private addTable(
-    doc: jsPDF,
-    headers: string[],
-    data: string[][],
-    config: PdfConfig,
-    columns: TableColumn[]
-  ): void {
+private addTable(
+  doc: jsPDF,
+  headers: string[],
+  data: string[][],
+  config: PdfConfig,
+  columns: TableColumn[]
+): void {
+  // Sütun genişliklerini hesapla
+  const columnStyles: { [key: number]: any } = {};
+  columns.forEach((col, index) => {
+    if (col.width) {
+      columnStyles[index] = { cellWidth: col.width };
+    }
+  });
 
-    // Sütun genişliklerini hesapla
-    const columnStyles: { [key: number]: any } = {};
-    columns.forEach((col, index) => {
-      if (col.width) {
-        columnStyles[index] = { cellWidth: col.width };
-      }
-    });
-
-    // Başlıkları Türkçe karakter desteği ile hazırla
-    const encodedHeaders = headers.map(header => this.encodeTurkish(header));
-
-    autoTable(doc, {
-      head: [headers.map(h => this.encodeTurkish(h))],
+  autoTable(doc, {
+    head: [headers.map(h => this.encodeTurkish(h))],
     body: data,
+    startY: 35, // Tablonun başlangıç pozisyonu
+    tableWidth: 'auto', // Tablo genişliği ayarı
+    margin: {
+      top: 35,
+      left: 1,
+      right: 10,
+      bottom: 20
+    },
     styles: {
       font: 'Roboto',
       fontStyle: 'normal',
-      fontSize: 10,
-      cellPadding: 4,
+      fontSize: 9, // Yazı boyutunu küçült
+      cellPadding: 3, // Hücre içi boşluğu azalt
       textColor: config.textColor ? this.hexToRgb(config.textColor) : [44, 44, 44],
       lineColor: [200, 200, 200],
       lineWidth: 0.1,
       halign: 'left',
       valign: 'middle'
-      },
-      headStyles: {
-        fillColor: config.headerColor ? this.hexToRgb(config.headerColor) : [52, 152, 219], // Mavi
-        textColor: [255, 255, 255], // Beyaz
-        fontStyle: 'bold',
-        fontSize: 11,
-        halign: 'center',
-        font: 'Roboto'
-      },
-      alternateRowStyles: {
-        fillColor: config.alternateRowColor ? this.hexToRgb(config.alternateRowColor) : [245, 245, 245] // Açık gri
-      },
-      columnStyles: columnStyles,
-      margin: { top: 40, left: 15, right: 15, bottom: 25 }
-    });
-  }
+    },
+    headStyles: {
+      fillColor: config.headerColor ? this.hexToRgb(config.headerColor) : [52, 152, 219],
+      textColor: [255, 255, 255],
+      fontStyle: 'bold',
+      fontSize: 10, // Başlık yazı boyutu
+      halign: 'center',
+      font: 'Roboto',
+      cellPadding: 4, // Başlık hücre içi boşluğu
+      minCellHeight: 8 // Başlık minimum yüksekliği
+    },
+    bodyStyles: {
+      cellPadding: 3, // Gövde hücre içi boşluğu
+      minCellHeight: 7 // Gövde minimum yüksekliği
+    },
+    alternateRowStyles: {
+      fillColor: config.alternateRowColor ? this.hexToRgb(config.alternateRowColor) : [245, 245, 245]
+    },
+    columnStyles: columnStyles,
+    // Tablonun sayfaya sığması için otomatik ölçeklendirme
+    tableLineWidth: 0.1,
+    tableLineColor: [200, 200, 200]
+  });
+}
 
   /**
    * Sayfalama ekle

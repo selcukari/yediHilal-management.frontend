@@ -62,6 +62,7 @@ export class SpeedDialComponent implements OnInit {
       textColor: '#2c3e50' // Koyu gri
     };
 
+    console.log('tableColumns:', this.tableColumns)
     this.pdfHelperService.generatePdf(this.tableData, this.tableColumns, config);
   }
 }

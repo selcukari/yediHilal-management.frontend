@@ -111,7 +111,10 @@ export class HomePageComponent implements OnInit {
 
   get pdfTableColumns(): TableColumn[] {
 
-    return this.cols.map(col => ({
+    const newCols: Column[] = this.cols.filter(col =>
+      col.field != 'updateDate' && col.field != 'areaName');
+
+    return newCols.map(col => ({
       key: col.field,
       title: col.header,
       // İsteğe bağlı olarak genişlik ayarları ekleyebilirsiniz
