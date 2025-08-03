@@ -1,19 +1,19 @@
-<div class="card flex justify-center gap-2">
+<div class="flex justify-content-center flex-wrap">
   <p-toast />
     <p-confirmdialog />
 
     <!-- Main Content Area (Column-8) -->
       <div>
-          <h2>Toolbar</h2>
-          <app-component-country (countrySelected)="onCountrySelected($event)"></app-component-country>
-          @if (selectedCountry == 1) {
-            <app-component-area (areaSelected)="onAreaSelected($event)"></app-component-area>
+        <h2>Toolbar</h2>
+        <app-component-country (countrySelected)="onCountrySelected($event)" (countrySelectedName)="onCountrySelectedName($event)"></app-component-country>
+        @if (selectedCountry == 1) {
+          <app-component-area (areaSelected)="onAreaSelected($event)" (areaSelectedName)="onAreaSelectedName($event)"></app-component-area>
 
-          }
-          <app-component-province [countryCode]="selectedCountry" [areaCode]="selectedArea"
-            (provinceSelected)="onProvinceSelected($event)"></app-component-province>
+        }
+        <app-component-province [countryCode]="selectedCountry" [areaCode]="selectedArea" (provinceSelected)="onProvinceSelected($event)"
+          (provinceSelected)="onProvinceSelected($event)"></app-component-province>
 
-          <app-component-role (roleSelected)="onRoleSelected($event)"></app-component-role>
+        <app-component-role (roleSelected)="onRoleSelected($event)"></app-component-role>
       </div>
 
       <div class="header-section">
@@ -27,6 +27,9 @@
           [disabled]="isLoading">
         </p-button>
       </div>
+
+      <app-component-speedDial [pdfTitle]="pdfTitle" [tableData]="pdfTableData" [tableColumns]="pdfTableColumns">
+      </app-component-speedDial>
 
       @if (isLoading) {
         <div class="loading-container">

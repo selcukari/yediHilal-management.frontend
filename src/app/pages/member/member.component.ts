@@ -23,10 +23,13 @@ import { MemberService } from '../../../services/member.service';
 import { MemberAddComponent } from '../../components/memberAdd/memberAdd.component';
 import { RoleComponent } from '../../components/role/role.component';
 import { AuthService } from '../../../services/auth.service';
+import { SpeedDialComponent } from '../../components/speedDial/speedDial.component';
+import { TableColumn } from '../../helpers/pdfHelper';
+import { calculateColumnWidthMember } from '../../helpers/calculateColumnWidth';
 
 interface Column {
-    field: string;
-    header: string;
+  field: string;
+  header: string;
 }
 interface UserParams {
   countryId: number;
@@ -36,24 +39,25 @@ interface UserParams {
   roleId?: number;
 }
 interface ValueData {
-  id: number;
+ id: number;
   fullName: string;
   identificationNumber?: string;
-  telephone?: string;
-  email?: string;
+  telephone: string;
+	dateOfBirth?: number;
+  email: string;
   createdDate: string;
   updateDate?: string;
   countryName: string;
-  provinceName?: string;
-  dateOfBirth?: number;
-  areaName?: string
+  provinceName: string;
+  areaName: string;
+	roleName?: string;
 }
 
 @Component({
   selector: 'app-pages-member',
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
-    ConfirmDialog, RoleComponent, MemberAddComponent, CountryComponent, AreaComponent, Tooltip, MemberEditComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
+    ConfirmDialog, SpeedDialComponent, RoleComponent, MemberAddComponent, CountryComponent, AreaComponent, Tooltip, MemberEditComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
   providers: [MessageService, ConfirmationService],
   templateUrl: './member.component.html',
   styleUrl: './member.component.scss'
@@ -71,6 +75,7 @@ export class MemberPageComponent implements OnInit {
 
   resultData: ValueData[] = [];
   cols: Column[] = [];
+  pdfTableData: ValueData[] = [];
   isLoading = false;
   selectedCountry?: number = 1;
   selectedArea?: number = undefined;
@@ -78,6 +83,9 @@ export class MemberPageComponent implements OnInit {
   selectedRole?: number = undefined;
   searchFullName: string = '';
   isDisabledOnlyJunior: boolean = false;
+  selectedCountryName: string = 'Türkiye';
+  selectedProvinceName: string = '';
+  selectedAreaName: string = '';
 
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
@@ -106,6 +114,34 @@ export class MemberPageComponent implements OnInit {
     } finally {
       this.isLoading = false;
     }
+  }
+
+  get pdfTitle(): string {
+    if(this.selectedAreaName && this.selectedProvinceName) {
+      return `${this.selectedCountryName}/${this.selectedAreaName}/${this.selectedProvinceName} Kullanıcı Raporu`;
+    }
+
+    if(this.selectedAreaName) {
+      return `${this.selectedCountryName}/${this.selectedAreaName} Üye Raporu`;
+    }
+
+    if(this.selectedProvinceName) {
+      return `${this.selectedCountryName}/${this.selectedProvinceName} Üye Raporu`;
+    }
+    return `${this.selectedCountryName}/Tüm İller Üye Raporu`;
+  }
+
+  get pdfTableColumns(): TableColumn[] {
+
+    const newCols: Column[] = this.cols.filter(col =>
+      col.field != 'updateDate' && col.field != 'areaName');
+
+    return newCols.map(col => ({
+      key: col.field,
+      title: col.header,
+      // İsteğe bağlı olarak genişlik ayarları ekleyebilirsiniz
+      width: calculateColumnWidthMember(col.field) // Özel genişlik hesaplama fonksiyonu
+    }));
   }
 
   async onEdit (value: any) {
@@ -193,6 +229,19 @@ export class MemberPageComponent implements OnInit {
       const getMember = await this.memberService.members(params);
       if (getMember) {
         this.resultData = getMember;
+        this.pdfTableData = this.resultData.map(user => ({
+          id: user.id,
+          fullName: user.fullName,
+          telephone: user.telephone,
+          email: user.email,
+          identificationNumber: user.identificationNumber,
+          dateOfBirth: user.dateOfBirth,
+          countryName: user.countryName,
+          provinceName: user.provinceName,
+          areaName: user.areaName,
+          roleName: user.roleName,
+          createdDate: this.formatDate(user.createdDate)
+        }));
 
         this.messageService.add({
           severity: 'success',
@@ -263,6 +312,18 @@ export class MemberPageComponent implements OnInit {
     await this.fetchMemberData();
   }
 
+  onAreaSelectedName(areaName: string): void {
+    this.selectedAreaName = areaName;
+  }
+
+  onCountrySelectedName(countryName: string): void {
+    this.selectedCountryName = countryName;
+  }
+
+  onProvinceSelectedName(provinceName: string): void {
+    this.selectedProvinceName = provinceName;
+  }
+
   private initializeColumns(): void {
     this.cols = [
       { field: 'id', header: 'id' },
@@ -271,11 +332,11 @@ export class MemberPageComponent implements OnInit {
       { field: 'telephone', header: 'Telefon' },
       { field: 'email', header: 'E-mail' },
       { field: 'identificationNumber', header: 'Kimlik Numarası' },
-      { field: 'dateOfBirth', header: 'Yaşı' },
+      { field: 'dateOfBirth', header: 'Doğum Yılı' },
       { field: 'countryName', header: 'Ülke' },
       { field: 'provinceName', header: 'İl' },
-      { field: 'createdDate', header: 'İlk Kayıt Tarihi' },
-      { field: 'updateDate', header: 'Güncelleme Tarihi' },
+      { field: 'createdDate', header: 'İlk Kayıt Tarih' },
+      { field: 'updateDate', header: 'Güncelleme Tarih' },
     ];
   }
 

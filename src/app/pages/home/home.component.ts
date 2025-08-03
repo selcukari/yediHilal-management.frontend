@@ -23,7 +23,7 @@ import { UserService } from '../../../services/user.service';
 import { UserAddComponent } from '../../components/userAdd/userAdd.component';
 import { SpeedDialComponent } from '../../components/speedDial/speedDial.component';
 import { TableColumn } from '../../helpers/pdfHelper';
-import { calculateColumnWidth } from '../../helpers/calculateColumnWidth';
+import { calculateColumnWidthUser } from '../../helpers/calculateColumnWidth';
 
 interface Column {
     field: string;
@@ -47,7 +47,7 @@ export interface ValueData {
   countryName: string;
   provinceName: string;
   areaName: string;
-	roleName: string;
+	roleName?: string;
 }
 
 @Component({
@@ -130,7 +130,7 @@ export class HomePageComponent implements OnInit {
       key: col.field,
       title: col.header,
       // İsteğe bağlı olarak genişlik ayarları ekleyebilirsiniz
-      width: calculateColumnWidth(col.field) // Özel genişlik hesaplama fonksiyonu
+      width: calculateColumnWidthUser(col.field) // Özel genişlik hesaplama fonksiyonu
     }));
   }
 
@@ -199,7 +199,6 @@ export class HomePageComponent implements OnInit {
           countryName: user.countryName,
           provinceName: user.provinceName,
           areaName: user.areaName,
-          roleName: user.roleName,
           createdDate: this.formatDate(user.createdDate)
         }));
 
@@ -287,8 +286,8 @@ export class HomePageComponent implements OnInit {
       { field: 'dateOfBirth', header: 'Doğum Yılı' },
       { field: 'countryName', header: 'Ülke' },
       { field: 'provinceName', header: 'İl' },
-      { field: 'createdDate', header: 'İlk Kayıt Tarihi' },
-      { field: 'updateDate', header: 'Güncelleme Tarihi' },
+      { field: 'createdDate', header: 'İlk Kayıt Tarih' },
+      { field: 'updateDate', header: 'Güncelleme Tarih' },
     ];
   }
 
