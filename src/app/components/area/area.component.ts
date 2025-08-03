@@ -19,8 +19,10 @@ export class AreaComponent implements OnInit {
 
   private areaService = inject(AreaService);
   areas!: Area[];
-   @Output() areaSelected = new EventEmitter<string>();
-   @Input() model?: number = undefined;
+
+  @Output() areaSelectedName = new EventEmitter<string>();
+  @Output() areaSelected = new EventEmitter<string>();
+  @Input() model?: number = undefined;
 
   async ngOnInit() {
     await this.fetchAreaData();
@@ -44,7 +46,11 @@ export class AreaComponent implements OnInit {
 
   onAreaSelect(areaCode: any): void {
     this.areaSelected.emit(areaCode);
-
-    // Implement any additional logic needed when a country is selected
+    const selectedArea = this.areas.find(area => area.code === areaCode);
+    if (selectedArea) {
+      this.areaSelectedName.emit(selectedArea.name);
+    } else {
+      this.areaSelectedName.emit('');
+    }
   }
 }

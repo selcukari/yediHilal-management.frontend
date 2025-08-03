@@ -274,7 +274,7 @@ export class MemberPageComponent implements OnInit {
       { field: 'dateOfBirth', header: 'Yaşı' },
       { field: 'countryName', header: 'Ülke' },
       { field: 'provinceName', header: 'İl' },
-      { field: 'createdDate', header: 'İlk Oluşturulma Tarihi' },
+      { field: 'createdDate', header: 'İlk Kayıt Tarihi' },
       { field: 'updateDate', header: 'Güncelleme Tarihi' },
     ];
   }

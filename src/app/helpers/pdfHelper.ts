@@ -170,7 +170,7 @@ private addTable(
     tableWidth: 'auto', // Tablo genişliği ayarı
     margin: {
       top: 35,
-      left: 1,
+      left: 0,
       right: 10,
       bottom: 20
     },

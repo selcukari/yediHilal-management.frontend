@@ -75,7 +75,8 @@ export class HomePageComponent implements OnInit {
   isLoading = false;
   selectedCountry?: number = 1;
   selectedCountryName: string = 'Türkiye';
-  selectedProvinceName: string = 'Tüm İller';
+  selectedProvinceName: string = '';
+  selectedAreaName: string = '';
   selectedArea?: number = undefined;
   selectedProvince?: number = undefined;
   searchFullName: string = '';
@@ -106,7 +107,18 @@ export class HomePageComponent implements OnInit {
   }
 
   get pdfTitle(): string {
-    return `${this.selectedCountryName}/${this.selectedProvinceName} Kullanıcı Raporu`;
+    if(this.selectedAreaName && this.selectedProvinceName) {
+      return `${this.selectedCountryName}/${this.selectedAreaName}/${this.selectedProvinceName} Kullanıcı Raporu`;
+    }
+
+    if(this.selectedAreaName) {
+      return `${this.selectedCountryName}/${this.selectedAreaName} Kullanıcı Raporu`;
+    }
+
+    if(this.selectedProvinceName) {
+      return `${this.selectedCountryName}/${this.selectedProvinceName} Kullanıcı Raporu`;
+    }
+    return `${this.selectedCountryName}/Tüm İller Kullanıcı Raporu`;
   }
 
   get pdfTableColumns(): TableColumn[] {
@@ -255,6 +267,9 @@ export class HomePageComponent implements OnInit {
     this.selectedProvinceName = provinceName;
   }
 
+  onAreaSelectedName(areaName: string): void {
+    this.selectedAreaName = areaName;
+  }
 
   async onProvinceSelected(provinceCode: any): Promise<void> {
     this.selectedProvince = provinceCode;
@@ -272,7 +287,7 @@ export class HomePageComponent implements OnInit {
       { field: 'dateOfBirth', header: 'Doğum Yılı' },
       { field: 'countryName', header: 'Ülke' },
       { field: 'provinceName', header: 'İl' },
-      { field: 'createdDate', header: 'İlk Oluşturulma Tarihi' },
+      { field: 'createdDate', header: 'İlk Kayıt Tarihi' },
       { field: 'updateDate', header: 'Güncelleme Tarihi' },
     ];
   }

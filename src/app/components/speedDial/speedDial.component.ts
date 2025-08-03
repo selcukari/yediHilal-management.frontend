@@ -52,7 +52,7 @@ export class SpeedDialComponent implements OnInit {
 
     const config: PdfConfig = {
       title: `YediHilal ${this.pdfTitle}`,
-      fileName: `yediHilal-` + pdfTitle.toLocaleLowerCase().replace('/','-').replace(/ /g, '-') + '.pdf',
+      fileName: `yediHilal-` + pdfTitle.toLocaleLowerCase().replace(/\//g,'-').replace(/ /g, '-') + '.pdf',
       pageSize: 'a4',
       orientation: 'portrait',
       showCreationDate: true,
