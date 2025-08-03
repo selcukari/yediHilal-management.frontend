@@ -22,6 +22,8 @@ import { UserEditComponent } from '../../components/userEdit/userEdit.component'
 import { UserService } from '../../../services/user.service';
 import { UserAddComponent } from '../../components/userAdd/userAdd.component';
 import { SpeedDialComponent } from '../../components/speedDial/speedDial.component';
+import { TableColumn } from '../../helpers/pdfHelper';
+import { calculateColumnWidth } from '../../helpers/calculateColumnWidth';
 
 interface Column {
     field: string;
@@ -33,18 +35,19 @@ interface UserParams {
   fullName?: string;
   provinceId?: number;
 }
-interface ValueData {
+export interface ValueData {
   id: number;
   fullName: string;
   identificationNumber?: string;
-  telephone?: string;
-  email?: string;
+  telephone: string;
+	dateOfBirth?: number;
+  email: string;
   createdDate: string;
   updateDate?: string;
   countryName: string;
-  provinceName?: string;
-  dateOfBirth?: number;
-  areaName?: string
+  provinceName: string;
+  areaName: string;
+	roleName: string;
 }
 
 @Component({
@@ -68,8 +71,11 @@ export class HomePageComponent implements OnInit {
 
   resultData: ValueData[] = [];
   cols: Column[] = [];
+  pdfTableData: ValueData[] = [];
   isLoading = false;
   selectedCountry?: number = 1;
+  selectedCountryName: string = 'Türkiye';
+  selectedProvinceName: string = 'Tüm İller';
   selectedArea?: number = undefined;
   selectedProvince?: number = undefined;
   searchFullName: string = '';
@@ -98,6 +104,21 @@ export class HomePageComponent implements OnInit {
       this.isLoading = false;
     }
   }
+
+  get pdfTitle(): string {
+    return `${this.selectedCountryName}/${this.selectedProvinceName} Kullanıcı Raporu`;
+  }
+
+  get pdfTableColumns(): TableColumn[] {
+
+    return this.cols.map(col => ({
+      key: col.field,
+      title: col.header,
+      // İsteğe bağlı olarak genişlik ayarları ekleyebilirsiniz
+      width: calculateColumnWidth(col.field) // Özel genişlik hesaplama fonksiyonu
+    }));
+  }
+
 
   async onEdit (value: any) {
     this.userEditComponentRef.edit(clone(value));
@@ -153,6 +174,20 @@ export class HomePageComponent implements OnInit {
       const getUsers = await this.userService.users(params);
       if (getUsers) {
         this.resultData = getUsers;
+        this.pdfTableData = this.resultData.map(user => ({
+          id: user.id,
+          fullName: user.fullName,
+          telephone: user.telephone,
+          email: user.email,
+          identificationNumber: user.identificationNumber,
+          dateOfBirth: user.dateOfBirth,
+          countryName: user.countryName,
+          provinceName: user.provinceName,
+          areaName: user.areaName,
+          roleName: user.roleName,
+          createdDate: this.formatDate(user.createdDate),
+          updateDate: user.updateDate ? this.formatDate(user.updateDate) : '',
+        }));
 
         this.messageService.add({
           severity: 'success',
@@ -204,12 +239,22 @@ export class HomePageComponent implements OnInit {
 
     await this.fetchUserData();
   }
-   async onAreaSelected(areaCode: any): Promise<void> {
+  async onAreaSelected(areaCode: any): Promise<void> {
     this.selectedArea = areaCode;
 
     await this.fetchUserData();
   }
-     async onProvinceSelected(provinceCode: any): Promise<void> {
+
+  onCountrySelectedName(countryName: string): void {
+    this.selectedCountryName = countryName;
+  }
+
+  onProvinceSelectedName(provinceName: string): void {
+    this.selectedProvinceName = provinceName;
+  }
+
+
+  async onProvinceSelected(provinceCode: any): Promise<void> {
     this.selectedProvince = provinceCode;
 
     await this.fetchUserData();

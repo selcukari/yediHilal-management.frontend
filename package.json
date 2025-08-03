@@ -23,6 +23,8 @@
     "@angular/router": "^19.2.0",
     "@primeuix/themes": "^1.2.1",
     "axios": "^1.11.0",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
     "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",
     "primeng": "^19.1.3",

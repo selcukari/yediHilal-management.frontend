@@ -21,6 +21,7 @@ export class CountryComponent implements OnInit {
   countries!: Country[];
   // model: number = 1;
   @Output() countrySelected = new EventEmitter<number>();
+  @Output() countrySelectedName = new EventEmitter<string>();
 
   @Input() model?: number = 1;
   @Input() isDisabled: boolean = false;
@@ -52,5 +53,11 @@ export class CountryComponent implements OnInit {
 
   onCountrySelect(countryCode: any): void {
     this.countrySelected.emit(countryCode as number);
+    const selectedCountry = this.countries.find(country => country.code === countryCode);
+    if (selectedCountry) {
+      this.countrySelectedName.emit(selectedCountry.name);
+    } else {
+      this.countrySelectedName.emit('');
+    }
   }
 }
