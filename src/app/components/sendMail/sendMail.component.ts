@@ -5,6 +5,7 @@ import { MessageModule } from 'primeng/message';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { InputIconModule } from 'primeng/inputicon';
 import { Dialog } from 'primeng/dialog';
+import { ProgressSpinner } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -34,13 +35,14 @@ interface EmailRequestType
 @Component({
   selector: 'app-component-sendMail',
   standalone: true,
-  imports: [Dialog, ConfirmDialog, ToastModule, MessageModule, EditorModule, ButtonModule, FormsModule, FloatLabel, InputIconModule, InputTextModule],
+  imports: [Dialog, ProgressSpinner, ConfirmDialog, ToastModule, MessageModule, EditorModule, ButtonModule, FormsModule, FloatLabel, InputIconModule, InputTextModule],
   providers: [MessageService, ConfirmationService],
-  templateUrl: './sendMail.component.html',
+  templateUrl: './sendMail.component.html'
 })
 
 export class SendMailComponent {
   visible: boolean = false;
+  isLoading: boolean = false;
   valueData: ValueDataType = { subject: "", content: ""};
 
   emailRequest: EmailRequestType = { toEmails: [], toUsers: [], type: 2};
@@ -62,6 +64,8 @@ export class SendMailComponent {
 
     if (form.valid) {
 
+      this.isLoading = true;
+
       const emailRequest: EmailParams = {
         ...this.emailRequest,
         subject: this.valueData.subject,
@@ -75,11 +79,29 @@ export class SendMailComponent {
         this.visible = false;
         this.valueData = { subject: "", content: ""};
 
+        this.isLoading = false;
+
         return;
       } else {
+        this.isLoading = false;
         this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'E-Mailler gönderilirken hata oluştu' });
       }
     } else {
+
+      this.confirmationService.confirm({
+        target: form.target as EventTarget,
+        message: 'Lütfen Zorunlu Alanları Doldurunuz',
+        header: 'Uyarı',
+        icon: 'pi pi-info-circle',
+        rejectVisible: false,
+        acceptButtonProps: {
+          label: 'Tamam',
+          severity: 'success',
+        },
+
+        accept: () => {}
+      });
+
       form.control.markAllAsTouched();
     }
   }

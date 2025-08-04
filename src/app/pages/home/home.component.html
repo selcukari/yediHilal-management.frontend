@@ -30,9 +30,11 @@
       </app-component-speedDial>
 
       @if (isLoading) {
-        <div class="loading-container">
-          <p-progressSpinner></p-progressSpinner>
-          <p>Veriler yükleniyor...</p>
+        <div class="global-loading-overlay">
+          <div class="loading-content">
+            <p-progressSpinner></p-progressSpinner>
+            <p>Veriler yükleniyor...</p>
+          </div>
         </div>
       } @else {
         <div class="announcements-section">
