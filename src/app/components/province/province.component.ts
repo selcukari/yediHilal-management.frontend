@@ -5,8 +5,8 @@ import { MessageModule } from 'primeng/message';
 import { ProvinceService } from '../../../services/province.service';
 
 interface Province {
-    name: string;
-    code: string;
+  name: string;
+  code: string;
 }
 
 interface ProvinceParams {
