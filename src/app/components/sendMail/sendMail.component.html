@@ -7,43 +7,25 @@
         </ng-template>
       <form #sendMailForm="ngForm"  class="formgrid grid">
 
-        <div class="field col-12 md:col-6">
+        <div class="field col-12 md:col-12">
           <p-floatlabel variant="on">
-            <p-iconfield>
-              <input pInputText id="subject" name="subject"  [(ngModel)]="valueData.subject" #subject="ngModel" pSize="large" required
-                [class.ng-invalid]="subject.invalid && (subject.touched || sendMailForm.submitted)"autocomplete="off" />
-                @if (subject.invalid && (subject.touched || sendMailForm.submitted)) {
-                  <p-message severity="error" variant="simple">Konu is required.</p-message>
-                }
-            </p-iconfield>
+            <input pInputText id="subject" name="subject"  [(ngModel)]="valueData.subject" #subject="ngModel" pSize="large" required
+              [class.ng-invalid]="subject.invalid && (subject.touched || sendMailForm.submitted)"autocomplete="off" />
+              @if (subject.invalid && (subject.touched || sendMailForm.submitted)) {
+                <p-message severity="error" variant="simple">Konu is required.</p-message>
+              }
             <label for="subject">Konu</label>
           </p-floatlabel>
         </div>
 
-          <div class="flex flex-col gap-1">
-            <p-editor id="content" #content="ngModel" [(ngModel)]="valueData.content" [class.ng-invalid]="content.invalid && (content.touched || sendMailForm.submitted)" name="content" [style]="{ height: '320px' }" required />
-            @if (content.invalid && (content.touched || sendMailForm.submitted)) {
-              <p-message severity="error" size="small" variant="simple">İçerik is required.</p-message>
-            }
-          </div>
+        <div class="flex flex-col gap-1">
+          <p-editor id="content" #content="ngModel" [(ngModel)]="valueData.content" [class.ng-invalid]="content.invalid && (content.touched || sendMailForm.submitted)"
+            (onTextChange)="content.control.markAsTouched()" name="content" [style]="{ height: '320px' }" required />
+          @if (content.invalid && (content.touched || sendMailForm.submitted)) {
+            <p-message severity="error" size="small" variant="simple">İçerik is required.</p-message>
+          }
+        </div>
 
-
-        <div class="field col-12 md:col-6">
-        </div>
-        <div class="field col-12 md:col-6">
-        </div>
-        <div class="field col-12 md:col-6">
-        </div>
-        <div class="field col-12 md:col-6">
-        </div>
-<div class="field col-12 md:col-6">
-        </div>
-        <div class="field col-12 md:col-6">
-        </div>
-        <div class="field col-12 md:col-6">
-        </div>
-        <div class="field col-12 md:col-6">
-        </div>
         </form>
         <ng-template #footer>
             <p-button label="Cancel" [text]="true" severity="secondary" [raised]="true" severity="danger" (click)="onCancel(sendMailForm)" />

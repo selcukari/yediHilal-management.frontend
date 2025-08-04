@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { IconFieldModule } from 'primeng/iconfield';
 import { FloatLabel } from 'primeng/floatlabel';
 import { FormsModule } from '@angular/forms';
 import { MessageModule } from 'primeng/message';
@@ -35,7 +34,7 @@ interface EmailRequestType
 @Component({
   selector: 'app-component-sendMail',
   standalone: true,
-  imports: [Dialog, ConfirmDialog, ToastModule, MessageModule, EditorModule, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule],
+  imports: [Dialog, ConfirmDialog, ToastModule, MessageModule, EditorModule, ButtonModule, FormsModule, FloatLabel, InputIconModule, InputTextModule],
   providers: [MessageService, ConfirmationService],
   templateUrl: './sendMail.component.html',
 })
@@ -80,6 +79,8 @@ export class SendMailComponent {
       } else {
         this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'E-Mailler gönderilirken hata oluştu' });
       }
+    } else {
+      form.control.markAllAsTouched();
     }
   }
 
@@ -94,7 +95,7 @@ export class SendMailComponent {
         icon: 'pi pi-info-circle',
         rejectLabel: 'Cancel',
         rejectButtonProps: {
-          label: 'İptal',
+          label: 'Hayır',
           severity: 'secondary',
           outlined: true,
         },
@@ -109,15 +110,16 @@ export class SendMailComponent {
           this.visible = false;
           this.valueData = { subject: "", content: ""};
 
-          return;
         },
         reject: () => {
           this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
-
-          return;
+          // Dialog açık kalacak - this.visible = false; yok
         },
-    });
+      });
+    } else {
+      // Eğer form boşsa direkt kapat
+      this.visible = false;
     }
-    this.visible = false;
-  }
+    // Bu satırı kaldırdık: this.visible = false;
+    }
 }

@@ -72,13 +72,11 @@ private isFormDataValid(): boolean {
 }
 
    async onSave(form: any) {
-    console.log('Form submitted with value:', this.memberData);
     const isAngularFormValid = form.valid;
     const isCustomDataValid = this.isFormDataValid();
     const isOverallValid = isAngularFormValid && isCustomDataValid;
 
      if (!isOverallValid) {
-      console.log('Form is invalid:', form);
       if (form.control?.markAllAsTouched) {
       form.control.markAllAsTouched();
     }
