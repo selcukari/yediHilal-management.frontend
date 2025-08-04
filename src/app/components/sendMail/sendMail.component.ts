@@ -60,7 +60,6 @@ export class SendMailComponent {
   }
 
    async onSent(form: any) {
-    console.log('Form submitted with valueData:', this.valueData);
 
     if (form.valid) {
 
@@ -72,7 +71,6 @@ export class SendMailComponent {
         body: this.valueData.content
       }
       const result = await this.emailService.sendMail(emailRequest);
-      console.log('add result:', result);
       if (result) {
         this.messageService.add({ severity: 'info', summary: 'E-Mail', detail: 'E-Mailler Gönderildi' });
 
