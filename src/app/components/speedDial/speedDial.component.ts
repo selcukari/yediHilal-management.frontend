@@ -1,22 +1,26 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { type MenuItem, MessageService } from 'primeng/api';
 import { SpeedDial } from 'primeng/speeddial';
 import { ToastModule } from 'primeng/toast';
 import { PdfHelperService, PdfConfig, TableColumn } from '../../helpers/repor/pdfHelper';
 import { ValueData } from '../../pages/home/home.component';
+import { SendMailComponent } from '../sendMail/sendMail.component';
 @Component({
   selector: 'app-component-speedDial',
   templateUrl: './speedDial.component.html',
   standalone: true,
-  imports: [SpeedDial, ToastModule],
+  imports: [SpeedDial, ToastModule, SendMailComponent],
   providers: [MessageService, PdfHelperService]
 })
 export class SpeedDialComponent implements OnInit {
   items: MenuItem[] = [];
 
   @Input() pdfTitle: string = '';
-  @Input() tableData: ValueData[] = [];
+  @Input() type: number = 2;
+  @Input() valueData: ValueData[] = [];
   @Input() tableColumns: TableColumn[] = [];
+
+  @ViewChild(SendMailComponent) sendMailComponentRef!: SendMailComponent;
 
   constructor(private messageService: MessageService, private pdfHelperService: PdfHelperService) {}
 
@@ -35,7 +39,8 @@ export class SpeedDialComponent implements OnInit {
         label: 'Mail',
         icon: 'pi pi-envelope',
         command: () => {
-          this.messageService.add({ severity: 'info', summary: 'Mail', detail: 'Mailler Gönderildi' });
+
+          this.sendMail(this.type);
         }
       },
       {
@@ -62,7 +67,15 @@ export class SpeedDialComponent implements OnInit {
       textColor: '#2c3e50' // Koyu gri
     };
 
-    console.log('tableColumns:', this.tableColumns)
-    this.pdfHelperService.generatePdf(this.tableData, this.tableColumns, config);
+    this.pdfHelperService.generatePdf(this.valueData, this.tableColumns, config);
+  }
+
+  sendMail(type: number) {
+
+    const newUserData = this.valueData?.filter(value => value.email) || []
+
+    this.sendMailComponentRef.openDialog(
+      newUserData.map(value => value.fullName),
+      newUserData.map(value => value.email), type);
   }
 }

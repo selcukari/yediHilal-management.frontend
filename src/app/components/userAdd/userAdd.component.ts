@@ -68,13 +68,11 @@ private isFormDataValid(): boolean {
 }
 
    async onSave(form: any) {
-    console.log('Form submitted with value:', this.userData);
     const isAngularFormValid = form.valid;
     const isCustomDataValid = this.isFormDataValid();
     const isOverallValid = isAngularFormValid && isCustomDataValid;
 
      if (!isOverallValid) {
-      console.log('Form is invalid:', form);
       if (form.control?.markAllAsTouched) {
       form.control.markAllAsTouched();
     }
@@ -110,7 +108,7 @@ private isFormDataValid(): boolean {
 
         return;
       } else {
-        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Yeni Kullanıcı Eklenirken ha oluştu' });
+        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Yeni Kullanıcı Eklenirken hata oluştu' });
       }
 
 

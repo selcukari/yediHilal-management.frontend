@@ -71,7 +71,7 @@ export class HomePageComponent implements OnInit {
 
   resultData: ValueData[] = [];
   cols: Column[] = [];
-  pdfTableData: ValueData[] = [];
+  sendValueData: ValueData[] = [];
   isLoading = false;
   selectedCountry?: number = 1;
   selectedCountryName: string = 'Türkiye';
@@ -189,7 +189,7 @@ export class HomePageComponent implements OnInit {
       const getUsers = await this.userService.users(params);
       if (getUsers) {
         this.resultData = getUsers;
-        this.pdfTableData = this.resultData.map(user => ({
+        this.sendValueData = this.resultData.map(user => ({
           id: user.id,
           fullName: user.fullName,
           telephone: user.telephone,

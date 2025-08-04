@@ -75,7 +75,7 @@ export class MemberPageComponent implements OnInit {
 
   resultData: ValueData[] = [];
   cols: Column[] = [];
-  pdfTableData: ValueData[] = [];
+  sendValueData: ValueData[] = [];
   isLoading = false;
   selectedCountry?: number = 1;
   selectedArea?: number = undefined;
@@ -229,7 +229,7 @@ export class MemberPageComponent implements OnInit {
       const getMember = await this.memberService.members(params);
       if (getMember) {
         this.resultData = getMember;
-        this.pdfTableData = this.resultData.map(user => ({
+        this.sendValueData = this.resultData.map(user => ({
           id: user.id,
           fullName: user.fullName,
           telephone: user.telephone,

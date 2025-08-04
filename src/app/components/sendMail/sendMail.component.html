@@ -1,0 +1,52 @@
+
+    <p-toast />
+    <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '40rem' }">
+        <ng-template #header>
+            <span class="text-surface-500 dark:text-surface-400 block mb-8">E-Mail Gönder</span>
+        </ng-template>
+      <form #sendMailForm="ngForm"  class="formgrid grid">
+
+        <div class="field col-12 md:col-6">
+          <p-floatlabel variant="on">
+            <p-iconfield>
+              <input pInputText id="subject" name="subject"  [(ngModel)]="valueData.subject" #subject="ngModel" pSize="large" required
+                [class.ng-invalid]="subject.invalid && (subject.touched || sendMailForm.submitted)"autocomplete="off" />
+                @if (subject.invalid && (subject.touched || sendMailForm.submitted)) {
+                  <p-message severity="error" variant="simple">Konu is required.</p-message>
+                }
+            </p-iconfield>
+            <label for="subject">Konu</label>
+          </p-floatlabel>
+        </div>
+
+          <div class="flex flex-col gap-1">
+            <p-editor id="content" #content="ngModel" [(ngModel)]="valueData.content" [class.ng-invalid]="content.invalid && (content.touched || sendMailForm.submitted)" name="content" [style]="{ height: '320px' }" required />
+            @if (content.invalid && (content.touched || sendMailForm.submitted)) {
+              <p-message severity="error" size="small" variant="simple">İçerik is required.</p-message>
+            }
+          </div>
+
+
+        <div class="field col-12 md:col-6">
+        </div>
+        <div class="field col-12 md:col-6">
+        </div>
+        <div class="field col-12 md:col-6">
+        </div>
+        <div class="field col-12 md:col-6">
+        </div>
+<div class="field col-12 md:col-6">
+        </div>
+        <div class="field col-12 md:col-6">
+        </div>
+        <div class="field col-12 md:col-6">
+        </div>
+        <div class="field col-12 md:col-6">
+        </div>
+        </form>
+        <ng-template #footer>
+            <p-button label="Cancel" [text]="true" severity="secondary" [raised]="true" severity="danger" (click)="onCancel(sendMailForm)" />
+            <p-button label="Save" [outlined]="true" severity="secondary" [raised]="true" severity="success" icon="pi pi-check" iconPos="left" (click)="onSent(sendMailForm)" />
+        </ng-template>
+    </p-dialog>
+
