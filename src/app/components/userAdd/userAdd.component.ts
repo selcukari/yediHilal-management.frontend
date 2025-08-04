@@ -67,52 +67,49 @@ private isFormDataValid(): boolean {
   return Object.values(requiredFields).every(isValid => isValid);
 }
 
-   async onSave(form: any) {
-    const isAngularFormValid = form.valid;
-    const isCustomDataValid = this.isFormDataValid();
-    const isOverallValid = isAngularFormValid && isCustomDataValid;
+  async onSave(form: any) {
+   const isAngularFormValid = form.valid;
+   const isCustomDataValid = this.isFormDataValid();
+   const isOverallValid = isAngularFormValid && isCustomDataValid;
 
-     if (!isOverallValid) {
-      if (form.control?.markAllAsTouched) {
-      form.control.markAllAsTouched();
+    if (!isOverallValid) {
+     if (form.control?.markAllAsTouched) {
+     form.control.markAllAsTouched();
+   }
+
+     // Manuel olarak touched durumu da ayarlanabilir (isteğe bağlı)
+     Object.keys(form.controls).forEach(field => {
+       const control = form.controls[field];
+       control.markAsTouched({ onlySelf: true });
+     });
+
+     this.messageService.add({ severity: 'warn', summary: 'Eksik Alan', detail: 'Lütfen gerekli alanları doldurunuz.' });
+     return;
+   }
+
+
+    const newUserValue = {
+      fullName: this.userData.fullName,
+      identificationNumber: this.userData.identificationNumber,
+      telephone: this.userData.telephone,
+      email: this.userData.email,
+      dateOfBirth: this.userData.dateOfBirth,
+      countryId: this.userData.countryId,
+      provinceId: this.userData.provinceId,
+      isActive: this.userData.isActive,
+      areaId: (this.userData.areaId || 8)
     }
+    const result = await this.userService.addUser(newUserValue);
+    console.log('add result:', result);
+    if (result) {
+      this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Yeni Kullanıcı Eklendi' });
 
-      // Manuel olarak touched durumu da ayarlanabilir (isteğe bağlı)
-      Object.keys(form.controls).forEach(field => {
-        const control = form.controls[field];
-        control.markAsTouched({ onlySelf: true });
-      });
+      this.visible = false;
 
-      this.messageService.add({ severity: 'warn', summary: 'Eksik Alan', detail: 'Lütfen gerekli alanları doldurunuz.' });
       return;
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Yeni Kullanıcı Eklenirken hata oluştu' });
     }
-
-
-      const newUserValue = {
-        fullName: this.userData.fullName,
-        identificationNumber: this.userData.identificationNumber,
-        telephone: this.userData.telephone,
-        email: this.userData.email,
-        dateOfBirth: this.userData.dateOfBirth,
-        countryId: this.userData.countryId,
-        provinceId: this.userData.provinceId,
-        isActive: this.userData.isActive,
-        areaId: (this.userData.areaId || 8)
-      }
-      const result = await this.userService.addUser(newUserValue);
-      console.log('add result:', result);
-      if (result) {
-        this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Yeni Kullanıcı Eklendi' });
-
-        this.visible = false;
-
-        return;
-      } else {
-        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Yeni Kullanıcı Eklenirken hata oluştu' });
-      }
-
-
-
   }
 
   async onCancel(form: any) {

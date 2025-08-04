@@ -22,8 +22,8 @@ export class LoginPageComponent {
   isLoading = false;
 
   user = {
-      email: 'yedihilaladmin@gmail.com',
-      password: '123456',
+    email: 'yedihilaladmin@gmail.com',
+    password: '123456',
   };
 
   async onSubmit(form: any) {

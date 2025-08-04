@@ -68,17 +68,16 @@ private isFormDataValid(): boolean {
   return Object.values(requiredFields).every(isValid => isValid);
 }
 
-   async onSave(form: any) {
+  async onSave(form: any) {
     console.log('Form submitted with value:', this.userData);
     const isAngularFormValid = form.valid;
     const isCustomDataValid = this.isFormDataValid();
     const isOverallValid = isAngularFormValid && isCustomDataValid;
 
-     if (!isOverallValid) {
-      console.log('Form is invalid:', form);
+    if (!isOverallValid) {
       if (form.control?.markAllAsTouched) {
-      form.control.markAllAsTouched();
-    }
+        form.control.markAllAsTouched();
+      }
 
       // Manuel olarak touched durumu da ayarlanabilir (isteğe bağlı)
       Object.keys(form.controls).forEach(field => {
@@ -86,39 +85,35 @@ private isFormDataValid(): boolean {
         control.markAsTouched({ onlySelf: true });
       });
 
-      this.messageService.add({ severity: 'warn', summary: 'Eksik Alan', detail: 'Lütfen gerekli alanları doldurunuz.' });
-      return;
+     this.messageService.add({ severity: 'warn', summary: 'Eksik Alan', detail: 'Lütfen gerekli alanları doldurunuz.' });
+     return;
+   }
+
+    const updateUserValue = {
+      Id: this.userData.id,
+      fullName: this.userData.fullName,
+      identificationNumber: this.userData.identificationNumber,
+      telephone: this.userData.telephone,
+      email: this.userData.email,
+      dateOfBirth: this.userData.dateOfBirth,
+      countryId: this.userData.countryId,
+      areaId: this.userData.areaId,
+      provinceId: this.userData.provinceId,
+      isActive: this.userData.isActive,
+      createdDate: this.userData.createdDate,
+      ...(this.userData.id ? {updateDate: new Date().toISOString() } : {})
     }
 
+    const result = await this.userService.updateUser(updateUserValue);
+    if (result) {
+      this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kullanıcı Güncellendi' });
 
-      const updateUserValue = {
-        Id: this.userData.id,
-        fullName: this.userData.fullName,
-        identificationNumber: this.userData.identificationNumber,
-        telephone: this.userData.telephone,
-        email: this.userData.email,
-        dateOfBirth: this.userData.dateOfBirth,
-        countryId: this.userData.countryId,
-        areaId: this.userData.areaId,
-        provinceId: this.userData.provinceId,
-        isActive: this.userData.isActive,
-        createdDate: this.userData.createdDate,
-        ...(this.userData.id ? {updateDate: new Date().toISOString() } : {})
-      }
-      const result = await this.userService.updateUser(updateUserValue);
-      console.log('Update result:', result);
-      if (result) {
-        this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kullanıcı Güncellendi' });
+      this.visible = false;
 
-        this.visible = false;
-
-        return;
-      } else {
-        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kullanıcı Güncellenemedi' });
-      }
-
-
-
+      return;
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kullanıcı Güncellenemedi' });
+    }
   }
 
   async onCancel(form: any) {

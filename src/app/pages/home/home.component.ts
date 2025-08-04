@@ -26,8 +26,8 @@ import { TableColumn } from '../../helpers/repor/pdfHelper';
 import { calculateColumnWidthUser } from '../../helpers/repor/calculateColumnWidth';
 
 interface Column {
-    field: string;
-    header: string;
+  field: string;
+  header: string;
 }
 interface UserParams {
   countryId: number;
