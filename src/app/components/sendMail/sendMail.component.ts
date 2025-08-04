@@ -3,6 +3,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { FloatLabel } from 'primeng/floatlabel';
 import { FormsModule } from '@angular/forms';
 import { MessageModule } from 'primeng/message';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 import { InputIconModule } from 'primeng/inputicon';
 import { Dialog } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
@@ -34,7 +35,7 @@ interface EmailRequestType
 @Component({
   selector: 'app-component-sendMail',
   standalone: true,
-  imports: [Dialog, ToastModule, MessageModule, EditorModule, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule],
+  imports: [Dialog, ConfirmDialog, ToastModule, MessageModule, EditorModule, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule],
   providers: [MessageService, ConfirmationService],
   templateUrl: './sendMail.component.html',
 })
@@ -73,6 +74,7 @@ export class SendMailComponent {
         this.messageService.add({ severity: 'info', summary: 'E-Mail', detail: 'E-Mailler Gönderildi' });
 
         this.visible = false;
+        this.valueData = { subject: "", content: ""};
 
         return;
       } else {
@@ -82,6 +84,40 @@ export class SendMailComponent {
   }
 
   async onCancel(form: any) {
+
+    if (this.valueData.subject || this.valueData.content) {
+
+      this.confirmationService.confirm({
+        target: form.target as EventTarget,
+        message: 'Yaptığınız değişiklikler iptal olcaktır devam etmek istiyor musunuz?',
+        header: 'Tehlikeli Bölge',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Cancel',
+        rejectButtonProps: {
+          label: 'İptal',
+          severity: 'secondary',
+          outlined: true,
+        },
+        acceptButtonProps: {
+          label: 'Evet',
+          severity: 'danger',
+        },
+
+        accept: async () => {
+
+          this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
+          this.visible = false;
+          this.valueData = { subject: "", content: ""};
+
+          return;
+        },
+        reject: () => {
+          this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
+
+          return;
+        },
+    });
+    }
     this.visible = false;
   }
 }
