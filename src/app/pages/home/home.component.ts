@@ -22,8 +22,8 @@ import { UserEditComponent } from '../../components/userEdit/userEdit.component'
 import { UserService } from '../../../services/user.service';
 import { UserAddComponent } from '../../components/userAdd/userAdd.component';
 import { SpeedDialComponent } from '../../components/speedDial/speedDial.component';
-import { TableColumn } from '../../helpers/pdfHelper';
-import { calculateColumnWidthUser } from '../../helpers/calculateColumnWidth';
+import { TableColumn } from '../../helpers/repor/pdfHelper';
+import { calculateColumnWidthUser } from '../../helpers/repor/calculateColumnWidth';
 
 interface Column {
     field: string;

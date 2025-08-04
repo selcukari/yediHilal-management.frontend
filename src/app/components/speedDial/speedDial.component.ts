@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { type MenuItem, MessageService } from 'primeng/api';
 import { SpeedDial } from 'primeng/speeddial';
 import { ToastModule } from 'primeng/toast';
-import { PdfHelperService, PdfConfig, TableColumn } from '../../helpers/pdfHelper';
+import { PdfHelperService, PdfConfig, TableColumn } from '../../helpers/repor/pdfHelper';
 import { ValueData } from '../../pages/home/home.component';
 @Component({
   selector: 'app-component-speedDial',

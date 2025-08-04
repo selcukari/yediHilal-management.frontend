@@ -24,8 +24,8 @@ import { MemberAddComponent } from '../../components/memberAdd/memberAdd.compone
 import { RoleComponent } from '../../components/role/role.component';
 import { AuthService } from '../../../services/auth.service';
 import { SpeedDialComponent } from '../../components/speedDial/speedDial.component';
-import { TableColumn } from '../../helpers/pdfHelper';
-import { calculateColumnWidthMember } from '../../helpers/calculateColumnWidth';
+import { TableColumn } from '../../helpers/repor/pdfHelper';
+import { calculateColumnWidthMember } from '../../helpers/repor/calculateColumnWidth';
 
 interface Column {
   field: string;
