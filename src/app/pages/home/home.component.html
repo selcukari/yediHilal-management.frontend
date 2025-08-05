@@ -43,24 +43,19 @@
             [value]="resultData"
             [columns]="cols"
             [paginator]="true"
-            [rows]="10"
+            [rows]="20"
             [showCurrentPageReport]="true"
             currentPageReportTemplate="Gösterilen: {first} - {last} / Toplam: {totalRecords}"
-            [globalFilterFields]="['title', 'category', 'message', 'owner.name']">
-
-
+            [globalFilterFields]="['fullName', 'telephone', 'email', 'provinceName']">
 
             <ng-template #caption>
-              <div class="flex items-center justify-between">
+              <div class="flex">
                 <span class="table-title">Aktif Kullanıcılar ({{ resultData.length }})</span>
-                <p-floatlabel variant="on">
-                  <p-iconfield>
-                    <p-inputicon class="pi pi-search" />
-                    <input pInputText id="on_label" (ngModelChange)="onSearchChange($event)"  [(ngModel)]="searchFullName" pSize="large" autocomplete="off" />
-                  </p-iconfield>
-                  <label for="on_label">Kullanıcı Ara...</label>
-                </p-floatlabel>
-                <p-button icon="pi pi-refresh" icon="pi pi-refresh" (click)="refreshData()" [disabled]="isLoading" pTooltip="Yenile" tooltipPosition="right" rounded raised />
+                <p-iconfield iconPosition="left" class="ml-auto">
+                  <p-inputicon class="pi pi-search" />
+                  <input pInputText id="on_label" (ngModelChange)="onSearchChange($event)"  [(ngModel)]="searchFullName" placeholder="Kullanıcı Ara..." pSize="large" autocomplete="off" />
+                </p-iconfield>
+                <p-button icon="pi pi-refresh" icon="pi pi-refresh" (click)="refreshData()" [disabled]="isLoading" pTooltip="Yenile" tooltipPosition="top" rounded raised />
               </div>
             </ng-template>
 

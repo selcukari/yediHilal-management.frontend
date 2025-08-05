@@ -10,6 +10,15 @@ interface EmailParams {
   body: string;
 }
 
+export interface MailsType {
+  id: number;
+  body: string;
+  toEmails: string;
+  subject: string;
+  toUsers: string;
+  createdDate: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,15 +28,18 @@ export class EmailService {
 constructor() {
   }
 
-  async mails(): Promise<any| null> {
+  async mails(type: number): Promise<MailsType[]> {
     try {
-      const getMails = await axios.get(`${this.envService.apiUrl}/managementMember/getMail`);
+      const getMails = await axios.get(`${this.envService.apiUrl}/managementMember/getMails`,{
+        params: {type}
+      });
       if (!getMails.data.data) {
         throw new Error('getMails bulunamadı.');
       }
       return getMails.data.data;
     } catch (error: any) {
       this.envService.logDebug('getMails error', error);
+      return [];
     }
   }
 

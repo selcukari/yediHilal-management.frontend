@@ -26,7 +26,7 @@ export class AppLayoutComponent {
   private messageService = inject(MessageService);
   private router = inject(Router);
 
-    pages!: PageType[];
+  pages!: PageType[];
   isAuthenticated = false;
   currentUser: any = null;
 
@@ -38,10 +38,13 @@ export class AppLayoutComponent {
     });
 
     this.pages = [
-            { name: 'Kullanıcı Yönetimi', code: '/' },
-            { name: 'Üye Yönetimi', code: 'members' },
-            { name: 'Sayfa-3', code: 'LDN' },
-        ];
+      { name: 'Kullanıcı Yönetimi', code: '/' },
+      { name: 'Üye Yönetimi', code: 'members' },
+      { name: 'Gön. Kul. E-Mail Listesi', code: 'mailList/2' },
+      { name: 'Gön. Üye E-Mail Listesi', code: 'mailList/1' },
+      { name: 'Gön. Kul. Bildirim Listesi', code: 'LDN' },
+      { name: 'Gön. Üye Bildirim Listesi', code: 'LDN' },
+    ];
   }
 
     onPageSelect(route: any): void {

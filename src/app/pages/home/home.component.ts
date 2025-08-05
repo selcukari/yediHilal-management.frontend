@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
 import { Button } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
-import { FloatLabel } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -54,7 +53,7 @@ export interface ValueData {
   selector: 'app-pages-home',
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
-    ConfirmDialog, SpeedDialComponent, UserAddComponent, CountryComponent, AreaComponent, Tooltip, UserEditComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
+    ConfirmDialog, SpeedDialComponent, UserAddComponent, CountryComponent, AreaComponent, Tooltip, UserEditComponent, IconFieldModule, ProvinceComponent, ProgressSpinner],
   providers: [MessageService, ConfirmationService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

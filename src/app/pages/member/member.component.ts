@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
 import { Button } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
-import { FloatLabel } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -57,7 +56,7 @@ interface ValueData {
   selector: 'app-pages-member',
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
-    ConfirmDialog, SpeedDialComponent, RoleComponent, MemberAddComponent, CountryComponent, AreaComponent, Tooltip, MemberEditComponent, IconFieldModule, FloatLabel, ProvinceComponent, ProgressSpinner],
+    ConfirmDialog, SpeedDialComponent, RoleComponent, MemberAddComponent, CountryComponent, AreaComponent, Tooltip, MemberEditComponent, IconFieldModule, ProvinceComponent, ProgressSpinner],
   providers: [MessageService, ConfirmationService],
   templateUrl: './member.component.html',
   styleUrl: './member.component.scss'
