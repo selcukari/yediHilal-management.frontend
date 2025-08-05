@@ -40,3 +40,36 @@ body {
   color: #374151;
   font-weight: 500;
 }
+
+.toolbar-container {
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin-bottom: 1rem;
+    color: #495057;
+  }
+
+  .toolbar-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem; // Öğeler arası boşluk
+    align-items: center;
+
+    // Her dropdown bileşeni için stil (PrimeNG dropdown varsayılanını override etmek için)
+    ::ng-deep .p-dropdown {
+      min-width: 200px; // Dropdown'lar için minimum genişlik
+    }
+
+    // Mobil görünüm
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: stretch;
+
+      ::ng-deep .p-dropdown {
+        width: 100%;
+      }
+    }
+  }
+}
+

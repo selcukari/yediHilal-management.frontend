@@ -2,28 +2,26 @@
   <p-toast />
     <p-confirmdialog />
 
-    <!-- Main Content Area (Column-8) -->
-      <div>
-        <h2>Toolbar</h2>
-        <app-component-country (countrySelected)="onCountrySelected($event)" (countrySelectedName)="onCountrySelectedName($event)"></app-component-country>
-        @if (selectedCountry == 1) {
-          <app-component-area (areaSelected)="onAreaSelected($event)" (areaSelectedName)="onAreaSelectedName($event)"></app-component-area>
+      <div class="toolbar-container">
+        <h2>Toolbar Filtreleme Alanı</h2>
+        <div class="toolbar-row">
+          <app-component-country (countrySelected)="onCountrySelected($event)" (countrySelectedName)="onCountrySelectedName($event)"></app-component-country>
+          @if (selectedCountry == 1) {
+            <app-component-area (areaSelected)="onAreaSelected($event)" (areaSelectedName)="onAreaSelectedName($event)"></app-component-area>
 
-        }
-        <app-component-province [countryCode]="selectedCountry" [areaCode]="selectedArea" (provinceSelectedName)="onProvinceSelectedName($event)"
-          (provinceSelected)="onProvinceSelected($event)"></app-component-province>
-      </div>
+          }
+          <app-component-province [countryCode]="selectedCountry" [areaCode]="selectedArea" (provinceSelectedName)="onProvinceSelectedName($event)"
+            (provinceSelected)="onProvinceSelected($event)"></app-component-province>
 
-      <div class="header-section">
-        <h2>Kullanıcılar</h2>
-        <p-button
-          pButton
-          type="button"
-          label="Yeni Kullanıcı"
-          icon="pi pi-plus"
-          (click)="onAdd()"
-          [disabled]="isLoading">
-        </p-button>
+          <p-button
+            pButton
+            type="button"
+            label="Yeni Kullanıcı"
+            icon="pi pi-plus"
+            (click)="onAdd()"
+            [disabled]="isLoading">
+          </p-button>
+        </div>
       </div>
 
       <app-component-speedDial [pdfTitle]="pdfTitle" [valueData]="sendValueData" [tableColumns]="pdfTableColumns" [type]="2">
@@ -51,7 +49,7 @@
             <ng-template #caption>
               <div class="flex">
                 <span class="table-title">Aktif Kullanıcılar ({{ resultData.length }})</span>
-                <p-iconfield iconPosition="left" class="ml-auto">
+                <p-iconfield iconPosition="left" class="ml-auto mr-2">
                   <p-inputicon class="pi pi-search" />
                   <input pInputText id="on_label" (ngModelChange)="onSearchChange($event)"  [(ngModel)]="searchFullName" placeholder="Kullanıcı Ara..." pSize="large" autocomplete="off" />
                 </p-iconfield>
@@ -87,7 +85,7 @@
                 </td>
                 <td>
                   <div class="flex justify-center">
-                      <p-button (click)="onDelete(rowData.id)" icon="pi pi-trash" [raised]="true" severity="danger" pTooltip="Sil" tooltipPosition="top" />
+                      <p-button (click)="onDelete(rowData.id)" icon="pi pi-trash" [raised]="true" class="mr-1" severity="danger" pTooltip="Sil" tooltipPosition="top" />
                       <p-button (click)="onEdit(rowData)" icon="pi pi-pencil" [raised]="true" severity="warn" pTooltip="Güncelle" tooltipPosition="top" />
                   </div>
                 </td>

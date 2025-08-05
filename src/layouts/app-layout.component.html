@@ -18,16 +18,16 @@
   <main>
     <div class="flex overflow-hidden">
       @if (isAuthenticated) {
-        <div class="flex-none flex align-items-center justify-content-center font-bold m-2 px-5 py-3 border-round">
+        <div class="menu-container">
           <h3>Menü Seçimi</h3>
           <p-listbox
             [options]="pages"
             (onChange)="onPageSelect($event.value)"
             optionLabel="name"
-            class="w-full" />
+            class="w-full fixed-menu" />
         </div>
       }
-      <div class="flex-grow-1 flex align-items-center justify-content-center font-bold m-2 px-5 py-3 border-round">
+      <div class="content-container">
         <router-outlet></router-outlet>
       </div>
     </div>

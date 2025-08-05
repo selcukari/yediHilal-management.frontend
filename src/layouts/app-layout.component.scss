@@ -41,12 +41,30 @@
   }
 }
 
-.app-main {
+.menu-container {
+  flex: 0 0 250px; // Sabit genişlik
+  padding: 1rem;
+  border-right: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  height: calc(100vh - 150px); // Yükseklik ayarı (header ve footer yüksekliği düşülür)
+  overflow: hidden; // Kaydırmayı engelle
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #495057;
+  }
+}
+
+.fixed-menu {
+  height: calc(100% - 40px); // h3 başlığı için yer bırak
+  overflow-y: auto; // Liste içinde kaydırma yapılabilir
+}
+
+.content-container {
   flex: 1;
-  padding: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 1rem;
+  overflow: auto; // İçerik kaydırılabilir
 }
 
 .app-footer {
@@ -73,7 +91,14 @@
     }
   }
 
-  .app-main {
-    padding: 1rem;
+  .menu-container {
+    flex: 0 0 100%; // Mobilde tam genişlik
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  .fixed-menu {
+    height: auto;
   }
 }
