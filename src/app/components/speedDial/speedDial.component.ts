@@ -11,7 +11,7 @@ import { SendMessageComponent } from '../sendMessage/sendMessage.component'
   selector: 'app-component-speedDial',
   templateUrl: './speedDial.component.html',
   standalone: true,
-  imports: [SpeedDial, ToastModule, SendMailComponent],
+  imports: [SpeedDial, ToastModule, SendMailComponent, SendMessageComponent],
   providers: [MessageService, PdfHelperService]
 })
 export class SpeedDialComponent implements OnInit {
@@ -23,8 +23,9 @@ export class SpeedDialComponent implements OnInit {
   @Input() tableColumns: TableColumn[] = [];
 
   @ViewChild(SendMailComponent) sendMailComponentRef!: SendMailComponent;
+  @ViewChild(SendMessageComponent) sendMessageComponent!: SendMessageComponent;
 
-  constructor(private sendMessageComponent: SendMessageComponent, private messageService: MessageService, private pdfHelperService: PdfHelperService) {}
+  constructor(private messageService: MessageService, private pdfHelperService: PdfHelperService) {}
 
   ngOnInit() {
     this.items = [

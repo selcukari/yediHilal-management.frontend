@@ -7,7 +7,7 @@
                 <span class="font-bold whitespace-nowrap">{{memberData?.fullName}}</span>
             </div>
         </ng-template>
-        <span class="text-surface-500 dark:text-surface-400 block mb-8">Yeni kullanıcı ekle.</span>
+        <span class="text-surface-500 dark:text-surface-400 block mb-8">Yeni üye ekle</span>
       <form #memberAddForm="ngForm"  class="formgrid grid">
 
         <div class="field col-12 md:col-6">
@@ -121,22 +121,6 @@
         <div class="field col-12 md:col-6">
           <label for="isActive" class="mr-2">Aktif Durumu:</label>
           <p-toggleswitch id="isActive" name="isActive" [(ngModel)]="memberData.isActive" />
-        </div>
-        <div class="field col-12 md:col-6">
-        </div>
-        <div class="field col-12 md:col-6">
-        </div>
-        <div class="field col-12 md:col-6">
-        </div>
-        <div class="field col-12 md:col-6">
-        </div>
-<div class="field col-12 md:col-6">
-        </div>
-        <div class="field col-12 md:col-6">
-        </div>
-        <div class="field col-12 md:col-6">
-        </div>
-        <div class="field col-12 md:col-6">
         </div>
         </form>
         <ng-template #footer>

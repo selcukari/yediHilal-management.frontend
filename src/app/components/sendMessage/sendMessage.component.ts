@@ -8,7 +8,8 @@ import { ProgressSpinner } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { EditorModule } from 'primeng/editor';
+import { TextareaModule } from 'primeng/textarea';
+import { FloatLabel } from 'primeng/floatlabel';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MessageService as MessageServiceApi } from '../../../services/message.service';
 
@@ -28,7 +29,7 @@ interface MessageRequestType
 @Component({
   selector: 'app-component-sendMessage',
   standalone: true,
-  imports: [Dialog, ProgressSpinner, ConfirmDialog, ToastModule, MessageModule, EditorModule, ButtonModule, FormsModule, InputIconModule, InputTextModule],
+  imports: [Dialog, ProgressSpinner, FloatLabel, ConfirmDialog, ToastModule, MessageModule, TextareaModule, ButtonModule, FormsModule, InputIconModule, InputTextModule],
   providers: [MessageService, ConfirmationService],
   templateUrl: './sendMessage.component.html'
 })

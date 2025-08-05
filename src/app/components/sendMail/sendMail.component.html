@@ -17,10 +17,10 @@
         </ng-template>
       <form #sendMailForm="ngForm"  class="formgrid grid">
 
-        <div class="field col-12">
+        <div class="field col-12 mt-2">
           <p-floatlabel variant="on" class="w-full">
             <input pInputText id="subject" name="subject" class="w-full"  [(ngModel)]="valueData.subject" #subject="ngModel" pSize="large" required
-              [class.ng-invalid]="subject.invalid && (subject.touched || sendMailForm.submitted)"autocomplete="off" />
+              [class.ng-invalid]="subject.invalid && (subject.touched || sendMailForm.submitted)" autocomplete="off" />
               @if (subject.invalid && (subject.touched || sendMailForm.submitted)) {
                 <p-message severity="error" variant="simple">Konu is required.</p-message>
               }
