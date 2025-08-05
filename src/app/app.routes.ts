@@ -3,6 +3,7 @@ import { LoginPageComponent } from './pages/login/login.component';
 import { AppLayoutComponent } from '../layouts/app-layout.component';
 import { HomePageComponent } from './pages/home/home.component';
 import { MemberPageComponent } from './pages/member/member.component';
+import { MessageListPageComponent } from './pages/messageList/messageList.component';
 import { MailListPageComponent } from './pages/mailList/mailList.component';
 import { AuthGuard, NoAuthGuard } from '../services/auth.guard';
 
@@ -24,6 +25,9 @@ export const routes: Routes = [
       },
       {
         path: 'mailList/:type', component: MailListPageComponent, canActivate: [AuthGuard]
+      },
+      {
+        path: 'messageList/:type', component: MessageListPageComponent, canActivate: [AuthGuard]
       },
     ]
   },

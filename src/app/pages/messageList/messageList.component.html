@@ -1,0 +1,70 @@
+<div class="flex justify-content-center flex-wrap">
+  <p-toast />
+  @if (isLoading) {
+    <div class="global-loading-overlay">
+      <div class="loading-content">
+        <p-progressSpinner></p-progressSpinner>
+        <p>Veriler yükleniyor...</p>
+      </div>
+    </div>
+  } @else {
+    <div>
+      <p-table
+        #dt
+        [value]="resultData"
+        [columns]="cols"
+        [paginator]="true"
+        [rows]="20"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Gösterilen: {first} - {last} / Toplam: {totalRecords}"
+        [globalFilterFields]="['message', 'toUsers', 'toPhoneNumbers']">
+        <ng-template #caption>
+          <div class="flex">
+            <span class="table-title">Gönderilmiş E-Mailler ({{ resultData.length }})</span>
+            <p-iconfield iconPosition="left" class="ml-auto">
+              <p-inputicon class="pi pi-search" />
+              <input pInputText id="on_label" (input)="onGlobalFilter($event)" placeholder="Mail Ara..." pSize="large" autocomplete="off" />
+            </p-iconfield>
+            <p-button icon="pi pi-refresh" icon="pi pi-refresh" (click)="refreshData()" [disabled]="isLoading" pTooltip="Yenile" tooltipPosition="top" rounded raised />
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+              {{ col.header }}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+              @switch (col.field) {
+                @case ('createdDate') {
+                  {{ formatDate(rowData[col.field]) }}
+                }
+                @case ('subject') {
+                  {{rowData[col.field].length > 30 ? rowData[col.field].substring(0, 30) + "..." : rowData[col.field]}}
+                }
+                @case ('body') {
+                  {{(rowData[col.field] | stripHtml).length > 25 ? (rowData[col.field] | stripHtml).substring(0, 25) + "..." : (rowData[col.field] | stripHtml)}}
+                }
+                @case ('toEmails') {
+                  {{rowData[col.field].length > 50 ? rowData[col.field].substring(0, 50) + "..." : rowData[col.field]}}
+                }
+                @case ('toUsers') {
+                  {{rowData[col.field].length > 50 ? rowData[col.field].substring(0, 50) + "..." : rowData[col.field]}}
+                }
+                @default {
+                  {{ rowData[col.field] || '-' }}
+                }
+              }
+            </td>
+          </tr>
+        </ng-template>
+
+      </p-table>
+    </div>
+  }
+</div>

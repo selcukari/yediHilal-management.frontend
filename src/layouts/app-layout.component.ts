@@ -9,12 +9,12 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 interface PageType {
-    name: string,
-    code: string
+  name: string,
+  code: string
 }
 
 @Component({
-   selector: 'app-layout',
+  selector: 'app-layout',
   standalone: true,
   imports: [RouterOutlet, RouterLink, FormsModule, ToastModule, Listbox, ButtonModule, CommonModule],
   providers: [MessageService],
@@ -42,8 +42,8 @@ export class AppLayoutComponent {
       { name: 'Üye Yönetimi', code: 'members' },
       { name: 'Gön. Kul. E-Mail Listesi', code: 'mailList/2' },
       { name: 'Gön. Üye E-Mail Listesi', code: 'mailList/1' },
-      { name: 'Gön. Kul. Bildirim Listesi', code: 'LDN' },
-      { name: 'Gön. Üye Bildirim Listesi', code: 'LDN' },
+      { name: 'Gön. Kul. Bildirim Listesi', code: 'messageList/2' },
+      { name: 'Gön. Üye Bildirim Listesi', code: 'messageList/1' },
     ];
   }
 
