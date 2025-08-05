@@ -5,6 +5,8 @@ import { ToastModule } from 'primeng/toast';
 import { PdfHelperService, PdfConfig, TableColumn } from '../../helpers/repor/pdfHelper';
 import { ValueData } from '../../pages/home/home.component';
 import { SendMailComponent } from '../sendMail/sendMail.component';
+import { SendMessageComponent } from '../sendMessage/sendMessage.component'
+
 @Component({
   selector: 'app-component-speedDial',
   templateUrl: './speedDial.component.html',
@@ -22,7 +24,7 @@ export class SpeedDialComponent implements OnInit {
 
   @ViewChild(SendMailComponent) sendMailComponentRef!: SendMailComponent;
 
-  constructor(private messageService: MessageService, private pdfHelperService: PdfHelperService) {}
+  constructor(private sendMessageComponent: SendMessageComponent, private messageService: MessageService, private pdfHelperService: PdfHelperService) {}
 
   ngOnInit() {
     this.items = [
@@ -44,10 +46,10 @@ export class SpeedDialComponent implements OnInit {
         }
       },
       {
-        label: 'Bildirim',
+        label: 'Mesaj',
         icon: 'pi pi-bell',
         command: () => {
-          this.messageService.add({ severity: 'info', summary: 'Bildirim', detail: 'Bildirimler Gönderildi' });
+          this.sendMessage(this.type);
         }
       },
     ];
@@ -77,5 +79,14 @@ export class SpeedDialComponent implements OnInit {
     this.sendMailComponentRef.openDialog(
       newUserData.map(value => value.fullName),
       newUserData.map(value => value.email), type);
+  }
+
+  sendMessage(type: number) {
+
+    const newUserData = this.valueData?.filter(value => value.telephone) || []
+
+    this.sendMessageComponent.openDialog(
+      newUserData.map(value => value.fullName),
+      newUserData.map(value => value.telephone), type);
   }
 }

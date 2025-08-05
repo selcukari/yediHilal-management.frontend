@@ -8,6 +8,7 @@ interface EmailParams {
   toUsers: Array<string>;
   toEmails: Array<string>;
   body: string;
+  count: number;
 }
 
 export interface MailsType {
@@ -17,12 +18,13 @@ export interface MailsType {
   subject: string;
   toUsers: string;
   createdDate: string;
+  count: number;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class EmailService {
+export class MailService {
   private envService = inject(EnvironmentService);
 
 constructor() {

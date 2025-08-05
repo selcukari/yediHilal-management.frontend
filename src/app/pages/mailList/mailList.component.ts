@@ -12,7 +12,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { Table } from 'primeng/table';
 import { Tooltip } from 'primeng/tooltip';
 import { ProgressSpinner } from 'primeng/progressspinner';
-import { EmailService, MailsType } from '../../../services/email.service';
+import { MailService, MailsType } from '../../../services/mail.service';
 import { StripHtmlPipe } from '../../helpers/stripHtml.pipe';
 import { Subscription } from 'rxjs';
 interface Column {
@@ -40,7 +40,7 @@ export class MailListPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private emailService: EmailService,
+    private mailService: MailService,
     private messageService: MessageService
   ) {}
 
@@ -98,9 +98,8 @@ export class MailListPageComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     try {
-      console.log('Fetching data for type:', type);
 
-      const getMails = await this.emailService.mails(type);
+      const getMails = await this.mailService.mails(type);
       if (getMails) {
         this.resultData = getMails.map(mail => ({
           id: mail.id,
@@ -108,6 +107,7 @@ export class MailListPageComponent implements OnInit, OnDestroy {
           toEmails: mail.toEmails,
           toUsers: mail.toUsers,
           body: mail.body,
+          count: mail.count,
           createdDate: this.formatDate(mail.createdDate)
         }));
 

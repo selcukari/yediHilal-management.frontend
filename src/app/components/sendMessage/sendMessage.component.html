@@ -1,0 +1,62 @@
+
+    <p-toast />
+    <p-confirmdialog />
+
+    @if (isLoading) {
+      <div class="global-loading-overlay">
+        <div class="loading-content">
+          <p-progressSpinner></p-progressSpinner>
+          <p>Mesajlar gönderiliyor...</p>
+        </div>
+      </div>
+    }
+
+    <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '40rem' }">
+        <ng-template #header>
+            <span class="text-surface-500 dark:text-surface-400 block mb-8">Mesaj Gönder</span>
+        </ng-template>
+      <form #sendMessageForm="ngForm"  class="formgrid grid">
+
+        <div class="field col-12">
+          <p-editor id="content" #content="ngModel" [(ngModel)]="content" [class.ng-invalid]="content.invalid && (content.touched || sendMessageForm.submitted)"
+            (onTextChange)="content.control.markAsTouched()" name="content" [style]="{ height: '320px' }" required>
+            <ng-template #header>
+              <span class="ql-formats">
+                <button type="button" class="ql-bold" aria-label="Bold"></button>
+                <button type="button" class="ql-italic" aria-label="Italic"></button>
+                <button type="button" class="ql-underline" aria-label="Underline"></button>
+              </span>
+              <span class="ql-formats">
+                <select class="ql-size">
+                  <option value="small"></option>
+                  <option selected></option>
+                  <option value="large"></option>
+                  <option value="huge"></option>
+                </select>
+              </span>
+              <span class="ql-formats">
+                <button type="button" class="ql-list" value="ordered" aria-label="Ordered List"></button>
+                <button type="button" class="ql-list" value="bullet" aria-label="Unordered List"></button>
+              </span>
+              <span class="ql-formats">
+                <select class="ql-align">
+                  <option selected></option>
+                  <option value="center"></option>
+                  <option value="right"></option>
+                  <option value="justify"></option>
+                </select>
+              </span>
+            </ng-template>
+          </p-editor>
+          @if (content.invalid && (content.touched || sendMessageForm.submitted)) {
+            <p-message severity="error" size="small" variant="simple">İçerik is required.</p-message>
+          }
+        </div>
+
+        </form>
+        <ng-template #footer>
+            <p-button label="Cancel" [text]="true" severity="secondary" [raised]="true" severity="danger" (click)="onCancel(sendMessageForm)" />
+            <p-button label="Save" [outlined]="true" severity="secondary" [raised]="true" severity="success" icon="pi pi-check" iconPos="left" (click)="onSent(sendMessageForm)" />
+        </ng-template>
+    </p-dialog>
+

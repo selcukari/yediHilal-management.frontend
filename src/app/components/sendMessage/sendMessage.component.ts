@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FloatLabel } from 'primeng/floatlabel';
 import { FormsModule } from '@angular/forms';
 import { MessageModule } from 'primeng/message';
 import { ConfirmDialog } from 'primeng/confirmdialog';
@@ -11,50 +10,43 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { EditorModule } from 'primeng/editor';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { MailService } from '../../../services/mail.service';
+import { MessageService as MessageServiceApi } from '../../../services/message.service';
 
-interface ValueDataType
-{
-  subject: string;
-  content: string;
-}
-
-interface EmailParams {
-  subject: string;
+interface MessageParams {
+  message: string;
   toUsers: Array<string>;
-  toEmails: Array<string>;
-  body: string;
   count: number;
+  type: number;
 }
-interface MailRequestType
+interface MessageRequestType
 {
   toUsers: Array<string>;
-  toEmails: Array<string>;
+  toPhoneNumbers: Array<string>;
   type: number;
 }
 
 @Component({
-  selector: 'app-component-sendMail',
+  selector: 'app-component-sendMessage',
   standalone: true,
-  imports: [Dialog, ProgressSpinner, ConfirmDialog, ToastModule, MessageModule, EditorModule, ButtonModule, FormsModule, FloatLabel, InputIconModule, InputTextModule],
+  imports: [Dialog, ProgressSpinner, ConfirmDialog, ToastModule, MessageModule, EditorModule, ButtonModule, FormsModule, InputIconModule, InputTextModule],
   providers: [MessageService, ConfirmationService],
-  templateUrl: './sendMail.component.html'
+  templateUrl: './sendMessage.component.html'
 })
 
-export class SendMailComponent {
+export class SendMessageComponent {
   visible: boolean = false;
   isLoading: boolean = false;
-  valueData: ValueDataType = { subject: "", content: ""};
+  content: string = "";
 
-  mailRequest: MailRequestType = { toEmails: [], toUsers: [], type: 2 };
+  messageRequest: MessageRequestType = { toPhoneNumbers: [], toUsers: [], type: 2};
 
-  constructor(private mailService: MailService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
+  constructor(private messageServiceApi: MessageServiceApi, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
-  openDialog(toUsers: Array<string>, toEmails: Array<string>, type: number) {
+  openDialog(toUsers: Array<string>, toPhoneNumbers: Array<string>, type: number) {
     this.visible = true;
 
-    this.mailRequest = {
-      toEmails,
+    this.messageRequest = {
+      toPhoneNumbers,
       toUsers,
       type
     }
@@ -66,25 +58,24 @@ export class SendMailComponent {
 
       this.isLoading = true;
 
-      const mailRequest: EmailParams = {
-        ...this.mailRequest,
-        subject: this.valueData.subject,
-        body: this.valueData.content,
-        count: this.mailRequest.toEmails.length
+      const messageRequest: MessageParams = {
+        ...this.messageRequest,
+        message: this.content,
+        count: this.messageRequest.toPhoneNumbers.length
       }
-      const result = await this.mailService.sendMail(mailRequest);
+      const result = await this.messageServiceApi.sendMessage(messageRequest);
       if (result) {
-        this.messageService.add({ severity: 'info', summary: 'E-Mail', detail: 'E-Mailler Gönderildi' });
+        this.messageService.add({ severity: 'info', summary: 'E-Mail', detail: 'Mesajlar Gönderildi' });
 
         this.visible = false;
-        this.valueData = { subject: "", content: ""};
+        this.content = "";
 
         this.isLoading = false;
 
         return;
       } else {
         this.isLoading = false;
-        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'E-Mailler gönderilirken hata oluştu' });
+        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Mesajlar gönderilirken hata oluştu' });
       }
     } else {
 
@@ -108,7 +99,7 @@ export class SendMailComponent {
 
   async onCancel(form: any) {
 
-    if (this.valueData.subject || this.valueData.content) {
+    if (this.content) {
 
       this.confirmationService.confirm({
         target: form.target as EventTarget,
@@ -130,7 +121,7 @@ export class SendMailComponent {
 
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
           this.visible = false;
-          this.valueData = { subject: "", content: ""};
+          this.content = "";
 
         },
         reject: () => {
