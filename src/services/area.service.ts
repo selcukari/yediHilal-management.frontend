@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import axios from 'axios';
+import { firstValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { EnvironmentService } from './environment.service';
 
 @Injectable({
@@ -8,16 +9,16 @@ import { EnvironmentService } from './environment.service';
 export class AreaService {
   private envService = inject(EnvironmentService);
 
-constructor() {
-  }
+  constructor(private http: HttpClient) {}
 
   async areas(): Promise<any| null> {
     try {
-      const getAreas = await axios.get(`${this.envService.apiUrl}/management/getAreas`);
-      if (!getAreas.data.data) {
+      const getAreas: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/management/getAreas`));
+      if (getAreas?.errors) {
         throw new Error('getAreas bulunamadı.');
       }
-      return getAreas.data.data;
+
+      return getAreas.data;
     } catch (error: any) {
       this.envService.logDebug('getAreas error', error);
     }

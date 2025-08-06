@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import axios from 'axios';
+import { firstValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { EnvironmentService } from './environment.service';
 
 
@@ -27,18 +28,18 @@ export interface MailsType {
 export class MailService {
   private envService = inject(EnvironmentService);
 
-constructor() {
-  }
+  constructor(private http: HttpClient) {}
+
 
   async mails(type: number): Promise<MailsType[]> {
     try {
-      const getMails = await axios.get(`${this.envService.apiUrl}/managementMember/getMails`,{
+      const getMails: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementMember/getMails`,{
         params: {type}
-      });
-      if (!getMails.data.data) {
+      }));
+      if (getMails?.errors) {
         throw new Error('getMails bulunamadı.');
       }
-      return getMails.data.data;
+      return getMails.data;
     } catch (error: any) {
       this.envService.logDebug('getMails error', error);
       return [];
@@ -47,11 +48,11 @@ constructor() {
 
   async sendMail(params: EmailParams): Promise<any| null> {
     try {
-      const sendMail = await axios.post(`${this.envService.apiUrl}/managementMember/sendMail`, params);
-      if (!sendMail.data.data) {
+      const sendMail: any = await firstValueFrom(this.http.post(`${this.envService.apiUrl}/managementMember/sendMail`, params));
+      if (sendMail?.errors) {
         throw new Error('sendMail gonderilemedi.');
       }
-      return sendMail.data.data;
+      return sendMail.data;
     } catch (error: any) {
       this.envService.logDebug('sendMail error', error);
     }

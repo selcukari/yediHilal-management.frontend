@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import axios from 'axios';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { EnvironmentService } from './environment.service';
 
 
@@ -14,22 +15,21 @@ interface ProvinceParams {
 export class ProvinceService {
   private envService = inject(EnvironmentService);
 
-constructor() {
-  }
+  constructor(private http: HttpClient) {}
 
   async provinces(params: ProvinceParams): Promise<any| null> {
     try {
       const { countryId, areaId } = params;
 
-      const getProvinces = await axios.get(`${this.envService.apiUrl}/management/getProvincesByCountryOrArea`,{
+      const getProvinces: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/management/getProvincesByCountryOrArea`, {
         params: {
           countryId,
           ...((areaId == undefined || countryId != 1) ? { } : {areaId})
-        }});
-      if (!getProvinces.data.data) {
+        }}));
+      if (getProvinces?.errors) {
         throw new Error('getProvinces bulunamadı.');
       }
-      return getProvinces.data.data;
+      return getProvinces.data;
     } catch (error: any) {
       this.envService.logDebug('getProvinces error', error);
     }

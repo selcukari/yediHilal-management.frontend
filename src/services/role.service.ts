@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import axios from 'axios';
+import { firstValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { EnvironmentService } from './environment.service';
 
 @Injectable({
@@ -8,16 +9,15 @@ import { EnvironmentService } from './environment.service';
 export class RoleService {
   private envService = inject(EnvironmentService);
 
-constructor() {
-  }
+  constructor(private http: HttpClient) {}
 
   async roles(): Promise<any| null> {
     try {
-      const getRoles = await axios.get(`${this.envService.apiUrl}/managementMember/getRoles`);
-      if (!getRoles.data.data) {
+      const getRoles: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementMember/getRoles`));
+      if (getRoles?.errors) {
         throw new Error('getRoles bulunamadı.');
       }
-      return getRoles.data.data;
+      return getRoles.data;
     } catch (error: any) {
       this.envService.logDebug('getRoles error', error);
     }

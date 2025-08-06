@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import axios from 'axios';
+import { firstValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { EnvironmentService } from './environment.service';
 
 @Injectable({
@@ -8,16 +9,15 @@ import { EnvironmentService } from './environment.service';
 export class CountryService {
   private envService = inject(EnvironmentService);
 
-constructor() {
-  }
+  constructor(private http: HttpClient) {}
 
   async countries(): Promise<any| null> {
     try {
-      const getCountries = await axios.get(`${this.envService.apiUrl}/management/getCountries`);
-      if (!getCountries.data.data) {
+      const getCountries: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/management/getCountries`));
+      if (getCountries?.errors) {
         throw new Error('getCountries bulunamadı.');
       }
-      return getCountries.data.data;
+      return getCountries.data;
     } catch (error: any) {
       this.envService.logDebug('getCountries error', error);
     }

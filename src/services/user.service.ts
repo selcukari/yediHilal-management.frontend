@@ -1,15 +1,13 @@
 import { Injectable, inject } from '@angular/core';
-import axios from 'axios';
+import { firstValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { EnvironmentService } from './environment.service';
-
-
 interface UserParams {
   countryId: number;
   areaId?: number;
   fullName?: string;
   provinceId?: number;
 }
-
 interface UserData {
   fullName: string;
   isActive: boolean;
@@ -30,24 +28,24 @@ interface UserData {
 export class UserService {
   private envService = inject(EnvironmentService);
 
-constructor() {
-  }
+  constructor(private http: HttpClient) {}
+
 
   async users(params: UserParams): Promise<any| null> {
     try {
       const { countryId, areaId, provinceId, fullName } = params;
 
-      const getUsers = await axios.get(`${this.envService.apiUrl}/management/getUsersBy`,{
+      const getUsers: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/management/getUsersBy`,{
         params: {
           countryId ,
           ...(provinceId !== undefined ? {provinceId } : {}),
           ...((fullName == undefined || fullName?.length < 2) ? {} : {fullName}),
           ...((areaId == undefined || countryId != 1) ? { } : {areaId})
-        }});
-      if (!getUsers.data.data) {
+        }}));
+      if (getUsers?.errors) {
         throw new Error('getUsers bulunamadı.');
       }
-      return getUsers.data.data;
+      return getUsers.data;
     } catch (error: any) {
       this.envService.logDebug('getUsers error', error);
     }
@@ -55,11 +53,11 @@ constructor() {
 
   async deleteUser(userId: number): Promise<any | null> {
     try {
-      const deleteUser = await axios.put(`${this.envService.apiUrl}/management/deleteUser?id=${userId}`);
-      if (!deleteUser.data.data) {
+      const deleteUser: any = await firstValueFrom(this.http.put(`${this.envService.apiUrl}/management/deleteUser?id=${userId}`, null));
+      if (deleteUser?.errors) {
         throw new Error('Kullanıcı silinemedi.');
       }
-      return deleteUser.data.data;
+      return deleteUser.data;
     } catch (error: any) {
       this.envService.logDebug('deleteUser error', error);
     }
@@ -67,11 +65,11 @@ constructor() {
 
    async updateUser(params: UserData): Promise<any | null> {
     try {
-      const updatedUser = await axios.put(`${this.envService.apiUrl}/management/updateUser`, params);
-      if (!updatedUser.data.data) {
+      const updatedUser: any = await firstValueFrom(this.http.put(`${this.envService.apiUrl}/management/updateUser`, params));
+      if (updatedUser?.errors) {
         throw new Error('Kullanıcı güncellenemedi.');
       }
-      return updatedUser.data.data;
+      return updatedUser.data;
     } catch (error: any) {
       this.envService.logDebug('updatedUser error', error);
     }
@@ -79,11 +77,11 @@ constructor() {
 
   async addUser(params: UserData): Promise<any | null> {
     try {
-      const addeddUser = await axios.post(`${this.envService.apiUrl}/management/addUser`, params);
-      if (!addeddUser.data.data) {
+      const addeddUser: any = await firstValueFrom(this.http.post(`${this.envService.apiUrl}/management/addUser`, params));
+      if (addeddUser?.errors) {
         throw new Error('Kullanıcı eklenemedi.');
       }
-      return addeddUser.data.data;
+      return addeddUser.data;
     } catch (error: any) {
       this.envService.logDebug('addeddUser error', error);
     }

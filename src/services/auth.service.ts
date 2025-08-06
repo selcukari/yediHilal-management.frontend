@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import axios from 'axios';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { setWithExpiry, getWithExpiry } from '../app/composables/useLocalStorage';
 import { EnvironmentService } from './environment.service';
@@ -9,14 +10,14 @@ import { EnvironmentService } from './environment.service';
 })
 export class AuthService {
   private envService = inject(EnvironmentService);
-   private currentMemberSubject = new BehaviorSubject<any>(null);
+  private currentMemberSubject = new BehaviorSubject<any>(null);
   public currentMember$ = this.currentMemberSubject.asObservable();
 
   // Component'te
 // currentMember$ = this.authService.currentMember$;
 
 
-constructor() {
+constructor(private http: HttpClient) {
     // Sayfa yenilendiğinde localStorage'dan user'ı yükle
     this.loadUserFromStorage();
   }
@@ -24,15 +25,15 @@ constructor() {
   // Email ile giriş yap
   async loginWithEmail(email: string, password: string): Promise<any| null> {
     try {
-      const getMember = await axios.get(`${this.envService.apiUrl}/managementMember/login?email=${email}&password=${password}`);
-      if (!getMember.data.data) {
+      const getMember: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementMember/login?email=${email}&password=${password}`));
+      if (getMember?.errors) {
         throw new Error('Kullanıcı bulunamadı veya şifre yanlış.');
       }
       // User'ı state'e kaydet
-      this.setCurrentMember(getMember.data.data);
+      this.setCurrentMember(getMember.data);
 
-      setWithExpiry('currentMember', JSON.stringify(getMember.data.data), 86400000 * 7); // 7 gün TTL
-      return getMember.data.data;
+      setWithExpiry('currentMember', JSON.stringify(getMember.data), 86400000 * 7); // 7 gün TTL
+      return getMember.data;
     } catch (error: any) {
       this.envService.logDebug('Login error', error);
     }
@@ -47,6 +48,10 @@ constructor() {
   getCurrentMember(): any {
     return this.currentMemberSubject.value;
   }
+
+  getCurrentToken(): string | null {
+  return this.currentMemberSubject?.value?.token || null;
+}
 
   // User'ı temizleme (logout)
   logout(): void {
