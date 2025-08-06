@@ -49,6 +49,7 @@ export class ProvinceComponent implements OnInit {
 
       // Sadece gerçekten değiştiyse işlem yap
       if (currentCountryCode !== previousCountryCode) {
+
         shouldFetchData = true;
       }
     }
@@ -60,12 +61,14 @@ export class ProvinceComponent implements OnInit {
 
       // Sadece gerçekten değiştiyse işlem yap
       if (currentAreaCode != previousAreaCode) {
+
         shouldFetchData = true;
       }
     }
 
     // Sadece gerçek bir değişiklik varsa veri çek ve model'i temizle
     if (shouldFetchData) {
+
       await this.fetchProvinceData({
         ...({countryId: this.countryCode || this.model || 1 }),
         ...(this.areaCode != undefined ? {areaId: this.areaCode } : {})

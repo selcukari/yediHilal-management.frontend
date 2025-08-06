@@ -40,7 +40,7 @@ export class MemberEditComponent {
   }
 
   edit(newValue: any) {
-    console.log('Add or Edit User:', newValue);
+
     this.visible = true;
     this.memberData = newValue || this.defaultmemberData();
   }
@@ -70,13 +70,11 @@ private isFormDataValid(): boolean {
 }
 
    async onSave(form: any) {
-    console.log('Form submitted with value:', this.memberData);
     const isAngularFormValid = form.valid;
     const isCustomDataValid = this.isFormDataValid();
     const isOverallValid = isAngularFormValid && isCustomDataValid;
 
      if (!isOverallValid) {
-      console.log('Form is invalid:', form);
       if (form.control?.markAllAsTouched) {
       form.control.markAllAsTouched();
     }
@@ -108,7 +106,6 @@ private isFormDataValid(): boolean {
         ...(this.memberData.id ? {updateDate: new Date().toISOString() } : {})
       }
       const result = await this.memberService.updateMember(updateMemberValue);
-      console.log('Update result:', result);
       if (result) {
         this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kullanıcı Güncellendi' });
 

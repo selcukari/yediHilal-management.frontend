@@ -106,7 +106,6 @@ private isFormDataValid(): boolean {
         areaId: (this.memberData.areaId || 8)
       }
       const result = await this.memberService.addMember(newMemberValue);
-      console.log('add result:', result);
       if (result) {
         this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Yeni Üye Eklendi' });
 

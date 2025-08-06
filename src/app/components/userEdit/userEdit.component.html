@@ -80,7 +80,7 @@
 
         <div class="field col-12 md:col-3">
           <app-component-country [model]="userData.countryId" [isDisabled]="true"
-            (countrySelected)="onCountrySelected($event)"></app-component-country>
+          ></app-component-country>
         </div>
 
         @if (userData.countryId == 1) {
@@ -91,7 +91,7 @@
         }
 
         <div class="field col-12 md:col-3">
-          <app-component-province [model]="userData.provinceId" [areaCode]="changeAreaCode" [isRequired]="true"
+          <app-component-province [model]="userData.provinceId" [areaCode]="changeAreaCode" [countryCode]="userData.countryId" [isRequired]="true"
             (provinceSelected)="onProvinceSelected($event)"></app-component-province>
         </div>
 

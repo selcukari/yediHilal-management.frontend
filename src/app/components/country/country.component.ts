@@ -27,8 +27,6 @@ export class CountryComponent implements OnInit {
   @Input() isDisabled: boolean = false;
 
   async ngOnInit() {
-    console.log('CountryComponent initialized with isDisabled:', this.isDisabled);
-    console.log('CountryComponent initialized with model:', this.model);
     await this.fetchCountryData();
 
     this.countrySelected.emit(this.model != null ? this.model : undefined);

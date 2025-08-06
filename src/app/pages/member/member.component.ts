@@ -91,7 +91,6 @@ export class MemberPageComponent implements OnInit {
   async ngOnInit() {
 
     this.isDisabledOnlyJunior = this.authService.getCurrentMember()?.roleId == 3; // 3 is Junior role
-    console.log('Current Member:', this.authService.getCurrentMember());
 
     this.isLoading = true;
 

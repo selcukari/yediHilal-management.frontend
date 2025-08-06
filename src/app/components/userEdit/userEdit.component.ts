@@ -39,7 +39,6 @@ export class UserEditComponent {
   }
 
   edit(newValue: any) {
-    console.log('Add or Edit User:', newValue);
     this.visible = true;
     this.userData = newValue || this.defaultUserData();
   }
@@ -69,7 +68,6 @@ private isFormDataValid(): boolean {
 }
 
   async onSave(form: any) {
-    console.log('Form submitted with value:', this.userData);
     const isAngularFormValid = form.valid;
     const isCustomDataValid = this.isFormDataValid();
     const isOverallValid = isAngularFormValid && isCustomDataValid;
@@ -120,9 +118,6 @@ private isFormDataValid(): boolean {
     this.visible = false;
   }
 
-  onCountrySelected(countryCode: any): void {
-    this.userData.countryId = countryCode;
-  }
 
   onProvinceSelected(provinceCode: any): void {
     this.userData.provinceId = provinceCode;
