@@ -73,3 +73,10 @@ body {
   }
 }
 
+/* Tablo başlık düzeni için ek ayar */
+.flex.align-items-center {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+

@@ -24,9 +24,6 @@
         </div>
       </div>
 
-      <app-component-speedDial [pdfTitle]="pdfTitle" [valueData]="sendValueData" [tableColumns]="pdfTableColumns" [type]="2">
-      </app-component-speedDial>
-
       @if (isLoading) {
         <div class="global-loading-overlay">
           <div class="loading-content">
@@ -47,13 +44,23 @@
             [globalFilterFields]="['fullName', 'telephone', 'email', 'provinceName']">
 
             <ng-template #caption>
-              <div class="flex">
+              <div class="flex align-items-center">
                 <span class="table-title">Aktif Kullanıcılar ({{ resultData.length }})</span>
-                <p-iconfield iconPosition="left" class="ml-auto mr-2">
+
+                <p-iconfield iconPosition="left" class="flex ml-auto mr-2">
                   <p-inputicon class="pi pi-search" />
                   <input pInputText id="on_label" (ngModelChange)="onSearchChange($event)"  [(ngModel)]="searchFullName" placeholder="Kullanıcı Ara..." pSize="large" autocomplete="off" />
                 </p-iconfield>
-                <p-button icon="pi pi-refresh" icon="pi pi-refresh" (click)="refreshData()" [disabled]="isLoading" pTooltip="Yenile" tooltipPosition="top" rounded raised />
+
+                <p-button icon="pi pi-refresh" class="mr-1" icon="pi pi-refresh" (click)="refreshData()" [disabled]="isLoading" pTooltip="Yenile" tooltipPosition="top" rounded raised />
+
+                <app-component-speedDial
+                  [pdfTitle]="pdfTitle"
+                  [valueData]="sendValueData"
+                  [tableColumns]="pdfTableColumns"
+                  [type]="2"
+                  >
+                </app-component-speedDial>
               </div>
             </ng-template>
 
