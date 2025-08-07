@@ -2,7 +2,7 @@
 <div class="card flex justify-center">
   <form #exampleForm="ngForm" (ngSubmit)="onSubmit(exampleForm)" class="flex flex-col gap-4 w-full sm:w-56">
     <div class="flex flex-col gap-1">
-      <input pInputText type="email" id="email" placeholder="email" name="email" [(ngModel)]="user.email" #email="ngModel" required email
+      <input pInputText type="email" id="email" placeholder="email" pSize="large" name="email" [(ngModel)]="user.email" #email="ngModel" required email
         [class.ng-invalid]="email.invalid && (email.touched || exampleForm.submitted)" />
 
         @if (email.invalid && (email.touched || exampleForm.submitted)) {
@@ -18,7 +18,7 @@
     </div>
 
     <div class="flex flex-col gap-1">
-      <input pInputText type="password" id="password" name="password" placeholder="password" [(ngModel)]="user.password" #password="ngModel" required password
+      <input pInputText type="password" id="password" name="password" placeholder="password" pSize="large" [(ngModel)]="user.password" #password="ngModel" required password
         [class.ng-invalid]="password.invalid && (password.touched || exampleForm.submitted)" />
 
         @if (password.invalid && (password.touched || exampleForm.submitted)) {
