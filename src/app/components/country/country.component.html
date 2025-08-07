@@ -1,5 +1,5 @@
 <div class="card flex justify-center">
     <p-select [options]="countries" optionLabel="name" optionValue="code" [(ngModel)]="model" [disabled]="isDisabled"
       (onChange)="onCountrySelect($event.value)" optionLabel="name" placeholder="Ülke Seçiniz" class="w-full md:w-56"
-      [panelStyle]="{'z-index':'1100'}"/>
+    />
 </div>
