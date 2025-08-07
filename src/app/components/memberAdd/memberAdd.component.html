@@ -1,6 +1,6 @@
 
     <p-toast />
-    <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '40rem' }">
+    <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '45rem' }">
         <ng-template #header>
             <div class="inline-flex items-center justify-center gap-2">
                 <p-avatar icon="pi pi-user" class="mr-2" size="large"  shape="circle" />
@@ -94,7 +94,7 @@
           </p-floatlabel>
         </div>
 
-        <div class="field col-12 md:col-6">
+        <div class="field col-12 md:col-3">
           <app-component-role [model]="memberData.roleId"
             (roleSelected)="onRoleSelected($event)"></app-component-role>
         </div>
@@ -104,13 +104,13 @@
         </div>
 
         @if (memberData.countryId == 1) {
-          <div class="field col-12 md:col-3">
+          <div class="field col-12 md:col-5">
             <app-component-area (areaSelected)="onAreaSelected($event)"></app-component-area>
           </div>
         }
 
         @if ((memberData.countryId == 1 && memberData.areaId) || (memberData.countryId && memberData.countryId !=1)) {
-          <div class="field col-12 md:col-3">
+          <div class="field col-12 md:col-4">
             <app-component-province [areaCode]="changeAreaCode" [countryCode]="changeCountryCode" [isRequired]="true"
               (provinceSelected)="onProvinceSelected($event)"></app-component-province>
           </div>
