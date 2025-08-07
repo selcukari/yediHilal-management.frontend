@@ -22,6 +22,7 @@ export class ProvinceComponent implements OnInit {
 
   private provinceService = inject(ProvinceService);
   provinces!: Province[];
+  defaultAreaCode: number = 8;
 
   @Input() countryCode?: number;
   @Input() areaCode?: number;
@@ -65,12 +66,22 @@ export class ProvinceComponent implements OnInit {
       }
     }
 
+    if (this.model) {
+
+      await this.fetchProvinceData({
+        ...({countryId: this.countryCode || 1 }),
+        ...(this.areaCode == undefined || this.defaultAreaCode == this.areaCode ? {} : {areaId: this.areaCode})
+      });
+
+      return;
+    }
+
     // Sadece gerçek bir değişiklik varsa veri çek ve model'i temizle
     if (shouldFetchData) {
 
       await this.fetchProvinceData({
-        ...({countryId: this.countryCode || this.model || 1 }),
-        ...(this.areaCode != undefined ? {areaId: this.areaCode } : {})
+        ...({countryId: this.countryCode || 1 }),
+        ...(this.areaCode == undefined || this.defaultAreaCode == this.areaCode ? {} : {areaId: this.areaCode})
       });
 
       this.model = undefined;

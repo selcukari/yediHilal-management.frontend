@@ -47,7 +47,7 @@ export class MemberEditComponent {
 
     this.visible = true;
     this.memberData = newValue || this.defaultmemberData();
-
+    this.changeAreaCode = this.memberData.areaId;
     this.lazyValue = clone(newValue);
 
     await new Promise(resolve => setTimeout(resolve, 100));
@@ -58,9 +58,9 @@ export class MemberEditComponent {
       id: null,
       fullName: "",
       isActive: true,
-      countryId: null,
-      areaId: null,
-      provinceId: null,
+      countryId: undefined,
+      areaId: undefined,
+      provinceId: undefined,
       identificationNumber: null,
       telephone: null,
       email: null,

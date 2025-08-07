@@ -57,6 +57,7 @@ export class UserEditComponent {
   async edit(newValue: any) {
     this.visible = true;
     this.userData = newValue || this.defaultUserData;
+    this.changeAreaCode = this.userData.areaId;
 
     this.lazyValue = clone(newValue);
 

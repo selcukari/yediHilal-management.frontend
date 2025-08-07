@@ -97,7 +97,7 @@
     }
 
     <div class="field col-12 md:col-4">
-      <app-component-province [model]="memberData.provinceId" [areaCode]="changeAreaCode" [isRequired]="true"
+      <app-component-province [model]="memberData.provinceId" [countryCode]="memberData.countryId" [areaCode]="changeAreaCode" [isRequired]="true"
         (provinceSelected)="onProvinceSelected($event)"></app-component-province>
     </div>
 

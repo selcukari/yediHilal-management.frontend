@@ -24,7 +24,7 @@ export class ProvinceService {
       const getProvinces: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/management/getProvincesByCountryOrArea`, {
         params: {
           countryId,
-          ...((areaId == undefined || countryId != 1) ? { } : {areaId})
+        ...(areaId == undefined || areaId == 8 ? {} : {areaId})
         }}));
       if (getProvinces?.errors) {
         throw new Error('getProvinces bulunamadı.');
