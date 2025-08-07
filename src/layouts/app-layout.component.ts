@@ -42,8 +42,8 @@ export class AppLayoutComponent {
       { name: 'Üye Yönetimi', code: 'members' },
       { name: 'Gön. Kul. E-Mail Listesi', code: 'mailList/2' },
       { name: 'Gön. Üye E-Mail Listesi', code: 'mailList/1' },
-      { name: 'Gön. Kul. Bildirim Listesi', code: 'messageList/2' },
-      { name: 'Gön. Üye Bildirim Listesi', code: 'messageList/1' },
+      { name: 'Gön. Kul. Mesaj Listesi', code: 'messageList/2' },
+      { name: 'Gön. Üye Mesaj Listesi', code: 'messageList/1' },
     ];
   }
 

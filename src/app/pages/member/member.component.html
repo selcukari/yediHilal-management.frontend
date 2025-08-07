@@ -5,11 +5,12 @@
       <div class="toolbar-container">
         <h2>Toolbar Filtreleme Alanı</h2>
         <div class="toolbar-row">
-          <app-component-country (countrySelected)="onCountrySelected($event)" (countrySelectedName)="onCountrySelectedName($event)"></app-component-country>
+          <app-component-country (countrySelected)="onCountrySelected($event)" (countrySelectedName)="onCountrySelectedName($event)" [model]="1">
+          </app-component-country>
           @if (selectedCountry == 1) {
             <app-component-area (areaSelected)="onAreaSelected($event)" (areaSelectedName)="onAreaSelectedName($event)"></app-component-area>
-
           }
+
           <app-component-province [countryCode]="selectedCountry" [areaCode]="selectedArea" (provinceSelected)="onProvinceSelected($event)"
             (provinceSelected)="onProvinceSelected($event)"></app-component-province>
 
