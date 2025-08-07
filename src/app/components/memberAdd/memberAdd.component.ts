@@ -81,43 +81,40 @@ private isFormDataValid(): boolean {
       form.control.markAllAsTouched();
     }
 
-      // Manuel olarak touched durumu da ayarlanabilir (isteğe bağlı)
-      Object.keys(form.controls).forEach(field => {
-        const control = form.controls[field];
-        control.markAsTouched({ onlySelf: true });
-      });
+    // Manuel olarak touched durumu da ayarlanabilir (isteğe bağlı)
+    Object.keys(form.controls).forEach(field => {
+      const control = form.controls[field];
+      control.markAsTouched({ onlySelf: true });
+    });
 
       this.messageService.add({ severity: 'warn', summary: 'Eksik Alan', detail: 'Lütfen gerekli alanları doldurunuz.' });
       return;
     }
 
 
-      const newMemberValue = {
-        fullName: this.memberData.fullName,
-        identificationNumber: this.memberData.identificationNumber,
-        telephone: this.memberData.telephone,
-        email: this.memberData.email,
-        password: this.memberData.password,
-        roleId: this.memberData.roleId,
-        dateOfBirth: this.memberData.dateOfBirth,
-        countryId: this.memberData.countryId,
-        provinceId: this.memberData.provinceId,
-        isActive: this.memberData.isActive,
-        areaId: (this.memberData.areaId || 8)
-      }
-      const result = await this.memberService.addMember(newMemberValue);
-      if (result) {
-        this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Yeni Üye Eklendi' });
+    const newMemberValue = {
+      fullName: this.memberData.fullName,
+      identificationNumber: this.memberData.identificationNumber,
+      telephone: this.memberData.telephone,
+      email: this.memberData.email,
+      password: this.memberData.password,
+      roleId: this.memberData.roleId,
+      dateOfBirth: this.memberData.dateOfBirth,
+      countryId: this.memberData.countryId,
+      provinceId: this.memberData.provinceId,
+      isActive: this.memberData.isActive,
+      areaId: (this.memberData.areaId || 8)
+    }
+    const result = await this.memberService.addMember(newMemberValue);
+    if (result) {
+      this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Yeni Üye Eklendi' });
 
-        this.visible = false;
+      this.visible = false;
 
-        return;
-      } else {
-        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Yeni Üye Eklenirken ha oluştu' });
-      }
-
-
-
+      return;
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Yeni Üye Eklenirken ha oluştu' });
+    }
   }
 
   async onCancel(form: any) {
