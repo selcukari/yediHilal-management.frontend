@@ -70,7 +70,17 @@ export class SpeedDialComponent implements OnInit {
       textColor: '#2c3e50' // Koyu gri
     };
 
-    this.pdfHelperService.generatePdf(this.valueData, this.tableColumns, config);
+    const modifiedCols = this.tableColumns.map(col => {
+      if (col.key === 'identificationNumber') {
+        return { ...col, title: 'K. Numarası' };
+      }
+      if (col.key === 'createdDate') {
+        return { ...col, title: 'Oluşturulma T.' };
+      }
+      return col;
+    });
+
+    this.pdfHelperService.generatePdf(this.valueData, modifiedCols, config);
   }
 
   sendMail(type: number) {

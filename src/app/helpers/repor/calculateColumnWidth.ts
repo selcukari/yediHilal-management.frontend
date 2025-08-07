@@ -4,10 +4,10 @@ export const calculateColumnWidthUser = (field: string): number | undefined => {
     'fullName': 32,
     'telephone': 25,
     'email': 34,
-    'identificationNumber': 25,
+    'identificationNumber': 24,
     'dateOfBirth': 20,
-    'countryName': 20,
-    'provinceName': 20,
+    'countryName': 18,
+    'provinceName': 18,
     'createdDate': 30
   };
 
