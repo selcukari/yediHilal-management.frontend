@@ -8,7 +8,6 @@
           <app-component-country (countrySelected)="onCountrySelected($event)" (countrySelectedName)="onCountrySelectedName($event)"></app-component-country>
           @if (selectedCountry == 1) {
             <app-component-area (areaSelected)="onAreaSelected($event)" (areaSelectedName)="onAreaSelectedName($event)"></app-component-area>
-
           }
           <app-component-province [countryCode]="selectedCountry" [areaCode]="selectedArea" (provinceSelectedName)="onProvinceSelectedName($event)"
             (provinceSelected)="onProvinceSelected($event)"></app-component-province>

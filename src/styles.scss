@@ -55,9 +55,9 @@ body {
     gap: 1rem; // Öğeler arası boşluk
     align-items: center;
 
-    // Her dropdown bileşeni için stil (PrimeNG dropdown varsayılanını override etmek için)
-    ::ng-deep .p-dropdown {
-      min-width: 200px; // Dropdown'lar için minimum genişlik
+    // Her select bileşeni için stil (PrimeNG dropdown varsayılanını override etmek için)
+    ::ng-deep .p-select {
+      min-width: 300px; // select'lar için minimum genişlik
     }
 
     // Mobil görünüm
@@ -66,7 +66,7 @@ body {
       gap: 0.5rem;
       align-items: stretch;
 
-      ::ng-deep .p-dropdown {
+      ::ng-deep .p-select {
         width: 100%;
       }
     }
