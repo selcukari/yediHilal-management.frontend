@@ -85,7 +85,7 @@
 
     @if (userData.countryId == 1) {
       <div class="field col-12 md:col-6">
-        <app-component-area [model]="userData.areaId"
+        <app-component-area [model]="userData.areaId" [isRequired]="!!(userData.countryId == 1)"
           (areaSelected)="onAreaSelected($event)"></app-component-area>
       </div>
     }

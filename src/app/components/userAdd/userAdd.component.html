@@ -79,12 +79,13 @@
     <div class=" col-offset-3"></div>
 
     <div class="field col-12 md:col-5 mr-4">
-      <app-component-country (countrySelected)="onCountrySelected($event)" [model]="userData.countryId"></app-component-country>
+      <app-component-country (countrySelected)="onCountrySelected($event)" [model]="userData.countryId" [isRequired]="true">
+      </app-component-country>
     </div>
 
     @if (userData.countryId == 1) {
       <div class="field col-12 md:col-6">
-        <app-component-area (areaSelected)="onAreaSelected($event)"></app-component-area>
+        <app-component-area (areaSelected)="onAreaSelected($event)" [isRequired]="!!(userData.countryId == 1)"></app-component-area>
       </div>
     }
 

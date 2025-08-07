@@ -91,14 +91,14 @@
 
     @if (memberData.countryId == 1) {
       <div class="field col-12 md:col-5">
-        <app-component-area [model]="memberData.areaId"
+        <app-component-area [model]="memberData.areaId" [isRequired]="!!(memberData.countryId == 1)"
           (areaSelected)="onAreaSelected($event)"></app-component-area>
       </div>
     }
 
     <div class="field col-12 md:col-4">
-      <app-component-province [model]="memberData.provinceId" [countryCode]="memberData.countryId" [areaCode]="changeAreaCode" [isRequired]="true"
-        (provinceSelected)="onProvinceSelected($event)"></app-component-province>
+      <app-component-province [model]="memberData.provinceId" [countryCode]="memberData.countryId" [areaCode]="changeAreaCode"
+        [isRequired]="true" (provinceSelected)="onProvinceSelected($event)"></app-component-province>
     </div>
 
     <div class="field col-12 md:col-6">

@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Select } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
+import { MessageModule } from 'primeng/message';
 import { AreaService } from '../../../services/area.service';
 interface Area {
   name: string;
@@ -9,13 +10,14 @@ interface Area {
 @Component({
   selector: 'app-component-area',
   standalone: true,
-  imports: [FormsModule, Select],
+  imports: [FormsModule, Select, MessageModule],
   templateUrl: './area.component.html',
 })
 
 export class AreaComponent implements OnInit {
 
   private areaService = inject(AreaService);
+  @Input() isRequired?: boolean = false;
   areas!: Area[];
 
   @Output() areaSelectedName = new EventEmitter<string>();

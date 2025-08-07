@@ -51,8 +51,8 @@ export class UserAddComponent {
       fullName: "",
       isActive: true,
       countryId: undefined,
-      areaId: null,
-      provinceId: null,
+      areaId: undefined,
+      provinceId: undefined,
       identificationNumber: null,
       telephone: null,
       email: null,
@@ -64,6 +64,7 @@ export class UserAddComponent {
 private isFormDataValid(): boolean {
   const requiredFields = {
     provinceId: !!this.userData.provinceId,
+    countryId: !!this.userData.countryId,
   };
 
   return Object.values(requiredFields).every(isValid => isValid);
