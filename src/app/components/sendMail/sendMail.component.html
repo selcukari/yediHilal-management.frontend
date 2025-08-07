@@ -1,73 +1,73 @@
 
-    <p-toast />
-    <p-confirmdialog />
+<p-toast />
+<p-confirmdialog />
 
-    @if (isLoading) {
-      <div class="global-loading-overlay">
-        <div class="loading-content">
-          <p-progressSpinner></p-progressSpinner>
-          <p>E-mailler gönderiliyor...</p>
-        </div>
-      </div>
-    }
+@if (isLoading) {
+  <div class="global-loading-overlay">
+    <div class="loading-content">
+      <p-progressSpinner></p-progressSpinner>
+      <p>E-mailler gönderiliyor...</p>
+    </div>
+  </div>
+}
 
-    <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '40rem' }">
-        <ng-template #header>
-            <span class="text-surface-500 dark:text-surface-400 block mb-8">E-Mail Gönder</span>
-        </ng-template>
-      <form #sendMailForm="ngForm"  class="formgrid grid">
+<p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '40rem' }">
+    <ng-template #header>
+        <span class="text-surface-500 dark:text-surface-400 block mb-8">E-Mail Gönder</span>
+    </ng-template>
+  <form #sendMailForm="ngForm"  class="formgrid grid">
 
-        <div class="field col-12 mt-2">
-          <p-floatlabel variant="on" class="w-full">
-            <input pInputText id="subject" name="subject" class="w-full"  [(ngModel)]="valueData.subject" #subject="ngModel" pSize="large" required
-              [class.ng-invalid]="subject.invalid && (subject.touched || sendMailForm.submitted)" autocomplete="off" />
-              @if (subject.invalid && (subject.touched || sendMailForm.submitted)) {
-                <p-message severity="error" variant="simple">Konu is required.</p-message>
-              }
-            <label for="subject">Konu</label>
-          </p-floatlabel>
-        </div>
-
-        <div class="field col-12">
-          <p-editor id="content" #content="ngModel" [(ngModel)]="valueData.content" [class.ng-invalid]="content.invalid && (content.touched || sendMailForm.submitted)"
-            (onTextChange)="content.control.markAsTouched()" name="content" [style]="{ height: '320px' }" required>
-            <ng-template #header>
-              <span class="ql-formats">
-                <button type="button" class="ql-bold" aria-label="Bold"></button>
-                <button type="button" class="ql-italic" aria-label="Italic"></button>
-                <button type="button" class="ql-underline" aria-label="Underline"></button>
-              </span>
-              <span class="ql-formats">
-                <select class="ql-size">
-                  <option value="small"></option>
-                  <option selected></option>
-                  <option value="large"></option>
-                  <option value="huge"></option>
-                </select>
-              </span>
-              <span class="ql-formats">
-                <button type="button" class="ql-list" value="ordered" aria-label="Ordered List"></button>
-                <button type="button" class="ql-list" value="bullet" aria-label="Unordered List"></button>
-              </span>
-              <span class="ql-formats">
-                <select class="ql-align">
-                  <option selected></option>
-                  <option value="center"></option>
-                  <option value="right"></option>
-                  <option value="justify"></option>
-                </select>
-              </span>
-            </ng-template>
-          </p-editor>
-          @if (content.invalid && (content.touched || sendMailForm.submitted)) {
-            <p-message severity="error" size="small" variant="simple">İçerik is required.</p-message>
+    <div class="field col-12 mt-2">
+      <p-floatlabel variant="on" class="w-full">
+        <input pInputText id="subject" name="subject" class="w-full"  [(ngModel)]="valueData.subject" #subject="ngModel" pSize="large" required
+          [class.ng-invalid]="subject.invalid && (subject.touched || sendMailForm.submitted)" autocomplete="off" />
+          @if (subject.invalid && (subject.touched || sendMailForm.submitted)) {
+            <p-message severity="error" variant="simple">Konu is required.</p-message>
           }
-        </div>
+        <label for="subject">Konu</label>
+      </p-floatlabel>
+    </div>
 
-        </form>
-        <ng-template #footer>
-            <p-button label="Cancel" [text]="true" severity="secondary" [raised]="true" severity="danger" (click)="onCancel(sendMailForm)" />
-            <p-button label="Save" [outlined]="true" severity="secondary" [raised]="true" severity="success" icon="pi pi-check" iconPos="left" (click)="onSent(sendMailForm)" />
+    <div class="field col-12">
+      <p-editor id="content" #content="ngModel" [(ngModel)]="valueData.content" [class.ng-invalid]="content.invalid && (content.touched || sendMailForm.submitted)"
+        (onTextChange)="content.control.markAsTouched()" name="content" [style]="{ height: '320px' }" required>
+        <ng-template #header>
+          <span class="ql-formats">
+            <button type="button" class="ql-bold" aria-label="Bold"></button>
+            <button type="button" class="ql-italic" aria-label="Italic"></button>
+            <button type="button" class="ql-underline" aria-label="Underline"></button>
+          </span>
+          <span class="ql-formats">
+            <select class="ql-size">
+              <option value="small"></option>
+              <option selected></option>
+              <option value="large"></option>
+              <option value="huge"></option>
+            </select>
+          </span>
+          <span class="ql-formats">
+            <button type="button" class="ql-list" value="ordered" aria-label="Ordered List"></button>
+            <button type="button" class="ql-list" value="bullet" aria-label="Unordered List"></button>
+          </span>
+          <span class="ql-formats">
+            <select class="ql-align">
+              <option selected></option>
+              <option value="center"></option>
+              <option value="right"></option>
+              <option value="justify"></option>
+            </select>
+          </span>
         </ng-template>
-    </p-dialog>
+      </p-editor>
+      @if (content.invalid && (content.touched || sendMailForm.submitted)) {
+        <p-message severity="error" size="small" variant="simple">İçerik is required.</p-message>
+      }
+    </div>
+
+    </form>
+    <ng-template #footer>
+        <p-button label="Cancel" [text]="true" severity="secondary" [raised]="true" severity="danger" (click)="onCancel(sendMailForm)" />
+        <p-button label="Save" [outlined]="true" severity="secondary" [raised]="true" severity="success" icon="pi pi-check" iconPos="left" (click)="onSent(sendMailForm)" />
+    </ng-template>
+</p-dialog>
 

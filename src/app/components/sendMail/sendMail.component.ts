@@ -143,5 +143,5 @@ export class SendMailComponent {
       this.visible = false;
     }
     // Bu satırı kaldırdık: this.visible = false;
-    }
+  }
 }

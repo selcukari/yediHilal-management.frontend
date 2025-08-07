@@ -9,6 +9,7 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AvatarModule } from 'primeng/avatar';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CountryComponent } from '../country/country.component';
 import { ProvinceComponent } from '../province/province.component';
@@ -16,11 +17,12 @@ import { AreaComponent } from '../area/area.component';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { MemberService } from '../../../services/member.service';
 import { RoleComponent } from '../role/role.component';
+import { isEquals } from '../../helpers'
 
 @Component({
   selector: 'app-component-memberAdd',
   standalone: true,
-  imports: [Dialog, ToggleSwitch, RoleComponent, ToastModule, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
+  imports: [Dialog, ConfirmDialog, ToggleSwitch, RoleComponent, ToastModule, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
   providers: [MessageService, ConfirmationService],
   templateUrl: './memberAdd.component.html',
 })
@@ -50,7 +52,7 @@ export class MemberAddComponent {
       id: null,
       fullName: "",
       isActive: true,
-      countryId: null,
+      countryId: undefined,
       password: null,
       roleId: 3,
       areaId: null,
@@ -118,7 +120,41 @@ private isFormDataValid(): boolean {
   }
 
   async onCancel(form: any) {
-    this.visible = false;
+    if (!isEquals(this.defaultmemberData(), this.memberData)) {
+
+      this.confirmationService.confirm({
+        target: form.target as EventTarget,
+        message: 'Yaptığınız değişiklikler iptal olcaktır devam etmek istiyor musunuz?',
+        header: 'Tehlikeli Bölge',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Cancel',
+        rejectButtonProps: {
+          label: 'Hayır',
+          severity: 'secondary',
+          outlined: true,
+        },
+        acceptButtonProps: {
+          label: 'Evet',
+          severity: 'danger',
+        },
+
+        accept: async () => {
+
+          this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
+          this.visible = false;
+          this.memberData = this.defaultmemberData();
+
+        },
+        reject: () => {
+          this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
+          // Dialog açık kalacak - this.visible = false; yok
+        },
+      });
+    } else {
+        // Eğer form boşsa direkt kapat
+        this.visible = false;
+    }
+    // Bu satırı kaldırdık: this.visible = false;
   }
 
   onCountrySelected(countryCode: any): void {
