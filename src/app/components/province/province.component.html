@@ -1,10 +1,14 @@
 <div class="card flex justify-center">
-    <p-select [options]="provinces" (onChange)="onProvinceSelect($event.value)"
-    optionLabel="name" optionValue="code" [(ngModel)]="model"
-    optionLabel="name" placeholder="İl Seçiniz"
-    class="w-full md:w-56" />
+    @if (provinces) {
+        <p-select [options]="provinces" (onChange)="onProvinceSelect($event.value)"
+        optionLabel="name" optionValue="code" [(ngModel)]="model"
+        optionLabel="name" placeholder="İl Seçiniz"
+        class="w-full md:w-56" />
+    } @else {
+      <p-progressSpinner styleClass="w-1rem h-1rem" strokeWidth="4" />
+    }
 
      @if (isRequired && !model) {
-        <p-message severity="error" variant="simple" class="mt-1">İl is required.</p-message>
+      <p-message severity="error" variant="simple" class="mt-1">İl is required.</p-message>
     }
 </div>

@@ -1,23 +1,21 @@
 import { Component, inject, OnInit, Input, EventEmitter, Output, SimpleChanges } from '@angular/core';
 import { Select } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
+import { ProgressSpinner } from 'primeng/progressspinner';
 import { MessageModule } from 'primeng/message';
 import { ProvinceService } from '../../../services/province.service';
-
 interface Province {
   name: string;
   code: string;
 }
-
 interface ProvinceParams {
   countryId: number;
   areaId?: number;
 }
-
 @Component({
   selector: 'app-component-province',
   standalone: true,
-  imports: [FormsModule, Select, MessageModule],
+  imports: [FormsModule, Select, MessageModule, ProgressSpinner],
   templateUrl: './province.component.html',
 })
 

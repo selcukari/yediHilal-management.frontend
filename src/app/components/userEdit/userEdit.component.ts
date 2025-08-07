@@ -38,9 +38,11 @@ export class UserEditComponent {
     }
   }
 
-  edit(newValue: any) {
+  async edit(newValue: any) {
     this.visible = true;
     this.userData = newValue || this.defaultUserData();
+
+    await new Promise(resolve => setTimeout(resolve, 100));
   }
 
   defaultUserData(): any {
