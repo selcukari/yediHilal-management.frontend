@@ -50,7 +50,7 @@ export class UserAddComponent {
       id: null,
       fullName: "",
       isActive: true,
-      countryId: null,
+      countryId: undefined,
       areaId: null,
       provinceId: null,
       identificationNumber: null,
