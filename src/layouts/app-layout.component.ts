@@ -12,7 +12,6 @@ interface PageType {
   name: string,
   code: string
 }
-
 @Component({
   selector: 'app-layout',
   standalone: true,
@@ -47,7 +46,7 @@ export class AppLayoutComponent {
     ];
   }
 
-    onPageSelect(route: any): void {
+  onPageSelect(route: any): void {
 
     if(route && route.code) {
       this.router.navigate([`/${route.code}`]);
