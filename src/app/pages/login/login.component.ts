@@ -29,7 +29,6 @@ export class LoginPageComponent {
   async onSubmit(form: any) {
     if (form.valid) {
      try {
-        // Firebase ile giriş yap
         const member = await this.authService.loginWithEmail(this.user.email, this.user.password);
 
         if (member) {
@@ -42,9 +41,17 @@ export class LoginPageComponent {
 
           // Form'u temizle
           form.resetForm();
+          await new Promise(resolve => setTimeout(resolve, 2000));
 
           this.router.navigate(['/home']);
         }
+
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Uyarı',
+          detail: 'Giriş Bilgileriniz Yanlış!',
+          life: 3000
+        });
 
       } catch (error: any) {
         this.messageService.add({
