@@ -34,7 +34,9 @@ export class ProvinceComponent implements OnInit {
 
 
   async ngOnInit() {
-    await this.fetchProvinceData({ countryId: this.countryCode || 1 });
+    if (this.model) {
+      await this.fetchProvinceData({ countryId: this.countryCode || 1 });
+    }
   }
 
    async ngOnChanges(changes: SimpleChanges): Promise<void> {

@@ -79,20 +79,18 @@
 
 
         <div class="field col-12 md:col-3">
-          <app-component-country [model]="userData.countryId"
-            (countrySelected)="onCountrySelected($event)"></app-component-country>
+          <app-component-country (countrySelected)="onCountrySelected($event)"></app-component-country>
         </div>
 
         @if (userData.countryId == 1) {
           <div class="field col-12 md:col-3">
-            <app-component-area [model]="userData.areaId"
-              (areaSelected)="onAreaSelected($event)"></app-component-area>
+            <app-component-area (areaSelected)="onAreaSelected($event)"></app-component-area>
           </div>
         }
 
         @if ((userData.countryId == 1 && userData.areaId) || (userData.countryId && userData.countryId !=1)) {
           <div class="field col-12 md:col-3">
-            <app-component-province [model]="userData.provinceId" [areaCode]="changeAreaCode" [countryCode]="changeCountryCode" [isRequired]="true"
+            <app-component-province [areaCode]="changeAreaCode" [countryCode]="changeCountryCode" [isRequired]="true"
               (provinceSelected)="onProvinceSelected($event)"></app-component-province>
           </div>
         }

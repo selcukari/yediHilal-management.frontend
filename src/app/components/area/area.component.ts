@@ -2,12 +2,10 @@ import { Component, inject, OnInit, Input, EventEmitter, Output } from '@angular
 import { Select } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { AreaService } from '../../../services/area.service';
-
 interface Area {
-    name: string;
-    code: string;
+  name: string;
+  code: string;
 }
-
 @Component({
   selector: 'app-component-area',
   standalone: true,

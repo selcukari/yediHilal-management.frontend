@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { CountryService } from '../../../services/country.service';
 
 interface Country {
-    name: string;
-    code: string;
+  name: string;
+  code: string;
 }
 
 @Component({
@@ -23,14 +23,13 @@ export class CountryComponent implements OnInit {
   @Output() countrySelected = new EventEmitter<number>();
   @Output() countrySelectedName = new EventEmitter<string>();
 
-  @Input() model?: number = 1;
+  @Input() model?: number;
   @Input() isDisabled: boolean = false;
 
   async ngOnInit() {
     await this.fetchCountryData();
 
     this.countrySelected.emit(this.model != null ? this.model : undefined);
-
   }
 
  private async fetchCountryData(): Promise<void> {
