@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { clone } from 'ramda';
 import { IconFieldModule } from 'primeng/iconfield';
 import { FloatLabel } from 'primeng/floatlabel';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +10,7 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AvatarModule } from 'primeng/avatar';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CountryComponent } from '../country/country.component';
 import { ProvinceComponent } from '../province/province.component';
@@ -16,11 +18,12 @@ import { AreaComponent } from '../area/area.component';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { MemberService } from '../../../services/member.service';
 import { RoleComponent } from '../role/role.component';
+import { isEquals } from '../../helpers';
 
 @Component({
   selector: 'app-component-memberEdit',
   standalone: true,
-  imports: [Dialog, RoleComponent, ToggleSwitch, ToastModule, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
+  imports: [Dialog, ConfirmDialog, RoleComponent, ToggleSwitch, ToastModule, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
   providers: [MessageService, ConfirmationService],
   templateUrl: './memberEdit.component.html',
 })
@@ -30,6 +33,7 @@ export class MemberEditComponent {
   memberData: any;
   changeAreaCode?: number;
   changeProvinceCode?: number;
+  lazyValue: any = null;
 
   constructor(private memberService: MemberService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
@@ -39,10 +43,14 @@ export class MemberEditComponent {
     }
   }
 
-  edit(newValue: any) {
+  async edit(newValue: any) {
 
     this.visible = true;
     this.memberData = newValue || this.defaultmemberData();
+
+    this.lazyValue = clone(newValue);
+
+    await new Promise(resolve => setTimeout(resolve, 100));
   }
 
   defaultmemberData(): any {
@@ -118,7 +126,40 @@ async onSave(form: any) {
   }
 
   async onCancel(form: any) {
-    this.visible = false;
+    if (!isEquals(this.lazyValue, this.memberData)) {
+
+      this.confirmationService.confirm({
+        target: form.target as EventTarget,
+        message: 'Yaptığınız değişiklikler iptal olcaktır devam etmek istiyor musunuz?',
+        header: 'Tehlikeli Bölge',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Cancel',
+        rejectButtonProps: {
+          label: 'Hayır',
+          severity: 'secondary',
+          outlined: true,
+        },
+        acceptButtonProps: {
+          label: 'Evet',
+          severity: 'danger',
+        },
+
+        accept: async () => {
+
+          this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
+          this.visible = false;
+          this.memberData = this.defaultmemberData();
+        },
+        reject: () => {
+          this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
+          // Dialog açık kalacak - this.visible = false; yok
+            },
+      });
+    } else {
+      // Eğer form boşsa direkt kapat
+      this.visible = false;
+    }
+    // Bu satırı kaldırdık: this.visible = false;
   }
 
   onCountrySelected(countryCode: any): void {

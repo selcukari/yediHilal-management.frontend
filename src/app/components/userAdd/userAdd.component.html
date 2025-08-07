@@ -1,110 +1,109 @@
 
-    <p-toast />
-    <p-confirmdialog />
-    <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '45rem' }">
-        <ng-template #header>
-            <div class="inline-flex items-center justify-center gap-2">
-                <p-avatar icon="pi pi-user" class="mr-2" size="large"  shape="circle" />
-                <span class="font-bold whitespace-nowrap">{{userData?.fullName}}</span>
-            </div>
-        </ng-template>
-        <span class="text-surface-500 dark:text-surface-400 block mb-8">Yeni kullanıcı ekle.</span>
-      <form #userAddForm="ngForm"  class="formgrid grid">
-
-        <div class="field col-12 md:col-6">
-          <p-floatlabel variant="on">
-            <p-iconfield>
-              <p-inputicon class="pi pi-user" />
-              <input pInputText id="fullName" name="fullName"  [(ngModel)]="userData.fullName" #fullName="ngModel" pSize="large" required
-                [class.ng-invalid]="fullName.invalid && (fullName.touched || userAddForm.submitted)"autocomplete="off" />
-                @if (fullName.invalid && (fullName.touched || userAddForm.submitted)) {
-                  <p-message severity="error" variant="simple">fullName is required.</p-message>
-                }
-            </p-iconfield>
-            <label for="fullName">Ad Soyad</label>
-          </p-floatlabel>
+<p-toast />
+<p-confirmdialog />
+<p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '45rem' }">
+    <ng-template #header>
+        <div class="inline-flex items-center justify-center gap-2">
+            <p-avatar icon="pi pi-user" class="mr-2" size="large"  shape="circle" />
+            <span class="font-bold whitespace-nowrap">{{userData?.fullName}}</span>
         </div>
+    </ng-template>
+    <span class="text-surface-500 dark:text-surface-400 block mb-8">Yeni kullanıcı ekle.</span>
+  <form #userAddForm="ngForm"  class="formgrid grid">
 
-        <div class="field col-12 md:col-6">
-          <p-floatlabel variant="on">
-            <p-iconfield>
-              <p-inputicon class="pi pi-phone" />
-              <input pInputText id="telephone" name="telephone"  [(ngModel)]="userData.telephone" #telephone="ngModel" pSize="large" required
-                [class.ng-invalid]="telephone.invalid && (telephone.touched || userAddForm.submitted)"autocomplete="off" />
-                @if (telephone.invalid && (telephone.touched || userAddForm.submitted)) {
-                  <p-message severity="error" variant="simple">telephone is required.</p-message>
-                }
-            </p-iconfield>
-            <label for="telephone">Telefon</label>
-          </p-floatlabel>
-        </div>
+    <div class="field col-12 md:col-6">
+      <p-floatlabel variant="on">
+        <p-iconfield>
+          <p-inputicon class="pi pi-user" />
+          <input pInputText id="fullName" name="fullName"  [(ngModel)]="userData.fullName" #fullName="ngModel" pSize="large" required
+            [class.ng-invalid]="fullName.invalid && (fullName.touched || userAddForm.submitted)"autocomplete="off" />
+            @if (fullName.invalid && (fullName.touched || userAddForm.submitted)) {
+              <p-message severity="error" variant="simple">fullName is required.</p-message>
+            }
+        </p-iconfield>
+        <label for="fullName">Ad Soyad</label>
+      </p-floatlabel>
+    </div>
 
-        <div class="field col-12 md:col-6">
-          <p-floatlabel variant="on">
-              <p-iconfield>
-                <p-inputicon class="pi pi-envelope" />
-                <input pInputText id="email" name="email"  [(ngModel)]="userData.email" #email="ngModel" pSize="large" email
-                  [class.ng-invalid]="email.invalid && (email.touched || userAddForm.submitted)"autocomplete="off" />
-                  @if (email.invalid && (email.touched || userAddForm.submitted)) {
-                    <p-message severity="error" variant="simple">
-                      @if (email.hasError('email')) {
-                        Please enter a valid email.
-                      }
-                    </p-message>
+    <div class="field col-12 md:col-6">
+      <p-floatlabel variant="on">
+        <p-iconfield>
+          <p-inputicon class="pi pi-phone" />
+          <input pInputText id="telephone" name="telephone"  [(ngModel)]="userData.telephone" #telephone="ngModel" pSize="large" required
+            [class.ng-invalid]="telephone.invalid && (telephone.touched || userAddForm.submitted)"autocomplete="off" />
+            @if (telephone.invalid && (telephone.touched || userAddForm.submitted)) {
+              <p-message severity="error" variant="simple">telephone is required.</p-message>
+            }
+        </p-iconfield>
+        <label for="telephone">Telefon</label>
+      </p-floatlabel>
+    </div>
+
+    <div class="field col-12 md:col-6">
+      <p-floatlabel variant="on">
+          <p-iconfield>
+            <p-inputicon class="pi pi-envelope" />
+            <input pInputText id="email" name="email"  [(ngModel)]="userData.email" #email="ngModel" pSize="large" email
+              [class.ng-invalid]="email.invalid && (email.touched || userAddForm.submitted)"autocomplete="off" />
+              @if (email.invalid && (email.touched || userAddForm.submitted)) {
+                <p-message severity="error" variant="simple">
+                  @if (email.hasError('email')) {
+                    Please enter a valid email.
                   }
-              </p-iconfield>
-              <label for="email">Email</label>
-          </p-floatlabel>
-        </div>
-
-        <div class="field col-12 md:col-6">
-          <p-floatlabel variant="on">
-              <p-iconfield>
-                <p-inputicon class="pi pi-id-card" />
-                <input pInputText id="identificationNumber" name="identificationNumber"  [(ngModel)]="userData.identificationNumber" #identificationNumber="ngModel" pSize="large"/>
-              </p-iconfield>
-              <label for="identificationNumber">Kimlik Numara</label>
-          </p-floatlabel>
-        </div>
-
-        <div class="field col-12 md:col-6 col-offset-3">
-          <p-floatlabel variant="on">
-            <p-iconfield>
-              <p-inputicon class="pi pi-calendar" />
-              <input pInputText id="dateOfBirth" name="dateOfBirth"  [(ngModel)]="userData.dateOfBirth" #dateOfBirth="ngModel" pSize="large"/>
+                </p-message>
+              }
             </p-iconfield>
-            <label for="dateOfBirth">Doğum Tarih</label>
-          </p-floatlabel>
-        </div>
-        <div class=" col-offset-3"></div>
+          <label for="email">Email</label>
+      </p-floatlabel>
+    </div>
 
+    <div class="field col-12 md:col-6">
+      <p-floatlabel variant="on">
+          <p-iconfield>
+            <p-inputicon class="pi pi-id-card" />
+            <input pInputText id="identificationNumber" name="identificationNumber"  [(ngModel)]="userData.identificationNumber" #identificationNumber="ngModel" pSize="large"/>
+          </p-iconfield>
+          <label for="identificationNumber">Kimlik Numara</label>
+      </p-floatlabel>
+    </div>
 
-        <div class="field col-12 md:col-5 mr-4">
-          <app-component-country (countrySelected)="onCountrySelected($event)" [model]="userData.countryId"></app-component-country>
-        </div>
+    <div class="field col-12 md:col-6 col-offset-3">
+      <p-floatlabel variant="on">
+        <p-iconfield>
+          <p-inputicon class="pi pi-calendar" />
+          <input pInputText id="dateOfBirth" name="dateOfBirth"  [(ngModel)]="userData.dateOfBirth" #dateOfBirth="ngModel" pSize="large"/>
+        </p-iconfield>
+        <label for="dateOfBirth">Doğum Tarih</label>
+      </p-floatlabel>
+    </div>
+    <div class=" col-offset-3"></div>
 
-        @if (userData.countryId == 1) {
-          <div class="field col-12 md:col-6">
-            <app-component-area (areaSelected)="onAreaSelected($event)"></app-component-area>
-          </div>
-        }
+    <div class="field col-12 md:col-5 mr-4">
+      <app-component-country (countrySelected)="onCountrySelected($event)" [model]="userData.countryId"></app-component-country>
+    </div>
 
-        @if ((userData.countryId == 1 && userData.areaId) || (userData.countryId && userData.countryId !=1)) {
-          <div class="field col-12 md:col-6">
-            <app-component-province [areaCode]="changeAreaCode" [countryCode]="changeCountryCode" [isRequired]="true"
-              (provinceSelected)="onProvinceSelected($event)"></app-component-province>
-          </div>
-        }
+    @if (userData.countryId == 1) {
+      <div class="field col-12 md:col-6">
+        <app-component-area (areaSelected)="onAreaSelected($event)"></app-component-area>
+      </div>
+    }
 
-        <div class="field col-12 md:col-6">
-          <label for="isActive" class="mr-2">Aktif Durumu:</label>
-          <p-toggleswitch id="isActive" name="isActive" [(ngModel)]="userData.isActive" />
-        </div>
+    @if ((userData.countryId == 1 && userData.areaId) || (userData.countryId && userData.countryId !=1)) {
+      <div class="field col-12 md:col-6">
+        <app-component-province [areaCode]="changeAreaCode" [countryCode]="changeCountryCode" [isRequired]="true"
+          (provinceSelected)="onProvinceSelected($event)"></app-component-province>
+      </div>
+    }
 
-        </form>
-        <ng-template #footer class="mt-5">
-            <p-button label="Cancel" [text]="true" severity="secondary" [raised]="true" severity="danger" (click)="onCancel(userAddForm)" />
-            <p-button label="Save" [outlined]="true" severity="secondary" [raised]="true" severity="success" icon="pi pi-check" iconPos="left" (click)="onSave(userAddForm)" />
-        </ng-template>
-    </p-dialog>
+    <div class="field col-12 md:col-6">
+      <label for="isActive" class="mr-2">Aktif Durumu:</label>
+      <p-toggleswitch id="isActive" name="isActive" [(ngModel)]="userData.isActive" />
+    </div>
+
+    </form>
+    <ng-template #footer class="mt-5">
+        <p-button label="Cancel" [text]="true" severity="secondary" [raised]="true" severity="danger" (click)="onCancel(userAddForm)" />
+        <p-button label="Save" [outlined]="true" severity="secondary" [raised]="true" severity="success" icon="pi pi-check" iconPos="left" (click)="onSave(userAddForm)" />
+    </ng-template>
+</p-dialog>
 

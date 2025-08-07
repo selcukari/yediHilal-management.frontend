@@ -137,7 +137,6 @@ private isFormDataValid(): boolean {
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
           this.visible = false;
           this.userData = this.defaultUserData();
-
         },
         reject: () => {
           this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });

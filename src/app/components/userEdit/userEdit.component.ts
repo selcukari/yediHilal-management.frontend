@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { clone } from 'ramda';
 import { IconFieldModule } from 'primeng/iconfield';
 import { FloatLabel } from 'primeng/floatlabel';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +17,7 @@ import { ProvinceComponent } from '../province/province.component';
 import { AreaComponent } from '../area/area.component';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { UserService } from '../../../services/user.service';
+import { isEquals } from '../../helpers';
 
 @Component({
   selector: 'app-component-userEdit',
@@ -30,45 +32,45 @@ export class UserEditComponent {
   userData: any;
   changeAreaCode?: number;
   changeProvinceCode?: number;
+  lazyValue: any = null;
+  defaultUserData = {
+    id: null,
+    fullName: "",
+    isActive: true,
+    countryId: undefined,
+    areaId: undefined,
+    provinceId: undefined,
+    identificationNumber: null,
+    telephone: null,
+    email: null,
+    dateOfBirth: null
+  };
 
   constructor(private userService: UserService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   ngOnInit() {
     if (!this.userData) {
-      this.userData = this.defaultUserData();
+      this.userData = this.defaultUserData;
     }
   }
 
   async edit(newValue: any) {
     this.visible = true;
-    this.userData = newValue || this.defaultUserData();
+    this.userData = newValue || this.defaultUserData;
+
+    this.lazyValue = clone(newValue);
 
     await new Promise(resolve => setTimeout(resolve, 100));
   }
 
-  defaultUserData(): any {
-    return {
-      id: null,
-      fullName: "",
-      isActive: true,
-      countryId: null,
-      areaId: null,
-      provinceId: null,
-      identificationNumber: null,
-      telephone: null,
-      email: null,
-      dateOfBirth: null
+    // Validasyon fonksiyonu
+  private isFormDataValid(): boolean {
+    const requiredFields = {
+      provinceId: !!this.userData.provinceId,
     };
+
+    return Object.values(requiredFields).every(isValid => isValid);
   }
-
-  // Validasyon fonksiyonu
-private isFormDataValid(): boolean {
-  const requiredFields = {
-    provinceId: !!this.userData.provinceId,
-  };
-
-  return Object.values(requiredFields).every(isValid => isValid);
-}
 
   async onSave(form: any) {
     const isAngularFormValid = form.valid;
@@ -118,7 +120,40 @@ private isFormDataValid(): boolean {
   }
 
   async onCancel(form: any) {
-    this.visible = false;
+    if (!isEquals(this.lazyValue, this.userData)) {
+
+      this.confirmationService.confirm({
+        target: form.target as EventTarget,
+        message: 'Yaptığınız değişiklikler iptal olcaktır devam etmek istiyor musunuz?',
+        header: 'Tehlikeli Bölge',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Cancel',
+        rejectButtonProps: {
+          label: 'Hayır',
+          severity: 'secondary',
+          outlined: true,
+        },
+        acceptButtonProps: {
+          label: 'Evet',
+          severity: 'danger',
+        },
+
+        accept: async () => {
+
+          this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
+          this.visible = false;
+          this.userData = this.defaultUserData;
+        },
+        reject: () => {
+          this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
+          // Dialog açık kalacak - this.visible = false; yok
+        },
+      });
+    } else {
+      // Eğer form boşsa direkt kapat
+      this.visible = false;
+    }
+    // Bu satırı kaldırdık: this.visible = false;
   }
 
 
