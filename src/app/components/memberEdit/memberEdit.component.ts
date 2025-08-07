@@ -69,55 +69,52 @@ private isFormDataValid(): boolean {
   return Object.values(requiredFields).every(isValid => isValid);
 }
 
-   async onSave(form: any) {
-    const isAngularFormValid = form.valid;
-    const isCustomDataValid = this.isFormDataValid();
-    const isOverallValid = isAngularFormValid && isCustomDataValid;
+async onSave(form: any) {
+ const isAngularFormValid = form.valid;
+ const isCustomDataValid = this.isFormDataValid();
+ const isOverallValid = isAngularFormValid && isCustomDataValid;
 
-     if (!isOverallValid) {
-      if (form.control?.markAllAsTouched) {
-      form.control.markAllAsTouched();
-    }
+  if (!isOverallValid) {
+   if (form.control?.markAllAsTouched) {
+   form.control.markAllAsTouched();
+ }
 
-      // Manuel olarak touched durumu da ayarlanabilir (isteğe bağlı)
-      Object.keys(form.controls).forEach(field => {
-        const control = form.controls[field];
-        control.markAsTouched({ onlySelf: true });
-      });
+   // Manuel olarak touched durumu da ayarlanabilir (isteğe bağlı)
+   Object.keys(form.controls).forEach(field => {
+     const control = form.controls[field];
+     control.markAsTouched({ onlySelf: true });
+   });
 
-      this.messageService.add({ severity: 'warn', summary: 'Eksik Alan', detail: 'Lütfen gerekli alanları doldurunuz.' });
-      return;
-    }
-
-
-      const updateMemberValue = {
-        Id: this.memberData.id,
-        fullName: this.memberData.fullName,
-        identificationNumber: this.memberData.identificationNumber,
-        telephone: this.memberData.telephone,
-        email: this.memberData.email,
-        dateOfBirth: this.memberData.dateOfBirth,
-        countryId: this.memberData.countryId,
-        areaId: this.memberData.areaId,
-        provinceId: this.memberData.provinceId,
-        isActive: this.memberData.isActive,
-        createdDate: this.memberData.createdDate,
-        roleId: this.memberData.roleId,
-        ...(this.memberData.id ? {updateDate: new Date().toISOString() } : {})
-      }
-      const result = await this.memberService.updateMember(updateMemberValue);
-      if (result) {
-        this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kullanıcı Güncellendi' });
-
-        this.visible = false;
-
-        return;
-      } else {
-        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kullanıcı Güncellenemedi' });
-      }
+   this.messageService.add({ severity: 'warn', summary: 'Eksik Alan', detail: 'Lütfen gerekli alanları doldurunuz.' });
+   return;
+ }
 
 
+  const updateMemberValue = {
+    Id: this.memberData.id,
+    fullName: this.memberData.fullName,
+    identificationNumber: this.memberData.identificationNumber,
+    telephone: this.memberData.telephone,
+    email: this.memberData.email,
+    dateOfBirth: this.memberData.dateOfBirth,
+    countryId: this.memberData.countryId,
+    areaId: this.memberData.areaId,
+    provinceId: this.memberData.provinceId,
+    isActive: this.memberData.isActive,
+    createdDate: this.memberData.createdDate,
+    roleId: this.memberData.roleId,
+    ...(this.memberData.id ? {updateDate: new Date().toISOString() } : {})
+  }
+   const result = await this.memberService.updateMember(updateMemberValue);
+   if (result) {
+     this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kullanıcı Güncellendi' });
 
+     this.visible = false;
+
+     return;
+   } else {
+     this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kullanıcı Güncellenemedi' });
+   }
   }
 
   async onCancel(form: any) {
