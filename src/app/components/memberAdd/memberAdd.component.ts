@@ -55,8 +55,8 @@ export class MemberAddComponent {
       countryId: undefined,
       password: null,
       roleId: 3,
-      areaId: null,
-      provinceId: null,
+      areaId: undefined,
+      provinceId: undefined,
       identificationNumber: null,
       telephone: null,
       email: null,
@@ -68,6 +68,7 @@ export class MemberAddComponent {
 private isFormDataValid(): boolean {
   const requiredFields = {
     provinceId: !!this.memberData.provinceId,
+    countryId: !!this.memberData.countryId,
   };
 
   return Object.values(requiredFields).every(isValid => isValid);

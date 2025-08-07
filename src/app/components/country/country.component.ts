@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Select } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
+import { MessageModule } from 'primeng/message';
 import { CountryService } from '../../../services/country.service';
 
 interface Country {
@@ -11,7 +12,7 @@ interface Country {
 @Component({
   selector: 'app-component-country',
   standalone: true,
-  imports: [FormsModule, Select],
+  imports: [FormsModule, Select, MessageModule],
   templateUrl: './country.component.html',
 })
 
@@ -19,7 +20,7 @@ export class CountryComponent implements OnInit {
 
   private countryService = inject(CountryService);
   countries!: Country[];
-  // model: number = 1;
+  @Input() isRequired?: boolean = false;
   @Output() countrySelected = new EventEmitter<number>();
   @Output() countrySelectedName = new EventEmitter<string>();
 
