@@ -116,7 +116,7 @@ export class MemberPageComponent implements OnInit {
 
   get pdfTitle(): string {
     if(this.selectedAreaName && this.selectedProvinceName) {
-      return `${this.selectedCountryName}/${this.selectedAreaName}/${this.selectedProvinceName} Kullanıcı Raporu`;
+      return `${this.selectedCountryName}/${this.selectedAreaName}/${this.selectedProvinceName} Üye Raporu`;
     }
 
     if(this.selectedAreaName) {
