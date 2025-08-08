@@ -10,3 +10,5 @@ Kullanıcı ve Üyeleri yönetim sistemi
 5- Angular v19
 6- Login - Authorize
 
+7- BackEnd: Asp.Net Core Web Api(Domain-D-D) v9
+
