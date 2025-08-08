@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { IconFieldModule } from 'primeng/iconfield';
 import { FloatLabel } from 'primeng/floatlabel';
 import { FormsModule } from '@angular/forms';
@@ -26,6 +26,8 @@ import { UserService } from '../../../services/user.service';
 })
 
 export class UserAddComponent {
+  @Output() onSaveSuccess = new EventEmitter<void>();
+
   visible: boolean = false;
   userData: any;
   changeAreaCode?: number;
@@ -104,8 +106,8 @@ private isFormDataValid(): boolean {
     }
     const result = await this.userService.addUser(newUserValue);
     if (result) {
-      this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Yeni Kullanıcı Eklendi' });
-
+      this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Yeni Kullanıcı Eklendi' });
+      this.onSaveSuccess.emit();
       this.visible = false;
 
       return;

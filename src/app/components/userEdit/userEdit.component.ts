@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { clone } from 'ramda';
 import { IconFieldModule } from 'primeng/iconfield';
 import { FloatLabel } from 'primeng/floatlabel';
@@ -28,6 +28,8 @@ import { isEquals } from '../../helpers';
 })
 
 export class UserEditComponent {
+  @Output() onSaveSuccess = new EventEmitter<void>();
+
   visible: boolean = false;
   userData: any;
   changeAreaCode?: number;
@@ -110,8 +112,8 @@ export class UserEditComponent {
 
     const result = await this.userService.updateUser(updateUserValue);
     if (result) {
-      this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kullanıcı Güncellendi' });
-
+      this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Kullanıcı Güncellendi' });
+      this.onSaveSuccess.emit();
       this.visible = false;
 
       return;

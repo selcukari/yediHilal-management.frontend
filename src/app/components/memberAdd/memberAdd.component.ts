@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { IconFieldModule } from 'primeng/iconfield';
 import { FloatLabel } from 'primeng/floatlabel';
 import { FormsModule } from '@angular/forms';
@@ -28,6 +28,8 @@ import { isEquals } from '../../helpers'
 })
 
 export class MemberAddComponent {
+  @Output() onSaveSuccess = new EventEmitter<void>();
+
   visible: boolean = false;
   memberData: any;
   changeAreaCode?: number;
@@ -110,8 +112,8 @@ private isFormDataValid(): boolean {
     }
     const result = await this.memberService.addMember(newMemberValue);
     if (result) {
-      this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Yeni Üye Eklendi' });
-
+      this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Yeni Üye Eklendi' });
+      this.onSaveSuccess.emit();
       this.visible = false;
 
       return;

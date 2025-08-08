@@ -103,5 +103,5 @@
         </div>
       }
 </div>
-<app-component-userEdit></app-component-userEdit>
-<app-component-userAdd></app-component-userAdd>
+<app-component-userEdit (onSaveSuccess)="refreshData()"></app-component-userEdit>
+<app-component-userAdd (onSaveSuccess)="refreshData()"></app-component-userAdd>
