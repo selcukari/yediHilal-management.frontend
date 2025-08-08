@@ -144,35 +144,35 @@ export class HomePageComponent implements OnInit {
 
   onDelete(event: Event) {
     this.confirmationService.confirm({
-        target: event.target as EventTarget,
-        message: 'Bu kaydı silmek istiyor musunuz?',
-        header: 'Tehlikeli Bölge',
-        icon: 'pi pi-info-circle',
-        rejectLabel: 'Cancel',
-        rejectButtonProps: {
-          label: 'İptal',
-          severity: 'secondary',
-          outlined: true,
-        },
-        acceptButtonProps: {
-          label: 'Sil',
-          severity: 'danger',
-        },
+      target: event.target as EventTarget,
+      message: 'Bu kaydı silmek istiyor musunuz?',
+      header: 'Tehlikeli Bölge',
+      icon: 'pi pi-info-circle',
+      rejectLabel: 'Cancel',
+      rejectButtonProps: {
+        label: 'İptal',
+        severity: 'secondary',
+        outlined: true,
+      },
+      acceptButtonProps: {
+        label: 'Sil',
+        severity: 'danger',
+      },
 
-        accept: async () => {
-          const result = await this.userService.deleteUser(event as unknown as number);
-          if (result) {
-            this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt Silindi' });
-            await this.refreshData();
+      accept: async () => {
+        const result = await this.userService.deleteUser(event as unknown as number);
+        if (result) {
+          this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt Silindi' });
+          await this.refreshData();
 
-            return;
-          }
+          return;
+        }
 
-          this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kayıt silinemedi.' });
-        },
-        reject: () => {
-            this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
-        },
+        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kayıt silinemedi.' });
+      },
+      reject: () => {
+          this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
+      },
     });
   }
 
