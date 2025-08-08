@@ -52,12 +52,18 @@ body {
   .toolbar-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem; // Öğeler arası boşluk
+    gap: 1rem;
     align-items: center;
 
-    // Her select bileşeni için stil (PrimeNG dropdown varsayılanını override etmek için)
+    // Sadece app-component-area için genişlik ayarı
+    app-component-area {
+      min-width: 350px; // İstediğiniz genişliği ayarlayın (400px, 450px vb.)
+      flex: 1; // Esnek genişlik için
+    }
+
+    // PrimeNG dropdown bileşenleri için (eğer kullanıyorsa)
     ::ng-deep .p-select {
-      min-width: 300px; // select'lar için minimum genişlik
+      width: 100%;
     }
 
     // Mobil görünüm
@@ -65,6 +71,10 @@ body {
       flex-direction: column;
       gap: 0.5rem;
       align-items: stretch;
+
+      app-component-country, app-component-area {
+        min-width: 100% !important; // Mobilde tam genişlik
+      }
 
       ::ng-deep .p-select {
         width: 100%;
