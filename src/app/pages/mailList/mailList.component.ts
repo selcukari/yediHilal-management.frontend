@@ -3,14 +3,12 @@ import { MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
-import { Button } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { Table } from 'primeng/table';
-import { Tooltip } from 'primeng/tooltip';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { MailService, MailsType } from '../../../services/mail.service';
 import { StripHtmlPipe } from '../../helpers/stripHtml.pipe';
@@ -22,8 +20,8 @@ interface Column {
 @Component({
   selector: 'app-pages-mailList',
   standalone: true,
-  imports: [TableModule, StripHtmlPipe, ToastModule, CommonModule, Button, FormsModule, InputIconModule, InputTextModule,
-    IconFieldModule, ProgressSpinner, Tooltip],
+  imports: [TableModule, StripHtmlPipe, ToastModule, CommonModule, FormsModule, InputIconModule, InputTextModule,
+    IconFieldModule, ProgressSpinner],
   providers: [MessageService],
   templateUrl: './mailList.component.html',
   styleUrl: './mailList.component.scss'
@@ -165,10 +163,5 @@ export class MailListPageComponent implements OnInit, OnDestroy {
   onGlobalFilter(event: Event): void {
     const target = event.target as HTMLInputElement;
     this.dt.filterGlobal(target.value, 'contains');
-  }
-
-  // Refresh fonksiyonu
-  async refreshData(): Promise<void> {
-    await this.fetchMemberData(this.typeId);
   }
 }

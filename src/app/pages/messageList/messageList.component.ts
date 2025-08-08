@@ -3,14 +3,14 @@ import { MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
-import { Button } from 'primeng/button';
+// import { Button } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { Table } from 'primeng/table';
-import { Tooltip } from 'primeng/tooltip';
+// import { Tooltip } from 'primeng/tooltip';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { MessageService as MessageServiceApi, MessagesType } from '../../../services/message.service';
 import { StripHtmlPipe } from '../../helpers/stripHtml.pipe';
@@ -22,8 +22,8 @@ interface Column {
 @Component({
   selector: 'app-pages-messageList',
   standalone: true,
-  imports: [TableModule, StripHtmlPipe, ToastModule, CommonModule, Button, FormsModule, InputIconModule, InputTextModule,
-    IconFieldModule, ProgressSpinner, Tooltip],
+  imports: [TableModule, StripHtmlPipe, ToastModule, CommonModule, FormsModule, InputIconModule, InputTextModule,
+    IconFieldModule, ProgressSpinner],
   providers: [MessageService],
   templateUrl: './messageList.component.html',
   styleUrl: './messageList.component.scss'
@@ -166,7 +166,7 @@ export class MessageListPageComponent implements OnInit, OnDestroy {
   }
 
   // Refresh fonksiyonu
-  async refreshData(): Promise<void> {
-    await this.fetchMemberData(this.typeId);
-  }
+  // async refreshData(): Promise<void> {
+  //   await this.fetchMemberData(this.typeId);
+  // }
 }
