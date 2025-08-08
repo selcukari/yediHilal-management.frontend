@@ -62,7 +62,7 @@ export class SpeedDialComponent implements OnInit {
       title: `YediHilal ${this.pdfTitle}`,
       fileName: `yediHilal-` + pdfTitle.toLocaleLowerCase().replace(/\//g,'-').replace(/ /g, '-') + '.pdf',
       pageSize: 'a4',
-      orientation: 'portrait',
+      orientation: 'landscape',
       showCreationDate: true,
       showPagination: true,
       headerColor: '#3498db', // Mavi
@@ -72,10 +72,10 @@ export class SpeedDialComponent implements OnInit {
 
     const modifiedCols = this.tableColumns.map(col => {
       if (col.key === 'identificationNumber') {
-        return { ...col, title: 'K. Numarası' };
+        return { ...col, title: 'Kimlik Numarası' };
       }
       if (col.key === 'createdDate') {
-        return { ...col, title: 'Oluş. T.' };
+        return { ...col, title: 'İlk Kayıt Tarihi' };
       }
       return col;
     });

@@ -1,14 +1,14 @@
 export const calculateColumnWidthUser = (field: string): number | undefined => {
   const widthMap: {[key: string]: number} = {
-    'id': 12,
-    'fullName': 32,
-    'telephone': 25,
-    'email': 34,
-    'identificationNumber': 24,
+    'id': 15,
+    'fullName': 60,
+    'telephone': 30,
+    'email': 50,
+    'identificationNumber': 30,
     'dateOfBirth': 20,
-    'countryName': 18,
-    'provinceName': 18,
-    'createdDate': 30
+    'countryName': 25,
+    'provinceName': 30,
+    'createdDate': 35
   };
 
   return widthMap[field] || undefined;
@@ -16,16 +16,16 @@ export const calculateColumnWidthUser = (field: string): number | undefined => {
 
 export const calculateColumnWidthMember = (field: string): number | undefined => {
   const widthMap: {[key: string]: number} = {
-    'id': 11,
-    'fullName': 32,
-    'telephone': 25,
-    'email': 34,
-    'identificationNumber': 25,
-    'dateOfBirth': 17,
-    'countryName': 18,
-    'provinceName': 18,
-    'roleName': 15,
-    'createdDate': 30
+    'id': 15,
+    'fullName': 55,
+    'telephone': 30,
+    'email': 45,
+    'identificationNumber': 30,
+    'dateOfBirth': 20,
+    'countryName': 20,
+    'provinceName': 25,
+    'roleName': 25,
+    'createdDate': 35
   };
 
   return widthMap[field] || undefined;
