@@ -41,7 +41,7 @@ export class LoginPageComponent {
 
           // Form'u temizle
           form.resetForm();
-          await new Promise(resolve => setTimeout(resolve, 2000));
+          await new Promise(resolve => setTimeout(resolve, 1500));
 
           this.router.navigate(['/home']);
         }
