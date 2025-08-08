@@ -75,7 +75,7 @@ export class SpeedDialComponent implements OnInit {
         return { ...col, title: 'K. Numarası' };
       }
       if (col.key === 'createdDate') {
-        return { ...col, title: 'Oluşturulma T.' };
+        return { ...col, title: 'Oluş. T.' };
       }
       return col;
     });

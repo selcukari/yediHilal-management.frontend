@@ -28,7 +28,7 @@ export class ProvinceComponent implements OnInit {
   @Input() areaCode?: number;
   @Input() isRequired?: boolean = false;
 
-  @Output() provinceSelected = new EventEmitter<string | undefined>();
+  @Output() provinceSelected = new EventEmitter<number>();
   @Output() provinceSelectedName = new EventEmitter<string>();
   @Input() model?: number = undefined;
 
@@ -107,7 +107,7 @@ export class ProvinceComponent implements OnInit {
   }
 
   onProvinceSelect(provinceCode: any): void {
-    this.provinceSelected.emit(provinceCode);
+    this.provinceSelected.emit(provinceCode as number);
     const selectedProvince = this.provinces.find(province => province.code === provinceCode);
     if (selectedProvince) {
       this.provinceSelectedName.emit(selectedProvince.name);
