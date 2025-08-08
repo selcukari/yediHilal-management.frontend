@@ -46,13 +46,29 @@
   padding: 1rem;
   border-right: 1px solid #dee2e6;
   background-color: #f8f9fa;
-  height: calc(100vh - 150px); // Yükseklik ayarı (header ve footer yüksekliği düşülür)
-  overflow: hidden; // Kaydırmayı engelle
+  height: auto; // Yüksekliği otomatik yap
+  overflow: visible; // Overflow'u görünür yap
 
   h3 {
     margin-top: 0;
     margin-bottom: 1rem;
     color: #495057;
+  }
+}
+
+.fixed-menu {
+  height: auto; // Yüksekliği otomatik yap
+  overflow: visible; // Scroll bar'ı kaldır
+  border: none; // İsteğe bağlı: border'ı kaldır
+
+  // PrimeNG Listbox içeriğinin tamamını göster
+  ::ng-deep .p-listbox-wrapper {
+    height: auto;
+  }
+
+  ::ng-deep .p-listbox {
+    overflow: visible;
+    height: auto;
   }
 }
 
