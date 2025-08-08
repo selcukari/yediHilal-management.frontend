@@ -7,15 +7,18 @@ import { ButtonModule } from 'primeng/button';
 import { Listbox } from 'primeng/listbox';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { InputIconModule } from 'primeng/inputicon';
+
 
 interface PageType {
-  name: string,
-  code: string
+  name: string;
+  code: string;
+  icon: string;
 }
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, FormsModule, ToastModule, Listbox, ButtonModule, CommonModule],
+  imports: [RouterOutlet, RouterLink, InputIconModule, FormsModule, ToastModule, Listbox, ButtonModule, CommonModule],
   providers: [MessageService],
   templateUrl: './app-layout.component.html',
   styleUrl: './app-layout.component.scss'
@@ -37,12 +40,12 @@ export class AppLayoutComponent {
     });
 
     this.pages = [
-      { name: 'Kullanıcı Yönetimi', code: '/' },
-      { name: 'Üye Yönetimi', code: 'members' },
-      { name: 'Gön. Kul. E-Mail Listesi', code: 'mailList/2' },
-      { name: 'Gön. Üye E-Mail Listesi', code: 'mailList/1' },
-      { name: 'Gön. Kul. Mesaj Listesi', code: 'messageList/2' },
-      { name: 'Gön. Üye Mesaj Listesi', code: 'messageList/1' },
+      { name: 'Kullanıcı Yönetimi', code: '/', icon: 'pi-user' },
+      { name: 'Üye Yönetimi', code: 'members', icon: 'pi-user-edit' },
+      { name: 'Gön. Kul. E-Mail Lis.', code: 'mailList/2', icon: 'pi-send' },
+      { name: 'Gön. Üye E-Mail Lis.', code: 'mailList/1', icon: 'pi-send' },
+      { name: 'Gön. Kul. Mesaj Lis.', code: 'messageList/2', icon: 'pi-bell' },
+      { name: 'Gön. Üye Mesaj Lis.', code: 'messageList/1', icon: 'pi-bell' },
     ];
   }
 
