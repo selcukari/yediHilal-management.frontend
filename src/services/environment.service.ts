@@ -23,10 +23,6 @@ export class EnvironmentService {
     return environment.enableDebug;
   }
 
-  get firebaseConfig(): any {
-    return environment.firebaseConfig;
-  }
-
   get apiUrl(): string {
     return environment.apiUrl;
   }
