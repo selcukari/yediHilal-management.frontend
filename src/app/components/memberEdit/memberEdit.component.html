@@ -26,16 +26,15 @@
     </div>
 
     <div class="field col-12 md:col-6">
-      <p-floatlabel variant="on">
+      <p-floatlabel>
         <p-iconfield>
           <p-inputicon class="pi pi-phone" />
           <input pInputText id="telephone" name="telephone"  [(ngModel)]="memberData.telephone" #telephone="ngModel" pSize="large" required
-            [class.ng-invalid]="telephone.invalid && (telephone.touched || memberEditForm.submitted)"autocomplete="off" />
+            [class.ng-invalid]="telephone.invalid && (telephone.touched || memberEditForm.submitted)"autocomplete="off" placeholder="505 123 4567" />
             @if (telephone.invalid && (telephone.touched || memberEditForm.submitted)) {
               <p-message severity="error" variant="simple">telephone is required.</p-message>
             }
         </p-iconfield>
-        <label for="telephone">Telefon</label>
       </p-floatlabel>
     </div>
 
