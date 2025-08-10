@@ -30,7 +30,7 @@
         <p-iconfield>
           <p-inputicon class="pi pi-phone" />
           <input pInputText id="telephone" name="telephone"  [(ngModel)]="userData.telephone" #telephone="ngModel" pSize="large" required
-            [class.ng-invalid]="telephone.invalid && (telephone.touched || userEditForm.submitted)"autocomplete="off" placeholder="505 123 4567" />
+            [class.ng-invalid]="telephone.invalid && (telephone.touched || userEditForm.submitted)"autocomplete="off" placeholder="505 555 5555" />
             @if (telephone.invalid && (telephone.touched || userEditForm.submitted)) {
               <p-message severity="error" variant="simple">telephone is required.</p-message>
             }
