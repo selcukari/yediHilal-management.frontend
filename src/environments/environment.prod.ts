@@ -4,5 +4,5 @@ export const environment = {
   appName: 'MyApp Production',
   version: '1.0.0',
   enableDebug: true,
-  apiUrl: 'http://localhost:5225/api'
+  apiUrl: 'http://localhost:5015/api'
 };
