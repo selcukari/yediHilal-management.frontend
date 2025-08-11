@@ -277,7 +277,7 @@ export class HomePageComponent implements OnInit {
 
   private initializeColumns(): void {
     this.cols = [
-      { field: 'id', header: 'id' },
+      { field: 'id', header: 'Id' },
       { field: 'fullName', header: 'Ad Soyad' },
       { field: 'telephone', header: 'Telefon' },
       { field: 'email', header: 'E-mail' },

@@ -336,7 +336,7 @@ export class MemberPageComponent implements OnInit {
 
   private initializeColumns(): void {
     this.cols = [
-      { field: 'id', header: 'id' },
+      { field: 'id', header: 'Id' },
       { field: 'fullName', header: 'Ad Soyad' },
       { field: 'roleName', header: 'Rolü' },
       { field: 'telephone', header: 'Telefon' },
