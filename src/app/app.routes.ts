@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginPageComponent } from './pages/login/login.component';
 import { AppLayoutComponent } from '../layouts/app-layout.component';
-import { HomePageComponent } from './pages/home/home.component';
+import { MemberPageComponent } from './pages/member/member.component';
 import { UserPageComponent } from './pages/user/user.component';
 import { MessageListPageComponent } from './pages/messageList/messageList.component';
 import { MailListPageComponent } from './pages/mailList/mailList.component';
@@ -13,7 +13,7 @@ export const routes: Routes = [
     component: AppLayoutComponent,
     children: [
       {
-        path: '', component: HomePageComponent, canActivate: [AuthGuard]
+        path: '', component: MemberPageComponent, canActivate: [AuthGuard]
       }, // Ana sayfa yönlendirmesi
       {
         path: 'login',

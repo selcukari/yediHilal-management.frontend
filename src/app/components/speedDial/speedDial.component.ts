@@ -3,7 +3,7 @@ import { type MenuItem, MessageService } from 'primeng/api';
 import { SpeedDial } from 'primeng/speeddial';
 import { ToastModule } from 'primeng/toast';
 import { PdfHelperService, PdfConfig, TableColumn } from '../../helpers/repor/pdfHelper';
-import { ValueData } from '../../pages/home/home.component';
+import { ValueData } from '../../pages/member/member.component';
 import { SendMailComponent } from '../sendMail/sendMail.component';
 import { SendMessageComponent } from '../sendMessage/sendMessage.component'
 

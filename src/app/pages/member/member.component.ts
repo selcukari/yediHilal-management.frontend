@@ -50,15 +50,15 @@ export interface ValueData {
 }
 
 @Component({
-  selector: 'app-pages-home',
+  selector: 'app-pages-member',
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
     ConfirmDialog, SpeedDialComponent, UserAddComponent, CountryComponent, AreaComponent, Tooltip, UserEditComponent, IconFieldModule, ProvinceComponent, ProgressSpinner],
   providers: [MessageService, ConfirmationService],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  templateUrl: './member.component.html',
+  styleUrl: './member.component.scss'
 })
-export class HomePageComponent implements OnInit {
+export class MemberPageComponent implements OnInit {
   @ViewChild('dt') dt!: Table;
 
   private userService = inject(UserService);
