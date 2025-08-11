@@ -16,7 +16,8 @@ import { ProvinceComponent } from '../province/province.component';
 import { AreaComponent } from '../area/area.component';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { isEquals } from '../../helpers'
-import { UserService } from '../../../services/member.service';
+import { MemberService } from '../../../services/member.service';
+
 @Component({
   selector: 'app-component-memberAdd',
   standalone: true,
@@ -29,22 +30,22 @@ export class MemberAddComponent {
   @Output() onSaveSuccess = new EventEmitter<void>();
 
   visible: boolean = false;
-  userData: any;
+  memberData: any;
   changeAreaCode?: number;
   changeProvinceCode?: number;
   changeCountryCode?: number;
 
-  constructor(private userService: UserService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
+  constructor(private memberService: MemberService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   ngOnInit() {
-    if (!this.userData) {
-      this.userData = this.defaultUserData();
+    if (!this.memberData) {
+      this.memberData = this.defaultUserData();
     }
   }
 
   add() {
     this.visible = true;
-    this.userData = this.defaultUserData();
+    this.memberData = this.defaultUserData();
   }
 
   defaultUserData(): any {
@@ -65,8 +66,8 @@ export class MemberAddComponent {
   // Validasyon fonksiyonu
 private isFormDataValid(): boolean {
   const requiredFields = {
-    provinceId: !!this.userData.provinceId,
-    countryId: !!this.userData.countryId,
+    provinceId: !!this.memberData.provinceId,
+    countryId: !!this.memberData.countryId,
   };
 
   return Object.values(requiredFields).every(isValid => isValid);
@@ -94,17 +95,17 @@ private isFormDataValid(): boolean {
 
 
     const newUserValue = {
-      fullName: this.userData.fullName,
-      identificationNumber: this.userData.identificationNumber,
-      telephone: this.userData.telephone,
-      email: this.userData.email,
-      dateOfBirth: this.userData.dateOfBirth,
-      countryId: this.userData.countryId,
-      provinceId: this.userData.provinceId,
-      isActive: this.userData.isActive,
-      areaId: (this.userData.areaId || 8)
+      fullName: this.memberData.fullName,
+      identificationNumber: this.memberData.identificationNumber,
+      telephone: this.memberData.telephone,
+      email: this.memberData.email,
+      dateOfBirth: this.memberData.dateOfBirth,
+      countryId: this.memberData.countryId,
+      provinceId: this.memberData.provinceId,
+      isActive: this.memberData.isActive,
+      areaId: (this.memberData.areaId || 8)
     }
-    const result = await this.userService.addUser(newUserValue);
+    const result = await this.memberService.addUser(newUserValue);
     if (result) {
       this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Yeni Kullanıcı Eklendi' });
       this.onSaveSuccess.emit();
@@ -117,7 +118,7 @@ private isFormDataValid(): boolean {
   }
 
   async onCancel(form: any) {
-    if (!isEquals(this.defaultUserData(), this.userData)) {
+    if (!isEquals(this.defaultUserData(), this.memberData)) {
 
       this.confirmationService.confirm({
         target: form.target as EventTarget,
@@ -139,7 +140,7 @@ private isFormDataValid(): boolean {
 
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
           this.visible = false;
-          this.userData = this.defaultUserData();
+          this.memberData = this.defaultUserData();
         },
         reject: () => {
           this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
@@ -154,18 +155,18 @@ private isFormDataValid(): boolean {
   }
 
   onCountrySelected(countryCode: any): void {
-    this.userData.countryId = countryCode;
+    this.memberData.countryId = countryCode;
     this.changeCountryCode = countryCode;
   }
 
   onProvinceSelected(provinceCode: any): void {
-    this.userData.provinceId = provinceCode;
+    this.memberData.provinceId = provinceCode;
     this.changeProvinceCode = provinceCode;
   }
   onAreaSelected(areaCode: any): void {
-    this.userData.areaId = areaCode;
+    this.memberData.areaId = areaCode;
 
-    this.userData.provinceId = undefined;
+    this.memberData.provinceId = undefined;
     this.changeAreaCode = areaCode;
   }
 }

@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EnvironmentService } from './environment.service';
-interface UserParams {
+interface MemberParams {
   countryId: number;
   areaId?: number;
   fullName?: string;
@@ -25,13 +25,13 @@ interface UserData {
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class MemberService {
   private envService = inject(EnvironmentService);
 
   constructor(private http: HttpClient) {}
 
 
-  async users(params: UserParams): Promise<any| null> {
+  async users(params: MemberParams): Promise<any| null> {
     try {
       const { countryId, areaId, provinceId, fullName } = params;
 

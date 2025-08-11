@@ -17,8 +17,8 @@ import { ProgressSpinner } from 'primeng/progressspinner';
 import { AreaComponent } from '../../components/area/area.component';
 import { ProvinceComponent } from '../../components/province/province.component';
 import { CountryComponent } from '../../components/country/country.component';
-import { MemberEditComponent } from '../../components/member/memberEdit.component';
-import { UserService } from '../../../services/member.service';
+import { MemberEditComponent } from '../../components/memberEdit/memberEdit.component';
+import { MemberService } from '../../../services/member.service';
 import { MemberAddComponent } from '../../components/memberAdd/memberAdd.component';
 import { SpeedDialComponent } from '../../components/speedDial/speedDial.component';
 import { TableColumn } from '../../helpers/repor/pdfHelper';
@@ -28,7 +28,7 @@ interface Column {
   field: string;
   header: string;
 }
-interface UserParams {
+interface MemberParams {
   countryId: number;
   areaId?: number;
   fullName?: string;
@@ -61,7 +61,7 @@ export interface ValueData {
 export class MemberPageComponent implements OnInit {
   @ViewChild('dt') dt!: Table;
 
-  private userService = inject(UserService);
+  private memberService = inject(MemberService);
   private router = inject(Router);
 
   @ViewChild(MemberEditComponent) memberEditComponentRef!: MemberEditComponent;
@@ -86,8 +86,7 @@ export class MemberPageComponent implements OnInit {
     this.isLoading = true;
 
     try {
-      // Announcements verilerini yükle
-      await this.fetchUserData();
+      await this.fetchMemberData();
 
       // Tablo kolonlarını tanımla
       this.initializeColumns();
@@ -160,7 +159,7 @@ export class MemberPageComponent implements OnInit {
       },
 
       accept: async () => {
-        const result = await this.userService.deleteUser(event as unknown as number);
+        const result = await this.memberService.deleteUser(event as unknown as number);
         if (result) {
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt Silindi' });
           await this.refreshData();
@@ -176,8 +175,8 @@ export class MemberPageComponent implements OnInit {
     });
   }
 
-  private async fetchUserData(): Promise<void> {
-    const params: UserParams = {
+  private async fetchMemberData(): Promise<void> {
+    const params: MemberParams = {
       countryId: this.selectedCountry || 1,
       areaId: this.selectedArea,
       provinceId: this.selectedProvince, // İl kodu henüz kullanılmıyor
@@ -185,42 +184,42 @@ export class MemberPageComponent implements OnInit {
     }
      try {
 
-      const getUsers = await this.userService.users(params);
-      if (getUsers) {
-        this.resultData = getUsers;
-        this.sendValueData = this.resultData.map(user => ({
-          id: user.id,
-          fullName: user.fullName,
-          telephone: user.telephone,
-          email: user.email,
-          identificationNumber: user.identificationNumber,
-          dateOfBirth: user.dateOfBirth,
-          countryName: user.countryName,
-          provinceName: user.provinceName,
-          areaName: user.areaName,
-          createdDate: this.formatDate(user.createdDate)
+      const getMembers = await this.memberService.users(params);
+      if (getMembers) {
+        this.resultData = getMembers;
+        this.sendValueData = this.resultData.map(member => ({
+          id: member.id,
+          fullName: member.fullName,
+          telephone: member.telephone,
+          email: member.email,
+          identificationNumber: member.identificationNumber,
+          dateOfBirth: member.dateOfBirth,
+          countryName: member.countryName,
+          provinceName: member.provinceName,
+          areaName: member.areaName,
+          createdDate: this.formatDate(member.createdDate)
         }));
 
         this.messageService.add({
           severity: 'success',
           summary: 'Başarılı',
-          detail: `${getUsers.length} kullanıcı yüklendi.`,
+          detail: `${getMembers.length} üye yüklendi.`,
           life: 3000
         });
       } else {
         this.messageService.add({
           severity: 'info',
           summary: 'Bilgi',
-          detail: 'Henüz kullanıcı bulunmamaktadır.',
+          detail: 'Henüz üye bulunmamaktadır.',
           life: 3000
         });
       }
     } catch (error: any) {
-      console.error('Error fetching getUsers:', error.message);
+      console.error('Error fetching getMembers:', error.message);
       this.messageService.add({
         severity: 'error',
         summary: 'Veri Hatası',
-        detail: `KullanıcıLar yüklenirken hata: ${error.message}`,
+        detail: `Üye yüklenirken hata: ${error.message}`,
         life: 5000
       });
     }
@@ -230,7 +229,7 @@ export class MemberPageComponent implements OnInit {
     if (value.length > 3) {
       // burada API çağrısı vs. yapılabilir
       this.searchFullName = value;
-      await this.fetchUserData();
+      await this.fetchMemberData();
     }
   }
 
@@ -249,12 +248,12 @@ export class MemberPageComponent implements OnInit {
     this.selectedArea = undefined;
     this.selectedProvince = undefined;
 
-    await this.fetchUserData();
+    await this.fetchMemberData();
   }
   async onAreaSelected(areaCode: any): Promise<void> {
     this.selectedArea = areaCode;
 
-    await this.fetchUserData();
+    await this.fetchMemberData();
   }
 
   onCountrySelectedName(countryName: string): void {
@@ -272,7 +271,7 @@ export class MemberPageComponent implements OnInit {
   async onProvinceSelected(provinceCode: any): Promise<void> {
     this.selectedProvince = provinceCode;
 
-    await this.fetchUserData();
+    await this.fetchMemberData();
   }
 
   private initializeColumns(): void {
@@ -307,12 +306,6 @@ export class MemberPageComponent implements OnInit {
 
   }
 
-  openLink(link: string): void {
-    if (link && link.startsWith('http')) {
-      window.open(link, '_blank');
-    }
-  }
-
   // Arama fonksiyonu
   onGlobalFilter(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -321,6 +314,6 @@ export class MemberPageComponent implements OnInit {
 
   // Refresh fonksiyonu
   async refreshData(): Promise<void> {
-    await this.fetchUserData();
+    await this.fetchMemberData();
   }
 }

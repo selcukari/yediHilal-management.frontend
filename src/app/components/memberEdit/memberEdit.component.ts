@@ -16,7 +16,7 @@ import { CountryComponent } from '../country/country.component';
 import { ProvinceComponent } from '../province/province.component';
 import { AreaComponent } from '../area/area.component';
 import { ToggleSwitch } from 'primeng/toggleswitch';
-import { UserService } from '../../../services/member.service';
+import { MemberService } from '../../../services/member.service';
 import { isEquals } from '../../helpers';
 
 @Component({
@@ -31,11 +31,11 @@ export class MemberEditComponent {
   @Output() onSaveSuccess = new EventEmitter<void>();
 
   visible: boolean = false;
-  userData: any;
+  memberData: any;
   changeAreaCode?: number;
   changeProvinceCode?: number;
   lazyValue: any = null;
-  defaultUserData = {
+  defaultMemberData = {
     id: null,
     fullName: "",
     isActive: true,
@@ -48,18 +48,18 @@ export class MemberEditComponent {
     dateOfBirth: null
   };
 
-  constructor(private userService: UserService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
+  constructor(private memberService: MemberService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   ngOnInit() {
-    if (!this.userData) {
-      this.userData = this.defaultUserData;
+    if (!this.memberData) {
+      this.memberData = this.defaultMemberData;
     }
   }
 
   async edit(newValue: any) {
     this.visible = true;
-    this.userData = newValue || this.defaultUserData;
-    this.changeAreaCode = this.userData.areaId;
+    this.memberData = newValue || this.defaultMemberData;
+    this.changeAreaCode = this.memberData.areaId;
 
     this.lazyValue = clone(newValue);
 
@@ -69,7 +69,7 @@ export class MemberEditComponent {
     // Validasyon fonksiyonu
   private isFormDataValid(): boolean {
     const requiredFields = {
-      provinceId: !!this.userData.provinceId,
+      provinceId: !!this.memberData.provinceId,
     };
 
     return Object.values(requiredFields).every(isValid => isValid);
@@ -96,21 +96,21 @@ export class MemberEditComponent {
    }
 
     const updateUserValue = {
-      Id: this.userData.id,
-      fullName: this.userData.fullName,
-      identificationNumber: this.userData.identificationNumber,
-      telephone: this.userData.telephone,
-      email: this.userData.email,
-      dateOfBirth: this.userData.dateOfBirth,
-      countryId: this.userData.countryId,
-      areaId: this.userData.areaId,
-      provinceId: this.userData.provinceId,
-      isActive: this.userData.isActive,
-      createdDate: this.userData.createdDate,
-      ...(this.userData.id ? {updateDate: new Date().toISOString() } : {})
+      Id: this.memberData.id,
+      fullName: this.memberData.fullName,
+      identificationNumber: this.memberData.identificationNumber,
+      telephone: this.memberData.telephone,
+      email: this.memberData.email,
+      dateOfBirth: this.memberData.dateOfBirth,
+      countryId: this.memberData.countryId,
+      areaId: this.memberData.areaId,
+      provinceId: this.memberData.provinceId,
+      isActive: this.memberData.isActive,
+      createdDate: this.memberData.createdDate,
+      ...(this.memberData.id ? {updateDate: new Date().toISOString() } : {})
     }
 
-    const result = await this.userService.updateUser(updateUserValue);
+    const result = await this.memberService.updateUser(updateUserValue);
     if (result) {
       this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Kullanıcı Güncellendi' });
       this.onSaveSuccess.emit();
@@ -123,7 +123,7 @@ export class MemberEditComponent {
   }
 
   async onCancel(form: any) {
-    if (!isEquals(this.lazyValue, this.userData)) {
+    if (!isEquals(this.lazyValue, this.memberData)) {
 
       this.confirmationService.confirm({
         target: form.target as EventTarget,
@@ -145,7 +145,7 @@ export class MemberEditComponent {
 
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
           this.visible = false;
-          this.userData = this.defaultUserData;
+          this.memberData = this.defaultMemberData;
         },
         reject: () => {
           this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
@@ -161,13 +161,13 @@ export class MemberEditComponent {
 
 
   onProvinceSelected(provinceCode: any): void {
-    this.userData.provinceId = provinceCode;
+    this.memberData.provinceId = provinceCode;
     this.changeProvinceCode = provinceCode;
   }
   onAreaSelected(areaCode: any): void {
-    this.userData.areaId = areaCode;
+    this.memberData.areaId = areaCode;
 
-    this.userData.provinceId = undefined;
+    this.memberData.provinceId = undefined;
     this.changeAreaCode = areaCode;
   }
 }
