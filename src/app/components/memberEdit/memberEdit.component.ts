@@ -103,6 +103,7 @@ async onSave(form: any) {
   const updateMemberValue = {
     Id: this.memberData.id,
     fullName: this.memberData.fullName,
+    password: this.memberData.password,
     identificationNumber: this.memberData.identificationNumber,
     telephone: this.memberData.telephone,
     email: this.memberData.email,

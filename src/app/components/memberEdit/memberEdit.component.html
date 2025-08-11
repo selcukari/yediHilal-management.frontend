@@ -58,6 +58,20 @@
 
     <div class="field col-12 md:col-6">
       <p-floatlabel variant="on">
+        <p-iconfield>
+          <p-inputicon class="pi pi-key" />
+          <input pInputText id="password" name="password"  [(ngModel)]="memberData.password" #password="ngModel" pSize="large" required
+            [class.ng-invalid]="password.invalid && (password.touched || memberEditForm.submitted)"autocomplete="off" />
+            @if (password.invalid && (password.touched || memberEditForm.submitted)) {
+              <p-message severity="error" variant="simple">password is required.</p-message>
+            }
+        </p-iconfield>
+        <label for="password">password</label>
+      </p-floatlabel>
+    </div>
+
+    <div class="field col-12 md:col-6">
+      <p-floatlabel variant="on">
           <p-iconfield>
             <p-inputicon class="pi pi-id-card" />
             <input pInputText id="identificationNumber" name="identificationNumber"  [(ngModel)]="memberData.identificationNumber" #identificationNumber="ngModel" pSize="large"/>

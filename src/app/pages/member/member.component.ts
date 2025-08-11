@@ -82,6 +82,8 @@ export class MemberPageComponent implements OnInit {
   selectedRole?: number = undefined;
   searchFullName: string = '';
   isDisabledOnlyJunior: boolean = false;
+  isDisabledOnlySenior: boolean = false;
+  isDisabledOnlyAdmin: boolean = false;
   selectedCountryName: string = 'Türkiye';
   selectedProvinceName: string = '';
   selectedAreaName: string = '';
@@ -91,6 +93,8 @@ export class MemberPageComponent implements OnInit {
   async ngOnInit() {
 
     this.isDisabledOnlyJunior = this.authService.getCurrentMember()?.roleId == 3; // 3 is Junior role
+    this.isDisabledOnlySenior = this.authService.getCurrentMember()?.roleId == 2; // 2 is Senior role
+    this.isDisabledOnlyAdmin = this.authService.getCurrentMember()?.roleId == 1; // 1 is Admin role
 
     this.isLoading = true;
 
@@ -143,17 +147,21 @@ export class MemberPageComponent implements OnInit {
   }
 
   async onEdit (value: any) {
-    if (this.isDisabledOnlyJunior){
-      this.messageService.add({
-        severity: 'warn',
-        summary: 'Uyarı',
-        detail: 'Yetkisiz işlem',
-        life: 3000
-      });
+    if (
+      (this.isDisabledOnlyJunior && value.roleId === 3) || (this.isDisabledOnlySenior && (value.roleId === 2 || value.roleId === 3)) || this.isDisabledOnlyAdmin
+    ){
+
+      this.memberEditComponentRef.edit(clone(value));
+
       return;
     }
 
-    this.memberEditComponentRef.edit(clone(value));
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Uyarı',
+      detail: 'Yetkisiz işlem',
+      life: 3000
+    });
   }
 
   async onAdd () {
@@ -171,46 +179,50 @@ export class MemberPageComponent implements OnInit {
   }
 
   onDelete(event: Event) {
-    if (this.isDisabledOnlyJunior){
-      this.messageService.add({
-        severity: 'warn',
-        summary: 'Uyarı',
-        detail: 'Yetkisiz işlem',
-        life: 3000
-      });
+    if (
+      (this.isDisabledOnlyJunior && event as unknown as number === 3) || (this.isDisabledOnlySenior && (event as unknown as number === 2 || event as unknown as number === 3)) || this.isDisabledOnlyAdmin
+    ){
+
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Bu kaydı silmek istiyor musunuz?',
+      header: 'Tehlikeli Bölge',
+      icon: 'pi pi-info-circle',
+      rejectLabel: 'Cancel',
+      rejectButtonProps: {
+        label: 'İptal',
+        severity: 'secondary',
+        outlined: true,
+      },
+      acceptButtonProps: {
+        label: 'Sil',
+        severity: 'danger',
+      },
+
+      accept: async () => {
+        const result = await this.memberService.deleteMember(event as unknown as number);
+        if (result) {
+          this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt Silindi' });
+          await this.refreshData();
+
+          return;
+        }
+
+        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kayıt silinemedi.' });
+      },
+      reject: () => {
+          this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
+      },
+    });
+
       return;
     }
 
-    this.confirmationService.confirm({
-        target: event.target as EventTarget,
-        message: 'Bu kaydı silmek istiyor musunuz?',
-        header: 'Tehlikeli Bölge',
-        icon: 'pi pi-info-circle',
-        rejectLabel: 'Cancel',
-        rejectButtonProps: {
-          label: 'İptal',
-          severity: 'secondary',
-          outlined: true,
-        },
-        acceptButtonProps: {
-          label: 'Sil',
-          severity: 'danger',
-        },
-
-        accept: async () => {
-          const result = await this.memberService.deleteMember(event as unknown as number);
-          if (result) {
-            this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt Silindi' });
-            await this.refreshData();
-
-            return;
-          }
-
-          this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kayıt silinemedi.' });
-        },
-        reject: () => {
-            this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
-        },
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Uyarı',
+      detail: 'Yetkisiz işlem',
+      life: 3000
     });
   }
 

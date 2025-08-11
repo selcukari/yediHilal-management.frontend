@@ -13,6 +13,7 @@ interface MemberParams {
 
 interface UserData {
   fullName: string;
+  password: string;
   isActive: boolean;
   countryId: number;
   areaId: number;
