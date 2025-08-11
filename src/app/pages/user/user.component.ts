@@ -101,7 +101,7 @@ export class UserPageComponent implements OnInit {
 
     try {
       // Announcements verilerini yükle
-      await this.fetchMemberData();
+      await this.fetchUserData();
 
       // Tablo kolonlarını tanımla
       this.initializeColumns();
@@ -227,7 +227,7 @@ export class UserPageComponent implements OnInit {
     });
   }
 
-  private async fetchMemberData(): Promise<void> {
+  private async fetchUserData(): Promise<void> {
     const params: UserParams = {
       countryId: this.selectedCountry || 1,
       areaId: this.selectedArea,
@@ -237,9 +237,9 @@ export class UserPageComponent implements OnInit {
     }
      try {
 
-      const getMember = await this.userService.members(params);
-      if (getMember) {
-        this.resultData = getMember;
+      const getUser = await this.userService.members(params);
+      if (getUser) {
+        this.resultData = getUser;
         this.sendValueData = this.resultData.map(user => ({
           id: user.id,
           fullName: user.fullName,
@@ -257,7 +257,7 @@ export class UserPageComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: 'Başarılı',
-          detail: `${getMember.length} Kullanıcı yüklendi.`,
+          detail: `${getUser.length} Kullanıcı yüklendi.`,
           life: 3000
         });
       } else {
@@ -269,7 +269,7 @@ export class UserPageComponent implements OnInit {
         });
       }
     } catch (error: any) {
-      console.error('Error fetching getMember:', error.message);
+      console.error('Error fetching getUser:', error.message);
       this.messageService.add({
         severity: 'error',
         summary: 'Veri Hatası',
@@ -283,7 +283,7 @@ export class UserPageComponent implements OnInit {
     if (value.length > 3) {
       // burada API çağrısı vs. yapılabilir
       this.searchFullName = value;
-      await this.fetchMemberData();
+      await this.fetchUserData();
     }
   }
 
@@ -302,25 +302,25 @@ export class UserPageComponent implements OnInit {
     this.selectedArea = undefined;
     this.selectedProvince = undefined;
 
-    await this.fetchMemberData();
+    await this.fetchUserData();
   }
 
   async onAreaSelected(areaCode: any): Promise<void> {
     this.selectedArea = areaCode;
 
-    await this.fetchMemberData();
+    await this.fetchUserData();
   }
 
   async onProvinceSelected(provinceCode: any): Promise<void> {
     this.selectedProvince = provinceCode;
 
-    await this.fetchMemberData();
+    await this.fetchUserData();
   }
 
   async onRoleSelected(roleCode: any): Promise<void> {
     this.selectedRole = roleCode;
 
-    await this.fetchMemberData();
+    await this.fetchUserData();
   }
 
   onAreaSelectedName(areaName: string): void {
@@ -382,6 +382,6 @@ export class UserPageComponent implements OnInit {
 
   // Refresh fonksiyonu
   async refreshData(): Promise<void> {
-    await this.fetchMemberData();
+    await this.fetchUserData();
   }
 }

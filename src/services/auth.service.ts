@@ -13,9 +13,6 @@ export class AuthService {
   private currentMemberSubject = new BehaviorSubject<any>(null);
   public currentMember$ = this.currentMemberSubject.asObservable();
 
-  // Component'te
-// currentMember$ = this.authService.currentMember$;
-
 
 constructor(private http: HttpClient) {
     // Sayfa yenilendiğinde localStorage'dan user'ı yükle
@@ -39,7 +36,7 @@ constructor(private http: HttpClient) {
     }
   }
 
-  // member'ı state'e kaydetme
+  // user'ı state'e kaydetme
   setCurrentMember(member: any): void {
     this.currentMemberSubject.next(member);
   }
@@ -59,7 +56,7 @@ constructor(private http: HttpClient) {
     localStorage.removeItem('currentMember');
   }
 
-  // Storage'dan member yükleme
+  // Storage'dan user yükleme
   private loadUserFromStorage(): void {
     const storedMember = getWithExpiry('currentMember') ?? '';
     if (storedMember) {
@@ -72,7 +69,7 @@ constructor(private http: HttpClient) {
     }
   }
 
-  // member login olmuş mu kontrolü
+  // user login olmuş mu kontrolü
   isLoggedIn(): boolean {
     return this.getCurrentMember() !== null;
   }
