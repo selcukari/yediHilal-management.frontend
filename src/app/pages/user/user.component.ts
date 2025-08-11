@@ -24,7 +24,7 @@ import { RoleComponent } from '../../components/role/role.component';
 import { AuthService } from '../../../services/auth.service';
 import { SpeedDialComponent } from '../../components/speedDial/speedDial.component';
 import { TableColumn } from '../../helpers/repor/pdfHelper';
-import { calculateColumnWidthMember } from '../../helpers/repor/calculateColumnWidth';
+import { calculateColumnWidthUser } from '../../helpers/repor/calculateColumnWidth';
 
 interface Column {
   field: string;
@@ -143,7 +143,7 @@ export class UserPageComponent implements OnInit {
       key: col.field,
       title: col.header,
       // İsteğe bağlı olarak genişlik ayarları ekleyebilirsiniz
-      width: calculateColumnWidthMember(col.field) // Özel genişlik hesaplama fonksiyonu
+      width: calculateColumnWidthUser(col.field) // Özel genişlik hesaplama fonksiyonu
     }));
   }
 

@@ -22,7 +22,7 @@ import { MemberService } from '../../../services/member.service';
 import { MemberAddComponent } from '../../components/memberAdd/memberAdd.component';
 import { SpeedDialComponent } from '../../components/speedDial/speedDial.component';
 import { TableColumn } from '../../helpers/repor/pdfHelper';
-import { calculateColumnWidthUser } from '../../helpers/repor/calculateColumnWidth';
+import { calculateColumnWidthMember } from '../../helpers/repor/calculateColumnWidth';
 
 interface Column {
   field: string;
@@ -128,7 +128,7 @@ export class MemberPageComponent implements OnInit {
       key: col.field,
       title: col.header,
       // İsteğe bağlı olarak genişlik ayarları ekleyebilirsiniz
-      width: calculateColumnWidthUser(col.field) // Özel genişlik hesaplama fonksiyonu
+      width: calculateColumnWidthMember(col.field) // Özel genişlik hesaplama fonksiyonu
     }));
   }
 

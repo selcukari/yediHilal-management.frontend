@@ -1,4 +1,4 @@
-export const calculateColumnWidthUser = (field: string): number | undefined => {
+export const calculateColumnWidthMember = (field: string): number | undefined => {
   const widthMap: {[key: string]: number} = {
     'id': 15,
     'fullName': 60,
@@ -14,7 +14,7 @@ export const calculateColumnWidthUser = (field: string): number | undefined => {
   return widthMap[field] || undefined;
 }
 
-export const calculateColumnWidthMember = (field: string): number | undefined => {
+export const calculateColumnWidthUser = (field: string): number | undefined => {
   const widthMap: {[key: string]: number} = {
     'id': 15,
     'fullName': 55,
