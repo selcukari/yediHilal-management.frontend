@@ -41,21 +41,21 @@ export class UserEditComponent {
 
   ngOnInit() {
     if (!this.userData) {
-      this.userData = this.defaultmemberData();
+      this.userData = this.defaulUserData();
     }
   }
 
   async edit(newValue: any) {
 
     this.visible = true;
-    this.userData = newValue || this.defaultmemberData();
+    this.userData = newValue || this.defaulUserData();
     this.changeAreaCode = this.userData.areaId;
     this.lazyValue = clone(newValue);
 
     await new Promise(resolve => setTimeout(resolve, 100));
   }
 
-  defaultmemberData(): any {
+  defaulUserData(): any {
     return {
       id: null,
       fullName: "",
@@ -100,7 +100,7 @@ async onSave(form: any) {
  }
 
 
-  const updateMemberValue = {
+  const updateUserValue = {
     Id: this.userData.id,
     fullName: this.userData.fullName,
     password: this.userData.password,
@@ -116,7 +116,7 @@ async onSave(form: any) {
     roleId: this.userData.roleId,
     ...(this.userData.id ? {updateDate: new Date().toISOString() } : {})
   }
-   const result = await this.userService.updateMember(updateMemberValue);
+   const result = await this.userService.updateMember(updateUserValue);
    if (result) {
      this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Kullanıcı Güncellendi' });
       this.onSaveSuccess.emit();
@@ -151,7 +151,7 @@ async onSave(form: any) {
 
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
           this.visible = false;
-          this.userData = this.defaultmemberData();
+          this.userData = this.defaulUserData();
         },
         reject: () => {
           this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
