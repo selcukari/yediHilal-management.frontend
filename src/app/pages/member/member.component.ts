@@ -186,7 +186,7 @@ export class MemberPageComponent implements OnInit {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Bu kaydı silmek istiyor musunuz?',
-      header: 'Tehlikeli Bölge',
+      header: 'Dikkat',
       icon: 'pi pi-info-circle',
       rejectLabel: 'Cancel',
       rejectButtonProps: {

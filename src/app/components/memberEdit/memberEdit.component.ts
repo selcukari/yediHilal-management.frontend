@@ -133,8 +133,8 @@ async onSave(form: any) {
 
       this.confirmationService.confirm({
         target: form.target as EventTarget,
-        message: 'Yaptığınız değişiklikler iptal olcaktır devam etmek istiyor musunuz?',
-        header: 'Tehlikeli Bölge',
+        message: 'Yaptığınız değişiklikler iptal olacaktır. Devam etmek istiyor musunuz?',
+        header: 'Dikkat',
         icon: 'pi pi-info-circle',
         rejectLabel: 'Cancel',
         rejectButtonProps: {
