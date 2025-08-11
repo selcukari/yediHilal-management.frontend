@@ -19,7 +19,7 @@ import { ProvinceComponent } from '../../components/province/province.component'
 import { CountryComponent } from '../../components/country/country.component';
 import { UserEditComponent } from '../../components/userEdit1/userEdit.component';
 import { MemberService } from '../../../services/member.service';
-import { MemberAddComponent } from '../../components/memberAdd/memberAdd.component';
+import { UserAddComponent } from '../../components/userAdd1/userAdd.component';
 import { RoleComponent } from '../../components/role/role.component';
 import { AuthService } from '../../../services/auth.service';
 import { SpeedDialComponent } from '../../components/speedDial/speedDial.component';
@@ -56,7 +56,7 @@ interface ValueData {
   selector: 'app-pages-user',
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
-    ConfirmDialog, SpeedDialComponent, RoleComponent, MemberAddComponent, CountryComponent, AreaComponent, Tooltip,
+    ConfirmDialog, SpeedDialComponent, RoleComponent, UserAddComponent, CountryComponent, AreaComponent, Tooltip,
     UserEditComponent, IconFieldModule, ProvinceComponent, ProgressSpinner],
   providers: [MessageService, ConfirmationService],
   templateUrl: './user.component.html',
@@ -70,7 +70,7 @@ export class UserPageComponent implements OnInit {
   private router = inject(Router);
 
   @ViewChild(UserEditComponent) userEditComponentRef!: UserEditComponent;
-  @ViewChild(MemberAddComponent) memberAddComponentRef!: MemberAddComponent;
+  @ViewChild(UserAddComponent) userAddComponentRef!: UserAddComponent;
 
 
   resultData: ValueData[] = [];
@@ -176,7 +176,7 @@ export class UserPageComponent implements OnInit {
       return;
     }
 
-    this.memberAddComponentRef.add();
+    this.userAddComponentRef.add();
   }
 
   onDelete(event: Event) {

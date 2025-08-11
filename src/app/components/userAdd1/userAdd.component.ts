@@ -20,14 +20,14 @@ import { RoleComponent } from '../role/role.component';
 import { isEquals } from '../../helpers'
 
 @Component({
-  selector: 'app-component-memberAdd',
+  selector: 'app-component-userAdd',
   standalone: true,
   imports: [Dialog, ConfirmDialog, ToggleSwitch, RoleComponent, ToastModule, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
   providers: [MessageService, ConfirmationService],
-  templateUrl: './memberAdd.component.html',
+  templateUrl: './userAdd.component.html',
 })
 
-export class MemberAddComponent {
+export class UserAddComponent {
   @Output() onSaveSuccess = new EventEmitter<void>();
 
   visible: boolean = false;
