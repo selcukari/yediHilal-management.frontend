@@ -17,9 +17,9 @@ import { ProgressSpinner } from 'primeng/progressspinner';
 import { AreaComponent } from '../../components/area/area.component';
 import { ProvinceComponent } from '../../components/province/province.component';
 import { CountryComponent } from '../../components/country/country.component';
-import { UserEditComponent } from '../../components/userEdit/userEdit.component';
+import { MemberEditComponent } from '../../components/member/memberEdit.component';
 import { UserService } from '../../../services/member.service';
-import { UserAddComponent } from '../../components/userAdd/userAdd.component';
+import { MemberAddComponent } from '../../components/memberAdd/memberAdd.component';
 import { SpeedDialComponent } from '../../components/speedDial/speedDial.component';
 import { TableColumn } from '../../helpers/repor/pdfHelper';
 import { calculateColumnWidthUser } from '../../helpers/repor/calculateColumnWidth';
@@ -53,7 +53,7 @@ export interface ValueData {
   selector: 'app-pages-member',
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
-    ConfirmDialog, SpeedDialComponent, UserAddComponent, CountryComponent, AreaComponent, Tooltip, UserEditComponent, IconFieldModule, ProvinceComponent, ProgressSpinner],
+    ConfirmDialog, SpeedDialComponent, MemberAddComponent, CountryComponent, AreaComponent, Tooltip, MemberEditComponent, IconFieldModule, ProvinceComponent, ProgressSpinner],
   providers: [MessageService, ConfirmationService],
   templateUrl: './member.component.html',
   styleUrl: './member.component.scss'
@@ -64,8 +64,8 @@ export class MemberPageComponent implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
 
-  @ViewChild(UserEditComponent) userEditComponentRef!: UserEditComponent;
-  @ViewChild(UserAddComponent) userAddComponentRef!: UserAddComponent;
+  @ViewChild(MemberEditComponent) memberEditComponentRef!: MemberEditComponent;
+  @ViewChild(MemberAddComponent) memberAddComponentRef!: MemberAddComponent;
 
 
   resultData: ValueData[] = [];
@@ -135,11 +135,11 @@ export class MemberPageComponent implements OnInit {
 
 
   async onEdit (value: any) {
-    this.userEditComponentRef.edit(clone(value));
+    this.memberEditComponentRef.edit(clone(value));
   }
 
   async onAdd () {
-    this.userAddComponentRef.add();
+    this.memberAddComponentRef.add();
   }
 
   onDelete(event: Event) {

@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { clone } from 'ramda';
 import { IconFieldModule } from 'primeng/iconfield';
 import { FloatLabel } from 'primeng/floatlabel';
 import { FormsModule } from '@angular/forms';
@@ -16,114 +15,109 @@ import { CountryComponent } from '../country/country.component';
 import { ProvinceComponent } from '../province/province.component';
 import { AreaComponent } from '../area/area.component';
 import { ToggleSwitch } from 'primeng/toggleswitch';
+import { isEquals } from '../../helpers'
 import { UserService } from '../../../services/member.service';
-import { isEquals } from '../../helpers';
-
 @Component({
-  selector: 'app-component-userEdit',
+  selector: 'app-component-memberAdd',
   standalone: true,
   imports: [Dialog, ToggleSwitch, ConfirmDialog, ToastModule, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
   providers: [MessageService, ConfirmationService],
-  templateUrl: './userEdit.component.html',
+  templateUrl: './memberAdd.component.html',
 })
 
-export class UserEditComponent {
+export class MemberAddComponent {
   @Output() onSaveSuccess = new EventEmitter<void>();
 
   visible: boolean = false;
   userData: any;
   changeAreaCode?: number;
   changeProvinceCode?: number;
-  lazyValue: any = null;
-  defaultUserData = {
-    id: null,
-    fullName: "",
-    isActive: true,
-    countryId: undefined,
-    areaId: undefined,
-    provinceId: undefined,
-    identificationNumber: null,
-    telephone: null,
-    email: null,
-    dateOfBirth: null
-  };
+  changeCountryCode?: number;
 
   constructor(private userService: UserService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   ngOnInit() {
     if (!this.userData) {
-      this.userData = this.defaultUserData;
+      this.userData = this.defaultUserData();
     }
   }
 
-  async edit(newValue: any) {
+  add() {
     this.visible = true;
-    this.userData = newValue || this.defaultUserData;
-    this.changeAreaCode = this.userData.areaId;
-
-    this.lazyValue = clone(newValue);
-
-    await new Promise(resolve => setTimeout(resolve, 100));
+    this.userData = this.defaultUserData();
   }
 
-    // Validasyon fonksiyonu
-  private isFormDataValid(): boolean {
-    const requiredFields = {
-      provinceId: !!this.userData.provinceId,
+  defaultUserData(): any {
+    return {
+      id: null,
+      fullName: "",
+      isActive: true,
+      countryId: undefined,
+      areaId: undefined,
+      provinceId: undefined,
+      identificationNumber: null,
+      telephone: null,
+      email: null,
+      dateOfBirth: null
     };
-
-    return Object.values(requiredFields).every(isValid => isValid);
   }
+
+  // Validasyon fonksiyonu
+private isFormDataValid(): boolean {
+  const requiredFields = {
+    provinceId: !!this.userData.provinceId,
+    countryId: !!this.userData.countryId,
+  };
+
+  return Object.values(requiredFields).every(isValid => isValid);
+}
 
   async onSave(form: any) {
-    const isAngularFormValid = form.valid;
-    const isCustomDataValid = this.isFormDataValid();
-    const isOverallValid = isAngularFormValid && isCustomDataValid;
+   const isAngularFormValid = form.valid;
+   const isCustomDataValid = this.isFormDataValid();
+   const isOverallValid = isAngularFormValid && isCustomDataValid;
 
     if (!isOverallValid) {
-      if (form.control?.markAllAsTouched) {
-        form.control.markAllAsTouched();
-      }
+     if (form.control?.markAllAsTouched) {
+     form.control.markAllAsTouched();
+   }
 
-      // Manuel olarak touched durumu da ayarlanabilir (isteğe bağlı)
-      Object.keys(form.controls).forEach(field => {
-        const control = form.controls[field];
-        control.markAsTouched({ onlySelf: true });
-      });
+     // Manuel olarak touched durumu da ayarlanabilir (isteğe bağlı)
+     Object.keys(form.controls).forEach(field => {
+       const control = form.controls[field];
+       control.markAsTouched({ onlySelf: true });
+     });
 
      this.messageService.add({ severity: 'warn', summary: 'Eksik Alan', detail: 'Lütfen gerekli alanları doldurunuz.' });
      return;
    }
 
-    const updateUserValue = {
-      Id: this.userData.id,
+
+    const newUserValue = {
       fullName: this.userData.fullName,
       identificationNumber: this.userData.identificationNumber,
       telephone: this.userData.telephone,
       email: this.userData.email,
       dateOfBirth: this.userData.dateOfBirth,
       countryId: this.userData.countryId,
-      areaId: this.userData.areaId,
       provinceId: this.userData.provinceId,
       isActive: this.userData.isActive,
-      createdDate: this.userData.createdDate,
-      ...(this.userData.id ? {updateDate: new Date().toISOString() } : {})
+      areaId: (this.userData.areaId || 8)
     }
-
-    const result = await this.userService.updateUser(updateUserValue);
+    const result = await this.userService.addUser(newUserValue);
     if (result) {
-      this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Kullanıcı Güncellendi' });
+      this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Yeni Kullanıcı Eklendi' });
       this.onSaveSuccess.emit();
       this.visible = false;
 
       return;
     } else {
-      this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kullanıcı Güncellenemedi' });
+      this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Yeni Kullanıcı Eklenirken hata oluştu' });
     }
   }
 
   async onCancel(form: any) {
-    if (!isEquals(this.lazyValue, this.userData)) {
+    if (!isEquals(this.defaultUserData(), this.userData)) {
 
       this.confirmationService.confirm({
         target: form.target as EventTarget,
@@ -145,7 +139,7 @@ export class UserEditComponent {
 
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
           this.visible = false;
-          this.userData = this.defaultUserData;
+          this.userData = this.defaultUserData();
         },
         reject: () => {
           this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
@@ -159,6 +153,10 @@ export class UserEditComponent {
     // Bu satırı kaldırdık: this.visible = false;
   }
 
+  onCountrySelected(countryCode: any): void {
+    this.userData.countryId = countryCode;
+    this.changeCountryCode = countryCode;
+  }
 
   onProvinceSelected(provinceCode: any): void {
     this.userData.provinceId = provinceCode;
