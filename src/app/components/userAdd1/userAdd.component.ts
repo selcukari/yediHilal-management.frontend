@@ -31,7 +31,7 @@ export class UserAddComponent {
   @Output() onSaveSuccess = new EventEmitter<void>();
 
   visible: boolean = false;
-  memberData: any;
+  userData: any;
   changeAreaCode?: number;
   changeProvinceCode?: number;
   changeCountryCode?: number;
@@ -39,14 +39,14 @@ export class UserAddComponent {
   constructor(private userService: UserService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   ngOnInit() {
-    if (!this.memberData) {
-      this.memberData = this.defaultmemberData();
+    if (!this.userData) {
+      this.userData = this.defaultmemberData();
     }
   }
 
   add() {
     this.visible = true;
-    this.memberData = this.defaultmemberData();
+    this.userData = this.defaultmemberData();
   }
 
   defaultmemberData(): any {
@@ -69,8 +69,8 @@ export class UserAddComponent {
   // Validasyon fonksiyonu
 private isFormDataValid(): boolean {
   const requiredFields = {
-    provinceId: !!this.memberData.provinceId,
-    countryId: !!this.memberData.countryId,
+    provinceId: !!this.userData.provinceId,
+    countryId: !!this.userData.countryId,
   };
 
   return Object.values(requiredFields).every(isValid => isValid);
@@ -98,17 +98,17 @@ private isFormDataValid(): boolean {
 
 
     const newMemberValue = {
-      fullName: this.memberData.fullName,
-      identificationNumber: this.memberData.identificationNumber,
-      telephone: this.memberData.telephone,
-      email: this.memberData.email,
-      password: this.memberData.password,
-      roleId: this.memberData.roleId,
-      dateOfBirth: this.memberData.dateOfBirth,
-      countryId: this.memberData.countryId,
-      provinceId: this.memberData.provinceId,
-      isActive: this.memberData.isActive,
-      areaId: (this.memberData.areaId || 8)
+      fullName: this.userData.fullName,
+      identificationNumber: this.userData.identificationNumber,
+      telephone: this.userData.telephone,
+      email: this.userData.email,
+      password: this.userData.password,
+      roleId: this.userData.roleId,
+      dateOfBirth: this.userData.dateOfBirth,
+      countryId: this.userData.countryId,
+      provinceId: this.userData.provinceId,
+      isActive: this.userData.isActive,
+      areaId: (this.userData.areaId || 8)
     }
     const result = await this.userService.addMember(newMemberValue);
     if (result) {
@@ -123,7 +123,7 @@ private isFormDataValid(): boolean {
   }
 
   async onCancel(form: any) {
-    if (!isEquals(this.defaultmemberData(), this.memberData)) {
+    if (!isEquals(this.defaultmemberData(), this.userData)) {
 
       this.confirmationService.confirm({
         target: form.target as EventTarget,
@@ -145,7 +145,7 @@ private isFormDataValid(): boolean {
 
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
           this.visible = false;
-          this.memberData = this.defaultmemberData();
+          this.userData = this.defaultmemberData();
 
         },
         reject: () => {
@@ -161,22 +161,22 @@ private isFormDataValid(): boolean {
   }
 
   onCountrySelected(countryCode: any): void {
-    this.memberData.countryId = countryCode;
+    this.userData.countryId = countryCode;
     this.changeCountryCode = countryCode;
   }
 
   onRoleSelected(roleCode: any): void {
-    this.memberData.roleId = roleCode;
+    this.userData.roleId = roleCode;
   }
 
   onProvinceSelected(provinceCode: any): void {
-    this.memberData.provinceId = provinceCode;
+    this.userData.provinceId = provinceCode;
     this.changeProvinceCode = provinceCode;
   }
   onAreaSelected(areaCode: any): void {
-    this.memberData.areaId = areaCode;
+    this.userData.areaId = areaCode;
 
-    this.memberData.provinceId = undefined;
+    this.userData.provinceId = undefined;
     this.changeAreaCode = areaCode;
   }
 }

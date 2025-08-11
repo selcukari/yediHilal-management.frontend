@@ -32,7 +32,7 @@ export class UserEditComponent {
   @Output() onSaveSuccess = new EventEmitter<void>();
 
   visible: boolean = false;
-  memberData: any;
+  userData: any;
   changeAreaCode?: number;
   changeProvinceCode?: number;
   lazyValue: any = null;
@@ -40,16 +40,16 @@ export class UserEditComponent {
   constructor(private userService: UserService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   ngOnInit() {
-    if (!this.memberData) {
-      this.memberData = this.defaultmemberData();
+    if (!this.userData) {
+      this.userData = this.defaultmemberData();
     }
   }
 
   async edit(newValue: any) {
 
     this.visible = true;
-    this.memberData = newValue || this.defaultmemberData();
-    this.changeAreaCode = this.memberData.areaId;
+    this.userData = newValue || this.defaultmemberData();
+    this.changeAreaCode = this.userData.areaId;
     this.lazyValue = clone(newValue);
 
     await new Promise(resolve => setTimeout(resolve, 100));
@@ -73,7 +73,7 @@ export class UserEditComponent {
   // Validasyon fonksiyonu
 private isFormDataValid(): boolean {
   const requiredFields = {
-    provinceId: !!this.memberData.provinceId,
+    provinceId: !!this.userData.provinceId,
   };
 
   return Object.values(requiredFields).every(isValid => isValid);
@@ -101,20 +101,20 @@ async onSave(form: any) {
 
 
   const updateMemberValue = {
-    Id: this.memberData.id,
-    fullName: this.memberData.fullName,
-    password: this.memberData.password,
-    identificationNumber: this.memberData.identificationNumber,
-    telephone: this.memberData.telephone,
-    email: this.memberData.email,
-    dateOfBirth: this.memberData.dateOfBirth,
-    countryId: this.memberData.countryId,
-    areaId: this.memberData.areaId,
-    provinceId: this.memberData.provinceId,
-    isActive: this.memberData.isActive,
-    createdDate: this.memberData.createdDate,
-    roleId: this.memberData.roleId,
-    ...(this.memberData.id ? {updateDate: new Date().toISOString() } : {})
+    Id: this.userData.id,
+    fullName: this.userData.fullName,
+    password: this.userData.password,
+    identificationNumber: this.userData.identificationNumber,
+    telephone: this.userData.telephone,
+    email: this.userData.email,
+    dateOfBirth: this.userData.dateOfBirth,
+    countryId: this.userData.countryId,
+    areaId: this.userData.areaId,
+    provinceId: this.userData.provinceId,
+    isActive: this.userData.isActive,
+    createdDate: this.userData.createdDate,
+    roleId: this.userData.roleId,
+    ...(this.userData.id ? {updateDate: new Date().toISOString() } : {})
   }
    const result = await this.userService.updateMember(updateMemberValue);
    if (result) {
@@ -129,7 +129,7 @@ async onSave(form: any) {
   }
 
   async onCancel(form: any) {
-    if (!isEquals(this.lazyValue, this.memberData)) {
+    if (!isEquals(this.lazyValue, this.userData)) {
 
       this.confirmationService.confirm({
         target: form.target as EventTarget,
@@ -151,7 +151,7 @@ async onSave(form: any) {
 
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
           this.visible = false;
-          this.memberData = this.defaultmemberData();
+          this.userData = this.defaultmemberData();
         },
         reject: () => {
           this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
@@ -166,21 +166,21 @@ async onSave(form: any) {
   }
 
   onCountrySelected(countryCode: any): void {
-    this.memberData.countryId = countryCode;
+    this.userData.countryId = countryCode;
   }
 
   onRoleSelected(roleCode: any): void {
-    this.memberData.roleId = roleCode;
+    this.userData.roleId = roleCode;
   }
 
   onProvinceSelected(provinceCode: any): void {
-    this.memberData.provinceId = provinceCode;
+    this.userData.provinceId = provinceCode;
     this.changeProvinceCode = provinceCode;
   }
   onAreaSelected(areaCode: any): void {
-    this.memberData.areaId = areaCode;
+    this.userData.areaId = areaCode;
 
-    this.memberData.provinceId = undefined;
+    this.userData.provinceId = undefined;
     this.changeAreaCode = areaCode;
   }
 }
