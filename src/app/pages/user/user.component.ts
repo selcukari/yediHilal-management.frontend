@@ -18,7 +18,7 @@ import { AreaComponent } from '../../components/area/area.component';
 import { ProvinceComponent } from '../../components/province/province.component';
 import { CountryComponent } from '../../components/country/country.component';
 import { UserEditComponent } from '../../components/userEdit1/userEdit.component';
-import { MemberService } from '../../../services/member.service';
+import { UserService } from '../../../services/user.service';
 import { UserAddComponent } from '../../components/userAdd1/userAdd.component';
 import { RoleComponent } from '../../components/role/role.component';
 import { AuthService } from '../../../services/auth.service';
@@ -65,7 +65,7 @@ interface ValueData {
 export class UserPageComponent implements OnInit {
   @ViewChild('dt') dt!: Table;
 
-  private memberService = inject(MemberService);
+  private userService = inject(UserService);
   private authService = inject(AuthService);
   private router = inject(Router);
 
@@ -201,7 +201,7 @@ export class UserPageComponent implements OnInit {
       },
 
       accept: async () => {
-        const result = await this.memberService.deleteMember(event as unknown as number);
+        const result = await this.userService.deleteMember(event as unknown as number);
         if (result) {
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt Silindi' });
           await this.refreshData();
@@ -237,7 +237,7 @@ export class UserPageComponent implements OnInit {
     }
      try {
 
-      const getMember = await this.memberService.members(params);
+      const getMember = await this.userService.members(params);
       if (getMember) {
         this.resultData = getMember;
         this.sendValueData = this.resultData.map(user => ({

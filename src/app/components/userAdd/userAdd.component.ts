@@ -16,7 +16,7 @@ import { ProvinceComponent } from '../province/province.component';
 import { AreaComponent } from '../area/area.component';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { isEquals } from '../../helpers'
-import { UserService } from '../../../services/user.service';
+import { UserService } from '../../../services/member.service';
 @Component({
   selector: 'app-component-userAdd',
   standalone: true,

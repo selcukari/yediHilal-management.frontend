@@ -15,7 +15,7 @@ import { CountryComponent } from '../country/country.component';
 import { ProvinceComponent } from '../province/province.component';
 import { AreaComponent } from '../area/area.component';
 import { ToggleSwitch } from 'primeng/toggleswitch';
-import { MemberService } from '../../../services/member.service';
+import { UserService } from '../../../services/user.service';
 import { RoleComponent } from '../role/role.component';
 import { isEquals } from '../../helpers'
 
@@ -36,7 +36,7 @@ export class UserAddComponent {
   changeProvinceCode?: number;
   changeCountryCode?: number;
 
-  constructor(private memberService: MemberService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
+  constructor(private userService: UserService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   ngOnInit() {
     if (!this.memberData) {
@@ -110,7 +110,7 @@ private isFormDataValid(): boolean {
       isActive: this.memberData.isActive,
       areaId: (this.memberData.areaId || 8)
     }
-    const result = await this.memberService.addMember(newMemberValue);
+    const result = await this.userService.addMember(newMemberValue);
     if (result) {
       this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Yeni Üye Eklendi' });
       this.onSaveSuccess.emit();

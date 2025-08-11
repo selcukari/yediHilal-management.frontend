@@ -16,7 +16,7 @@ import { CountryComponent } from '../country/country.component';
 import { ProvinceComponent } from '../province/province.component';
 import { AreaComponent } from '../area/area.component';
 import { ToggleSwitch } from 'primeng/toggleswitch';
-import { MemberService } from '../../../services/member.service';
+import { UserService } from '../../../services/user.service';
 import { RoleComponent } from '../role/role.component';
 import { isEquals } from '../../helpers';
 
@@ -37,7 +37,7 @@ export class UserEditComponent {
   changeProvinceCode?: number;
   lazyValue: any = null;
 
-  constructor(private memberService: MemberService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
+  constructor(private userService: UserService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   ngOnInit() {
     if (!this.memberData) {
@@ -116,7 +116,7 @@ async onSave(form: any) {
     roleId: this.memberData.roleId,
     ...(this.memberData.id ? {updateDate: new Date().toISOString() } : {})
   }
-   const result = await this.memberService.updateMember(updateMemberValue);
+   const result = await this.userService.updateMember(updateMemberValue);
    if (result) {
      this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Kullanıcı Güncellendi' });
       this.onSaveSuccess.emit();

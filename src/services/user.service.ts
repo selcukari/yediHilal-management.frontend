@@ -1,19 +1,24 @@
 import { Injectable, inject } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { EnvironmentService } from './environment.service';
-interface UserParams {
+
+interface MemberParams {
   countryId: number;
   areaId?: number;
   fullName?: string;
   provinceId?: number;
+  roleId?: number;
 }
+
 interface UserData {
   fullName: string;
+  password: string;
   isActive: boolean;
   countryId: number;
   areaId: number;
   provinceId: number;
+  roleId: number;
   identificationNumber?: string;
   telephone?: string;
   email?: string;
@@ -30,30 +35,30 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-
-  async users(params: UserParams): Promise<any| null> {
+  async members(params: MemberParams): Promise<any| null> {
     try {
-      const { countryId, areaId, provinceId, fullName } = params;
+      const { countryId, areaId, provinceId, fullName, roleId } = params;
 
-      const getUsers: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/management/getUsersBy`,{
+      const getMembers: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementMember/getMembersBy`,{
         params: {
           countryId ,
           ...(provinceId !== undefined ? {provinceId } : {}),
           ...((fullName == undefined || fullName?.length < 2) ? {} : {fullName}),
-          ...((areaId == undefined || countryId != 1) ? { } : {areaId})
+          ...((areaId == undefined || countryId != 1) ? { } : {areaId}),
+          ...(roleId !== undefined ? {roleId } : {}),
         }}));
-      if (getUsers?.errors) {
-        throw new Error('getUsers bulunamadı.');
+      if (getMembers?.errors) {
+        throw new Error('getMembers bulunamadı.');
       }
-      return getUsers.data;
+      return getMembers.data;
     } catch (error: any) {
-      this.envService.logDebug('getUsers error', error);
+      this.envService.logDebug('getMembers error', error);
     }
   }
 
-  async deleteUser(userId: number): Promise<any | null> {
+  async deleteMember(userId: number): Promise<any | null> {
     try {
-      const deleteUser: any = await firstValueFrom(this.http.put(`${this.envService.apiUrl}/management/deleteUser?id=${userId}`, null));
+      const deleteUser: any = await firstValueFrom(this.http.put(`${this.envService.apiUrl}/managementMember/deleteMember?id=${userId}`, null));
       if (deleteUser?.errors) {
         throw new Error('Kullanıcı silinemedi.');
       }
@@ -63,9 +68,9 @@ export class UserService {
     }
   }
 
-   async updateUser(params: UserData): Promise<any | null> {
+   async updateMember(params: UserData): Promise<any | null> {
     try {
-      const updatedUser: any = await firstValueFrom(this.http.put(`${this.envService.apiUrl}/management/updateUser`, params));
+      const updatedUser: any = await firstValueFrom(this.http.put(`${this.envService.apiUrl}/managementMember/updateMember`, params));
       if (updatedUser?.errors) {
         throw new Error('Kullanıcı güncellenemedi.');
       }
@@ -75,9 +80,9 @@ export class UserService {
     }
   }
 
-  async addUser(params: UserData): Promise<any | null> {
+  async addMember(params: UserData): Promise<any | null> {
     try {
-      const addeddUser: any = await firstValueFrom(this.http.post(`${this.envService.apiUrl}/management/addUser`, params));
+      const addeddUser: any = await firstValueFrom(this.http.post(`${this.envService.apiUrl}/managementMember/addUser`, params));
       if (addeddUser?.errors) {
         throw new Error('Kullanıcı eklenemedi.');
       }

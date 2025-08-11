@@ -18,7 +18,7 @@ import { AreaComponent } from '../../components/area/area.component';
 import { ProvinceComponent } from '../../components/province/province.component';
 import { CountryComponent } from '../../components/country/country.component';
 import { UserEditComponent } from '../../components/userEdit/userEdit.component';
-import { UserService } from '../../../services/user.service';
+import { UserService } from '../../../services/member.service';
 import { UserAddComponent } from '../../components/userAdd/userAdd.component';
 import { SpeedDialComponent } from '../../components/speedDial/speedDial.component';
 import { TableColumn } from '../../helpers/repor/pdfHelper';

@@ -16,7 +16,7 @@ import { CountryComponent } from '../country/country.component';
 import { ProvinceComponent } from '../province/province.component';
 import { AreaComponent } from '../area/area.component';
 import { ToggleSwitch } from 'primeng/toggleswitch';
-import { UserService } from '../../../services/user.service';
+import { UserService } from '../../../services/member.service';
 import { isEquals } from '../../helpers';
 
 @Component({
