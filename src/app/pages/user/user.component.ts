@@ -93,9 +93,9 @@ export class UserPageComponent implements OnInit {
 
   async ngOnInit() {
 
-    this.isDisabledOnlyJunior = this.authService.getCurrentMember()?.roleId == 3; // 3 is Junior role
-    this.isDisabledOnlySenior = this.authService.getCurrentMember()?.roleId == 2; // 2 is Senior role
-    this.isDisabledOnlyAdmin = this.authService.getCurrentMember()?.roleId == 1; // 1 is Admin role
+    this.isDisabledOnlyJunior = this.authService.getCurrentUser()?.roleId == 3; // 3 is Junior role
+    this.isDisabledOnlySenior = this.authService.getCurrentUser()?.roleId == 2; // 2 is Senior role
+    this.isDisabledOnlyAdmin = this.authService.getCurrentUser()?.roleId == 1; // 1 is Admin role
 
     this.isLoading = true;
 

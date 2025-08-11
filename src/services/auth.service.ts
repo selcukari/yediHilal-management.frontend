@@ -10,8 +10,8 @@ import { EnvironmentService } from './environment.service';
 })
 export class AuthService {
   private envService = inject(EnvironmentService);
-  private currentMemberSubject = new BehaviorSubject<any>(null);
-  public currentMember$ = this.currentMemberSubject.asObservable();
+  private currentUserSubject = new BehaviorSubject<any>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
 
 
 constructor(private http: HttpClient) {
@@ -22,55 +22,55 @@ constructor(private http: HttpClient) {
   // Email ile giriş yap
   async loginWithEmail(email: string, password: string): Promise<any| null> {
     try {
-      const getMember: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementMember/login?email=${email}&password=${password}`));
-      if (getMember?.errors) {
+      const getUser: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementMember/login?email=${email}&password=${password}`));
+      if (getUser?.errors) {
         throw new Error('Kullanıcı bulunamadı veya şifre yanlış.');
       }
       // User'ı state'e kaydet
-      this.setCurrentMember(getMember.data);
+      this.setCurrentUser(getUser.data);
 
-      setWithExpiry('currentMember', JSON.stringify(getMember.data), 86400000 * 7); // 7 gün TTL
-      return getMember.data;
+      setWithExpiry('currentUser', JSON.stringify(getUser.data), 86400000 * 7); // 7 gün TTL
+      return getUser.data;
     } catch (error: any) {
       this.envService.logDebug('Login error', error);
     }
   }
 
   // user'ı state'e kaydetme
-  setCurrentMember(member: any): void {
-    this.currentMemberSubject.next(member);
+  setCurrentUser(user: any): void {
+    this.currentUserSubject.next(user);
   }
 
    // Current user'ı alma
-  getCurrentMember(): any {
-    return this.currentMemberSubject.value;
+  getCurrentUser(): any {
+    return this.currentUserSubject.value;
   }
 
   getCurrentToken(): string | null {
-  return this.currentMemberSubject?.value?.token || null;
+  return this.currentUserSubject?.value?.token || null;
 }
 
   // User'ı temizleme (logout)
   logout(): void {
-    this.currentMemberSubject.next(null);
-    localStorage.removeItem('currentMember');
+    this.currentUserSubject.next(null);
+    localStorage.removeItem('currentUser');
   }
 
   // Storage'dan user yükleme
   private loadUserFromStorage(): void {
-    const storedMember = getWithExpiry('currentMember') ?? '';
-    if (storedMember) {
+    const storedUser = getWithExpiry('currentUser') ?? '';
+    if (storedUser) {
       try {
-        const member = JSON.parse(storedMember);
-        this.setCurrentMember(member);
+        const user = JSON.parse(storedUser);
+        this.setCurrentUser(user);
       } catch (error) {
-        console.error('Error parsing stored member:', error);
+        console.error('Error parsing stored user:', error);
       }
     }
   }
 
   // user login olmuş mu kontrolü
   isLoggedIn(): boolean {
-    return this.getCurrentMember() !== null;
+    return this.getCurrentUser() !== null;
   }
 }

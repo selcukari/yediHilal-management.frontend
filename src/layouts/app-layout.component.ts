@@ -33,7 +33,7 @@ export class AppLayoutComponent {
 
   ngOnInit() {
     // Auth state değişikliklerini dinle
-    this.authService.currentMember$.subscribe((user: any) => {
+    this.authService.currentUser$.subscribe((user: any) => {
       this.isAuthenticated = !!user;
       this.currentUser = user;
     });

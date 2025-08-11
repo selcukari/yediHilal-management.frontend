@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean | UrlTree> {
 
-    return this.authService.currentMember$.pipe(
+    return this.authService.currentUser$.pipe(
       take(1),
       map(user => {
         if (user) {
@@ -37,7 +37,7 @@ export class NoAuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean | UrlTree> {
 
-    return this.authService.currentMember$.pipe(
+    return this.authService.currentUser$.pipe(
       take(1),
       map(user => {
         if (!user) {
