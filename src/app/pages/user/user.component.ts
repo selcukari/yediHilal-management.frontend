@@ -17,7 +17,7 @@ import { ProgressSpinner } from 'primeng/progressspinner';
 import { AreaComponent } from '../../components/area/area.component';
 import { ProvinceComponent } from '../../components/province/province.component';
 import { CountryComponent } from '../../components/country/country.component';
-import { MemberEditComponent } from '../../components/memberEdit/memberEdit.component';
+import { UserEditComponent } from '../../components/userEdit1/userEdit.component';
 import { MemberService } from '../../../services/member.service';
 import { MemberAddComponent } from '../../components/memberAdd/memberAdd.component';
 import { RoleComponent } from '../../components/role/role.component';
@@ -53,22 +53,23 @@ interface ValueData {
 }
 
 @Component({
-  selector: 'app-pages-member',
+  selector: 'app-pages-user',
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
-    ConfirmDialog, SpeedDialComponent, RoleComponent, MemberAddComponent, CountryComponent, AreaComponent, Tooltip, MemberEditComponent, IconFieldModule, ProvinceComponent, ProgressSpinner],
+    ConfirmDialog, SpeedDialComponent, RoleComponent, MemberAddComponent, CountryComponent, AreaComponent, Tooltip,
+    UserEditComponent, IconFieldModule, ProvinceComponent, ProgressSpinner],
   providers: [MessageService, ConfirmationService],
-  templateUrl: './member.component.html',
-  styleUrl: './member.component.scss'
+  templateUrl: './user.component.html',
+  styleUrl: './user.component.scss'
 })
-export class MemberPageComponent implements OnInit {
+export class UserPageComponent implements OnInit {
   @ViewChild('dt') dt!: Table;
 
   private memberService = inject(MemberService);
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  @ViewChild(MemberEditComponent) memberEditComponentRef!: MemberEditComponent;
+  @ViewChild(UserEditComponent) userEditComponentRef!: UserEditComponent;
   @ViewChild(MemberAddComponent) memberAddComponentRef!: MemberAddComponent;
 
 
@@ -120,17 +121,17 @@ export class MemberPageComponent implements OnInit {
 
   get pdfTitle(): string {
     if(this.selectedAreaName && this.selectedProvinceName) {
-      return `${this.selectedCountryName}/${this.selectedAreaName}/${this.selectedProvinceName} Üye Raporu`;
+      return `${this.selectedCountryName}/${this.selectedAreaName}/${this.selectedProvinceName} Kullanıcı Raporu`;
     }
 
     if(this.selectedAreaName) {
-      return `${this.selectedCountryName}/${this.selectedAreaName} Üye Raporu`;
+      return `${this.selectedCountryName}/${this.selectedAreaName} Kullanıcı Raporu`;
     }
 
     if(this.selectedProvinceName) {
-      return `${this.selectedCountryName}/${this.selectedProvinceName} Üye Raporu`;
+      return `${this.selectedCountryName}/${this.selectedProvinceName} Kullanıcı Raporu`;
     }
-    return `${this.selectedCountryName}/Tüm İller Üye Raporu`;
+    return `${this.selectedCountryName}/Tüm İller Kullanıcı Raporu`;
   }
 
   get pdfTableColumns(): TableColumn[] {
@@ -151,7 +152,7 @@ export class MemberPageComponent implements OnInit {
       (this.isDisabledOnlyJunior && value.roleId === 3) || (this.isDisabledOnlySenior && (value.roleId === 2 || value.roleId === 3)) || this.isDisabledOnlyAdmin
     ){
 
-      this.memberEditComponentRef.edit(clone(value));
+      this.userEditComponentRef.edit(clone(value));
 
       return;
     }
@@ -256,14 +257,14 @@ export class MemberPageComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: 'Başarılı',
-          detail: `${getMember.length} üye yüklendi.`,
+          detail: `${getMember.length} Kullanıcı yüklendi.`,
           life: 3000
         });
       } else {
         this.messageService.add({
           severity: 'info',
           summary: 'Bilgi',
-          detail: 'Henüz üye bulunmamaktadır.',
+          detail: 'Henüz Kullanıcı bulunmamaktadır.',
           life: 3000
         });
       }

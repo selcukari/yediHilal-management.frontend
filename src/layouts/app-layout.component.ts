@@ -9,7 +9,6 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InputIconModule } from 'primeng/inputicon';
 
-
 interface PageType {
   name: string;
   code: string;
@@ -40,8 +39,8 @@ export class AppLayoutComponent {
     });
 
     this.pages = [
-      { name: 'Kullanıcı Yönetimi', code: '/', icon: 'pi-user' },
-      { name: 'Üye Yönetimi', code: 'members', icon: 'pi-user-edit' },
+      { name: 'Kullanıcı Yönetimi', code: 'users', icon: 'pi-user-edit' },
+      { name: 'Üye Yönetimi', code: '/', icon: 'pi-user' },
       { name: 'Gön. Kul. E-Mail Lis.', code: 'mailList/2', icon: 'pi-send' },
       { name: 'Gön. Üye E-Mail Lis.', code: 'mailList/1', icon: 'pi-send' },
       { name: 'Gön. Kul. Mesaj Lis.', code: 'messageList/2', icon: 'pi-bell' },

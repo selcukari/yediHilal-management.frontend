@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginPageComponent } from './pages/login/login.component';
 import { AppLayoutComponent } from '../layouts/app-layout.component';
 import { HomePageComponent } from './pages/home/home.component';
-import { MemberPageComponent } from './pages/member/member.component';
+import { UserPageComponent } from './pages/user/user.component';
 import { MessageListPageComponent } from './pages/messageList/messageList.component';
 import { MailListPageComponent } from './pages/mailList/mailList.component';
 import { AuthGuard, NoAuthGuard } from '../services/auth.guard';
@@ -21,7 +21,7 @@ export const routes: Routes = [
         canActivate: [NoAuthGuard] // Giriş yapmış kullanıcılar login sayfasına giremez
       },
       {
-        path: 'members', component: MemberPageComponent, canActivate: [AuthGuard]
+        path: 'users', component: UserPageComponent, canActivate: [AuthGuard]
       },
       {
         path: 'mailList/:type', component: MailListPageComponent, canActivate: [AuthGuard]
