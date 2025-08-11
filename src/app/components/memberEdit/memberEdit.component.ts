@@ -95,7 +95,7 @@ export class MemberEditComponent {
      return;
    }
 
-    const updateUserValue = {
+    const updateMemberValue = {
       Id: this.memberData.id,
       fullName: this.memberData.fullName,
       identificationNumber: this.memberData.identificationNumber,
@@ -110,7 +110,7 @@ export class MemberEditComponent {
       ...(this.memberData.id ? {updateDate: new Date().toISOString() } : {})
     }
 
-    const result = await this.memberService.updateUser(updateUserValue);
+    const result = await this.memberService.updateUser(updateMemberValue);
     if (result) {
       this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Kullanıcı Güncellendi' });
       this.onSaveSuccess.emit();
