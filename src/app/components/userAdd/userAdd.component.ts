@@ -40,16 +40,16 @@ export class UserAddComponent {
 
   ngOnInit() {
     if (!this.userData) {
-      this.userData = this.defaultmemberData();
+      this.userData = this.defaultUserData();
     }
   }
 
   add() {
     this.visible = true;
-    this.userData = this.defaultmemberData();
+    this.userData = this.defaultUserData();
   }
 
-  defaultmemberData(): any {
+  defaultUserData(): any {
     return {
       id: null,
       fullName: "",
@@ -97,7 +97,7 @@ private isFormDataValid(): boolean {
     }
 
 
-    const newMemberValue = {
+    const newUserValue = {
       fullName: this.userData.fullName,
       identificationNumber: this.userData.identificationNumber,
       telephone: this.userData.telephone,
@@ -110,7 +110,7 @@ private isFormDataValid(): boolean {
       isActive: this.userData.isActive,
       areaId: (this.userData.areaId || 8)
     }
-    const result = await this.userService.addMember(newMemberValue);
+    const result = await this.userService.addMember(newUserValue);
     if (result) {
       this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Yeni Üye Eklendi' });
       this.onSaveSuccess.emit();
@@ -123,7 +123,7 @@ private isFormDataValid(): boolean {
   }
 
   async onCancel(form: any) {
-    if (!isEquals(this.defaultmemberData(), this.userData)) {
+    if (!isEquals(this.defaultUserData(), this.userData)) {
 
       this.confirmationService.confirm({
         target: form.target as EventTarget,
@@ -145,7 +145,7 @@ private isFormDataValid(): boolean {
 
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
           this.visible = false;
-          this.userData = this.defaultmemberData();
+          this.userData = this.defaultUserData();
 
         },
         reject: () => {
