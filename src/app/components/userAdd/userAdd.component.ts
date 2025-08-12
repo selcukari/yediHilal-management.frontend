@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { IconFieldModule } from 'primeng/iconfield';
 import { FloatLabel } from 'primeng/floatlabel';
 import { FormsModule } from '@angular/forms';
@@ -29,6 +30,7 @@ import { isEquals } from '../../helpers'
 
 export class UserAddComponent {
   @Output() onSaveSuccess = new EventEmitter<void>();
+  @ViewChild('userAddForm') userAddForm!: NgForm; // Add this line
 
   visible: boolean = false;
   userData: any;
@@ -47,6 +49,12 @@ export class UserAddComponent {
   add() {
     this.visible = true;
     this.userData = this.defaultUserData();
+
+    setTimeout(() => {
+      if (this.userAddForm) {
+        this.userAddForm.resetForm(this.userData);
+      }
+    });
   }
 
   defaultUserData(): any {
@@ -144,6 +152,7 @@ private isFormDataValid(): boolean {
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
           this.visible = false;
           this.userData = this.defaultUserData();
+          this.resetForm();
 
         },
         reject: () => {
@@ -154,8 +163,17 @@ private isFormDataValid(): boolean {
     } else {
         // Eğer form boşsa direkt kapat
         this.visible = false;
+        this.resetForm();
     }
     // Bu satırı kaldırdık: this.visible = false;
+  }
+
+  private resetForm() {
+    setTimeout(() => {
+      if (this.userAddForm) {
+        this.userAddForm.resetForm(this.defaultUserData());
+      }
+    });
   }
 
   onCountrySelected(countryCode: any): void {

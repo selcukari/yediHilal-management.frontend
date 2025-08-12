@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { IconFieldModule } from 'primeng/iconfield';
+import { NgForm } from '@angular/forms';
 import { FloatLabel } from 'primeng/floatlabel';
 import { FormsModule } from '@angular/forms';
 import { MessageModule } from 'primeng/message';
@@ -28,6 +29,7 @@ import { MemberService } from '../../../services/member.service';
 
 export class MemberAddComponent {
   @Output() onSaveSuccess = new EventEmitter<void>();
+  @ViewChild('memberAddForm') memberAddForm!: NgForm; // Add this line
 
   visible: boolean = false;
   memberData: any;
@@ -46,6 +48,12 @@ export class MemberAddComponent {
   add() {
     this.visible = true;
     this.memberData = this.defaultMemberData();
+
+    setTimeout(() => {
+      if (this.memberAddForm) {
+        this.memberAddForm.resetForm(this.memberData);
+      }
+    });
   }
 
   defaultMemberData(): any {
@@ -141,6 +149,7 @@ private isFormDataValid(): boolean {
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
           this.visible = false;
           this.memberData = this.defaultMemberData();
+          this.resetForm();
         },
         reject: () => {
           this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });
@@ -150,8 +159,17 @@ private isFormDataValid(): boolean {
     } else {
       // Eğer form boşsa direkt kapat
       this.visible = false;
+      this.resetForm();
     }
     // Bu satırı kaldırdık: this.visible = false;
+  }
+
+   private resetForm() {
+    setTimeout(() => {
+      if (this.memberAddForm) {
+        this.memberAddForm.resetForm(this.defaultMemberData());
+      }
+    });
   }
 
   onCountrySelected(countryCode: any): void {
