@@ -93,7 +93,7 @@
                 </td>
                 <td>
                   <div class="flex justify-center">
-                      <p-button (click)="onDelete(rowData.id)" icon="pi pi-trash" [raised]="true" class="mr-1" severity="danger" pTooltip="Sil" tooltipPosition="top" />
+                      <p-button (click)="onDelete(rowData.id, rowData.roleId)" icon="pi pi-trash" [raised]="true" class="mr-1" severity="danger" pTooltip="Sil" tooltipPosition="top" />
                       <p-button (click)="onEdit(rowData)" icon="pi pi-pencil" [raised]="true" severity="warn" pTooltip="Güncelle" tooltipPosition="top" />
                   </div>
                 </td>

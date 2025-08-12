@@ -82,9 +82,6 @@ export class UserPageComponent implements OnInit {
   selectedProvince?: number = undefined;
   selectedRole?: number = undefined;
   searchFullName: string = '';
-  isDisabledOnlyJunior: boolean = false;
-  isDisabledOnlySenior: boolean = false;
-  isDisabledOnlyAdmin: boolean = false;
   selectedCountryName: string = 'Türkiye';
   selectedProvinceName: string = '';
   selectedAreaName: string = '';
@@ -92,10 +89,6 @@ export class UserPageComponent implements OnInit {
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   async ngOnInit() {
-
-    this.isDisabledOnlyJunior = this.authService.getCurrentUser()?.roleId == 3; // 3 is Junior role
-    this.isDisabledOnlySenior = this.authService.getCurrentUser()?.roleId == 2; // 2 is Senior role
-    this.isDisabledOnlyAdmin = this.authService.getCurrentUser()?.roleId == 1; // 1 is Admin role
 
     this.isLoading = true;
 
@@ -117,6 +110,13 @@ export class UserPageComponent implements OnInit {
     } finally {
       this.isLoading = false;
     }
+  }
+
+  get isDisabledOnlySenior(): boolean {
+    return this.authService.getCurrentUser()?.roleId == 2; // 3 is Senior role
+  }
+  get isDisabledOnlyAdmin(): boolean {
+    return this.authService.getCurrentUser()?.roleId == 1; // 3 is Admin role
   }
 
   get pdfTitle(): string {
@@ -149,7 +149,7 @@ export class UserPageComponent implements OnInit {
 
   async onEdit (value: any) {
     if (
-      (this.isDisabledOnlyJunior && value.roleId === 3) || (this.isDisabledOnlySenior && (value.roleId === 2 || value.roleId === 3)) || this.isDisabledOnlyAdmin
+      (this.isDisabledOnlySenior && (value.roleId != 1)) || this.isDisabledOnlyAdmin
     ){
 
       this.userEditComponentRef.edit(clone(value));
@@ -166,22 +166,12 @@ export class UserPageComponent implements OnInit {
   }
 
   async onAdd () {
-    if (this.isDisabledOnlyJunior){
-      this.messageService.add({
-        severity: 'warn',
-        summary: 'Uyarı',
-        detail: 'Yetkisiz işlem',
-        life: 3000
-      });
-      return;
-    }
-
     this.userAddComponentRef.add();
   }
 
-  onDelete(event: Event) {
+  onDelete(event: Event, roleId: number) {
     if (
-      (this.isDisabledOnlyJunior && event as unknown as number === 3) || (this.isDisabledOnlySenior && (event as unknown as number === 2 || event as unknown as number === 3)) || this.isDisabledOnlyAdmin
+      (this.isDisabledOnlySenior && (roleId as number != 1)) || this.isDisabledOnlyAdmin
     ){
 
     this.confirmationService.confirm({
