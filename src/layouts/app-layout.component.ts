@@ -30,8 +30,6 @@ export class AppLayoutComponent {
   pages!: PageType[];
   isAuthenticated = false;
   currentUser: any = null;
-  isOnlyJunior: boolean = false;
-
 
   ngOnInit() {
     // Auth state değişikliklerini dinle
@@ -39,9 +37,6 @@ export class AppLayoutComponent {
       this.isAuthenticated = !!user;
       this.currentUser = user;
     });
-
-    this.isOnlyJunior = this.authService.getCurrentUser()?.roleId == 3; // 3 is Junior role
-
 
     this.pages = [
       { name: 'Kullanıcı Yönetimi', code: 'users', icon: 'pi-user-edit' },
@@ -51,6 +46,10 @@ export class AppLayoutComponent {
       // { name: 'Gön. Kul. Mesaj Lis.', code: 'messageList/1', icon: 'pi-bell' }, // Kullanıcı gonderilen
       { name: 'Gön. Mesaj Lis.', code: 'messageList/2', icon: 'pi-bell' }, // Üyelere gonderilen
     ];
+  }
+
+  get isOnlyJunior(): boolean {
+    return this.authService.getCurrentUser()?.roleId == 3; // 3 is Junior role
   }
 
   onPageSelect(route: any): void {
@@ -69,7 +68,6 @@ export class AppLayoutComponent {
     if(route && route.code) {
       this.router.navigate([`/${route.code}`]);
     }
-
   }
 
   async onLogout() {

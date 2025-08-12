@@ -82,9 +82,7 @@ private isFormDataValid(): boolean {
     const isOverallValid = isAngularFormValid && isCustomDataValid;
 
      if (!isOverallValid) {
-      if (form.control?.markAllAsTouched) {
       form.control.markAllAsTouched();
-    }
 
     // Manuel olarak touched durumu da ayarlanabilir (isteğe bağlı)
     Object.keys(form.controls).forEach(field => {
