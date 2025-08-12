@@ -30,6 +30,8 @@ export class AppLayoutComponent {
   pages!: PageType[];
   isAuthenticated = false;
   currentUser: any = null;
+  isOnlyJunior: boolean = false;
+
 
   ngOnInit() {
     // Auth state değişikliklerini dinle
@@ -38,17 +40,31 @@ export class AppLayoutComponent {
       this.currentUser = user;
     });
 
+    this.isOnlyJunior = this.authService.getCurrentUser()?.roleId == 3; // 3 is Junior role
+
+
     this.pages = [
       { name: 'Kullanıcı Yönetimi', code: 'users', icon: 'pi-user-edit' },
       { name: 'Üye Yönetimi', code: '/', icon: 'pi-user' },
-      { name: 'Gön. Kul. E-Mail Lis.', code: 'mailList/2', icon: 'pi-send' },
-      { name: 'Gön. Üye E-Mail Lis.', code: 'mailList/1', icon: 'pi-send' },
-      { name: 'Gön. Kul. Mesaj Lis.', code: 'messageList/2', icon: 'pi-bell' },
-      { name: 'Gön. Üye Mesaj Lis.', code: 'messageList/1', icon: 'pi-bell' },
+      { name: 'Gön. Kul. E-Mail Lis.', code: 'mailList/1', icon: 'pi-send' },
+      { name: 'Gön. Üye E-Mail Lis.', code: 'mailList/2', icon: 'pi-send' },
+      { name: 'Gön. Kul. Mesaj Lis.', code: 'messageList/1', icon: 'pi-bell' },
+      { name: 'Gön. Üye Mesaj Lis.', code: 'messageList/2', icon: 'pi-bell' },
     ];
   }
 
   onPageSelect(route: any): void {
+
+    if (this.isOnlyJunior && route.code === 'users') {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Uyarı',
+        detail: 'Yetkisiz işlem',
+        life: 3000
+      });
+
+      return;
+    }
 
     if(route && route.code) {
       this.router.navigate([`/${route.code}`]);

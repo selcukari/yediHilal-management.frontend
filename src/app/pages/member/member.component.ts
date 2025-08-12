@@ -159,7 +159,7 @@ export class MemberPageComponent implements OnInit {
       },
 
       accept: async () => {
-        const result = await this.memberService.deleteUser(event as unknown as number);
+        const result = await this.memberService.deleteMember(event as unknown as number);
         if (result) {
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt Silindi' });
           await this.refreshData();
@@ -184,7 +184,7 @@ export class MemberPageComponent implements OnInit {
     }
      try {
 
-      const getMembers = await this.memberService.users(params);
+      const getMembers = await this.memberService.members(params);
       if (getMembers) {
         this.resultData = getMembers;
         this.sendValueData = this.resultData.map(member => ({

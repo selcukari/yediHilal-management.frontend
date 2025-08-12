@@ -110,7 +110,7 @@ private isFormDataValid(): boolean {
       isActive: this.userData.isActive,
       areaId: (this.userData.areaId || 8)
     }
-    const result = await this.userService.addMember(newUserValue);
+    const result = await this.userService.addUser(newUserValue);
     if (result) {
       this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Yeni Üye Eklendi' });
       this.onSaveSuccess.emit();

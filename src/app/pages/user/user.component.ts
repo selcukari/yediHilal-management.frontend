@@ -201,7 +201,7 @@ export class UserPageComponent implements OnInit {
       },
 
       accept: async () => {
-        const result = await this.userService.deleteMember(event as unknown as number);
+        const result = await this.userService.deleteUser(event as unknown as number);
         if (result) {
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Kayıt Silindi' });
           await this.refreshData();
@@ -237,7 +237,7 @@ export class UserPageComponent implements OnInit {
     }
      try {
 
-      const getUser = await this.userService.members(params);
+      const getUser = await this.userService.users(params);
       if (getUser) {
         this.resultData = getUser;
         this.sendValueData = this.resultData.map(user => ({

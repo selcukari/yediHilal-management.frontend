@@ -33,7 +33,7 @@ export class MailService {
 
   async mails(type: number): Promise<MailsType[]> {
     try {
-      const getMails: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementMember/getMails`,{
+      const getMails: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementUser/getMails`,{
         params: {type}
       }));
       if (getMails?.errors) {
@@ -48,7 +48,7 @@ export class MailService {
 
   async sendMail(params: EmailParams): Promise<any| null> {
     try {
-      const sendMail: any = await firstValueFrom(this.http.post(`${this.envService.apiUrl}/managementMember/sendMail`, params));
+      const sendMail: any = await firstValueFrom(this.http.post(`${this.envService.apiUrl}/managementUser/sendMail`, params));
       if (sendMail?.errors) {
         throw new Error('sendMail gonderilemedi.');
       }

@@ -22,7 +22,7 @@ constructor(private http: HttpClient) {
   // Email ile giriş yap
   async loginWithEmail(email: string, password: string): Promise<any| null> {
     try {
-      const getUser: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementMember/login?email=${email}&password=${password}`));
+      const getUser: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementUser/login?email=${email}&password=${password}`));
       if (getUser?.errors) {
         throw new Error('Kullanıcı bulunamadı veya şifre yanlış.');
       }

@@ -110,7 +110,7 @@ export class MemberEditComponent {
       ...(this.memberData.id ? {updateDate: new Date().toISOString() } : {})
     }
 
-    const result = await this.memberService.updateUser(updateMemberValue);
+    const result = await this.memberService.updateMember(updateMemberValue);
     if (result) {
       this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Kullanıcı Güncellendi' });
       this.onSaveSuccess.emit();

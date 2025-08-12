@@ -35,11 +35,11 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  async members(params: MemberParams): Promise<any| null> {
+  async users(params: MemberParams): Promise<any| null> {
     try {
       const { countryId, areaId, provinceId, fullName, roleId } = params;
 
-      const getMembers: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementMember/getMembersBy`,{
+      const getUsers: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementUser/getUsersBy`,{
         params: {
           countryId ,
           ...(provinceId !== undefined ? {provinceId } : {}),
@@ -47,18 +47,18 @@ export class UserService {
           ...((areaId == undefined || countryId != 1) ? { } : {areaId}),
           ...(roleId !== undefined ? {roleId } : {}),
         }}));
-      if (getMembers?.errors) {
-        throw new Error('getMembers bulunamadı.');
+      if (getUsers?.errors) {
+        throw new Error('getUsers bulunamadı.');
       }
-      return getMembers.data;
+      return getUsers.data;
     } catch (error: any) {
-      this.envService.logDebug('getMembers error', error);
+      this.envService.logDebug('getUsers error', error);
     }
   }
 
-  async deleteMember(userId: number): Promise<any | null> {
+  async deleteUser(userId: number): Promise<any | null> {
     try {
-      const deleteUser: any = await firstValueFrom(this.http.put(`${this.envService.apiUrl}/managementMember/deleteMember?id=${userId}`, null));
+      const deleteUser: any = await firstValueFrom(this.http.put(`${this.envService.apiUrl}/managementUser/deleteUser?id=${userId}`, null));
       if (deleteUser?.errors) {
         throw new Error('Kullanıcı silinemedi.');
       }
@@ -68,9 +68,9 @@ export class UserService {
     }
   }
 
-   async updateMember(params: UserData): Promise<any | null> {
+   async updateUser(params: UserData): Promise<any | null> {
     try {
-      const updatedUser: any = await firstValueFrom(this.http.put(`${this.envService.apiUrl}/managementMember/updateMember`, params));
+      const updatedUser: any = await firstValueFrom(this.http.put(`${this.envService.apiUrl}/managementUser/updateUser`, params));
       if (updatedUser?.errors) {
         throw new Error('Kullanıcı güncellenemedi.');
       }
@@ -80,15 +80,15 @@ export class UserService {
     }
   }
 
-  async addMember(params: UserData): Promise<any | null> {
+  async addUser(params: UserData): Promise<any | null> {
     try {
-      const addeddUser: any = await firstValueFrom(this.http.post(`${this.envService.apiUrl}/managementMember/addUser`, params));
-      if (addeddUser?.errors) {
+      const addedUser: any = await firstValueFrom(this.http.post(`${this.envService.apiUrl}/managementUser/addUser`, params));
+      if (addedUser?.errors) {
         throw new Error('Kullanıcı eklenemedi.');
       }
-      return addeddUser.data;
+      return addedUser.data;
     } catch (error: any) {
-      this.envService.logDebug('addeddUser error', error);
+      this.envService.logDebug('addedUser error', error);
     }
   }
 }

@@ -28,7 +28,7 @@ export class MessageService {
 
   async messages(type: number): Promise<MessagesType[]> {
     try {
-      const getMessages: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementMember/getMessages`,{
+      const getMessages: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementUser/getMessages`,{
         params: {type}
       }));
       if (getMessages?.errors) {
@@ -43,7 +43,7 @@ export class MessageService {
 
   async sendMessage(params: MessageParams): Promise<any| null> {
     try {
-      const sendMessage: any = await firstValueFrom(this.http.post(`${this.envService.apiUrl}/managementMember/sendMessage`, params));
+      const sendMessage: any = await firstValueFrom(this.http.post(`${this.envService.apiUrl}/managementUser/sendMessage`, params));
       if (sendMessage?.errors) {
         throw new Error('sendMessage gonderilemedi.');
       }

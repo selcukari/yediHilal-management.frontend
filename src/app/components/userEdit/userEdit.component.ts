@@ -116,7 +116,7 @@ async onSave(form: any) {
     roleId: this.userData.roleId,
     ...(this.userData.id ? {updateDate: new Date().toISOString() } : {})
   }
-   const result = await this.userService.updateMember(updateUserValue);
+   const result = await this.userService.updateUser(updateUserValue);
    if (result) {
      this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Kullanıcı Güncellendi' });
       this.onSaveSuccess.emit();
