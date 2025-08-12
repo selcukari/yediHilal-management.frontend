@@ -330,6 +330,7 @@ export class UserPageComponent implements OnInit {
       { field: 'id', header: 'Id' },
       { field: 'fullName', header: 'Ad Soyad' },
       { field: 'roleName', header: 'Rolü' },
+      { field: 'countryCode', header: 'Ülke Kodu' },
       { field: 'telephone', header: 'Telefon' },
       { field: 'email', header: 'E-mail' },
       { field: 'identificationNumber', header: 'Kimlik Numarası' },

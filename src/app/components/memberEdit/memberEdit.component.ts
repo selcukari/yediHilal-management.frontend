@@ -39,6 +39,7 @@ export class MemberEditComponent {
     id: null,
     fullName: "",
     isActive: true,
+    countryCode: undefined,
     countryId: undefined,
     areaId: undefined,
     provinceId: undefined,
@@ -105,6 +106,7 @@ export class MemberEditComponent {
       countryId: this.memberData.countryId,
       areaId: this.memberData.areaId,
       provinceId: this.memberData.provinceId,
+      countryCode: this.memberData.countryCode,
       isActive: this.memberData.isActive,
       createdDate: this.memberData.createdDate,
       ...(this.memberData.id ? {updateDate: new Date().toISOString() } : {})

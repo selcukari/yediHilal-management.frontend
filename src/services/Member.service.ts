@@ -10,6 +10,7 @@ interface MemberParams {
 }
 interface UserData {
   fullName: string;
+  countryCode: number;
   isActive: boolean;
   countryId: number;
   areaId: number;

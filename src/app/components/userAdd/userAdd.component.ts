@@ -69,6 +69,7 @@ export class UserAddComponent {
       provinceId: undefined,
       identificationNumber: null,
       telephone: null,
+      countryCode: 90,
       email: null,
       dateOfBirth: null
     };
@@ -110,6 +111,7 @@ private isFormDataValid(): boolean {
       email: this.userData.email,
       password: this.userData.password,
       roleId: this.userData.roleId,
+      countryCode: this.userData.countryCode,
       dateOfBirth: this.userData.dateOfBirth,
       countryId: this.userData.countryId,
       provinceId: this.userData.provinceId,

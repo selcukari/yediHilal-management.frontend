@@ -278,6 +278,7 @@ export class MemberPageComponent implements OnInit {
     this.cols = [
       { field: 'id', header: 'Id' },
       { field: 'fullName', header: 'Ad Soyad' },
+      { field: 'countryCode', header: 'Ülke Kodu' },
       { field: 'telephone', header: 'Telefon' },
       { field: 'email', header: 'E-mail' },
       { field: 'identificationNumber', header: 'Kimlik Numarası' },

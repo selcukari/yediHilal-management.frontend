@@ -20,8 +20,9 @@ interface UserData {
   provinceId: number;
   roleId: number;
   identificationNumber?: string;
-  telephone?: string;
+  telephone: number;
   email?: string;
+  countryCode: number;
   dateOfBirth?: Date;
   createdDate?: string;
   updateDate?: string;

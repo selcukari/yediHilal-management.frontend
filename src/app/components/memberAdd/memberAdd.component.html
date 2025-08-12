@@ -11,31 +11,72 @@
     <span class="text-surface-500 dark:text-surface-400 block mb-8">Yeni üye ekle.</span>
   <form #memberAddForm="ngForm"  class="formgrid grid">
 
-    <div class="field col-12 md:col-6">
-      <p-floatlabel variant="on">
-        <p-iconfield>
-          <p-inputicon class="pi pi-user" />
-          <input pInputText id="fullName" name="fullName"  [(ngModel)]="memberData.fullName" #fullName="ngModel" pSize="large" required
-            [class.ng-invalid]="fullName.invalid && (fullName.touched || memberAddForm.submitted)"autocomplete="off" />
-            @if (fullName.invalid && (fullName.touched || memberAddForm.submitted)) {
-              <p-message severity="error" variant="simple">fullName is required.</p-message>
-            }
-        </p-iconfield>
-        <label for="fullName">Ad Soyad</label>
-      </p-floatlabel>
-    </div>
+    <div class="field grid col-12 gap-3 align-items-end">
+    <!-- Ad Soyad + Ülke Kodu + Telefon -->
+    <div class="col-12 flex flex-row gap-3">
+      <!-- Ad Soyad -->
+      <div class="flex flex-column" style="flex: 2">
+        <p-floatlabel variant="on">
+          <p-iconfield>
+            <p-inputicon class="pi pi-user" />
+            <input pInputText id="fullName" name="fullName" [(ngModel)]="memberData.fullName" #fullName="ngModel"
+              pSize="large" required autocomplete="off"
+              [class.ng-invalid]="fullName.invalid && (fullName.touched || memberAddForm.submitted)" />
+          </p-iconfield>
+          <label for="fullName">Ad Soyad</label>
+        </p-floatlabel>
+        @if (fullName.invalid && (fullName.touched || memberAddForm.submitted)) {
+          <p-message severity="error" variant="simple" class="mt-1">Ad Soyad gereklidir.</p-message>
+        }
+      </div>
 
-    <div class="field col-12 md:col-6">
-      <p-floatlabel>
-        <p-iconfield>
-          <p-inputicon class="pi pi-phone" />
-          <input pInputText id="telephone" name="telephone"  [(ngModel)]="memberData.telephone" #telephone="ngModel" pSize="large" required
-            [class.ng-invalid]="telephone.invalid && (telephone.touched || memberAddForm.submitted)"autocomplete="off" placeholder="505 555 5555" />
-            @if (telephone.invalid && (telephone.touched || memberAddForm.submitted)) {
-              <p-message severity="error" variant="simple">telephone is required.</p-message>
+      <!-- Ülke Kodu -->
+      <div class="flex flex-column" style="flex: 1; max-width: 70px">
+        <p-floatlabel>
+          <p-iconfield>
+            <input pInputText id="countryCode" name="countryCode" [(ngModel)]="memberData.countryCode"
+              #countryCode="ngModel" pSize="large" required autocomplete="off"
+              placeholder="90" style="width: 100%" pattern="^[0-9]+$"
+              [class.ng-invalid]="countryCode.invalid && (countryCode.touched || memberAddForm.submitted)" />
+          </p-iconfield>
+          <label for="countryCode">Ülke Kodu</label>
+        </p-floatlabel>
+        @if (countryCode.invalid && (countryCode.touched || memberAddForm.submitted)) {
+          <p-message severity="error" variant="simple" class="mt-1">
+            @if (countryCode.errors?.['required']) {
+              Kod gereklidir.
             }
-        </p-iconfield>
-      </p-floatlabel>
+            @if (countryCode.errors?.['pattern']) {
+              Geçerli bir sayı giriniz.
+            }
+          </p-message>
+        }
+      </div>
+
+      <!-- Telefon Numarası -->
+      <div class="flex flex-column" style="flex: 2">
+        <p-floatlabel>
+          <p-iconfield>
+            <p-inputicon class="pi pi-phone" />
+            <input pInputText id="telephone" name="telephone" [(ngModel)]="memberData.telephone"
+              #telephone="ngModel" pSize="large" required autocomplete="off"
+              placeholder="505 555 5555" style="width: 100%" pattern="^[0-9]+$"
+              [class.ng-invalid]="telephone.invalid && (telephone.touched || memberAddForm.submitted)" />
+          </p-iconfield>
+          <label for="telephone">Telefon</label>
+        </p-floatlabel>
+        @if (telephone.invalid && (telephone.touched || memberAddForm.submitted)) {
+          <p-message severity="error" variant="simple" class="mt-1">
+            @if (telephone.errors?.['required']) {
+              Telefon gereklidir.
+            }
+            @if (telephone.errors?.['pattern']) {
+              Geçerli bir sayı giriniz.
+            }
+          </p-message>
+        }
+      </div>
+    </div>
     </div>
 
     <div class="field col-12 md:col-6">

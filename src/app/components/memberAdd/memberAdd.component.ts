@@ -60,6 +60,7 @@ export class MemberAddComponent {
     return {
       id: null,
       fullName: "",
+      countryCode: 90,
       isActive: true,
       countryId: undefined,
       areaId: undefined,
@@ -106,6 +107,7 @@ private isFormDataValid(): boolean {
       fullName: this.memberData.fullName,
       identificationNumber: this.memberData.identificationNumber,
       telephone: this.memberData.telephone,
+      countryCode: this.memberData.countryCode,
       email: this.memberData.email,
       dateOfBirth: this.memberData.dateOfBirth,
       countryId: this.memberData.countryId,

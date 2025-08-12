@@ -62,6 +62,7 @@ export class UserEditComponent {
       isActive: true,
       countryId: undefined,
       areaId: undefined,
+      countryCode: undefined,
       provinceId: undefined,
       identificationNumber: null,
       telephone: null,
@@ -112,6 +113,7 @@ async onSave(form: any) {
     areaId: this.userData.areaId,
     provinceId: this.userData.provinceId,
     isActive: this.userData.isActive,
+    countryCode: this.userData.countryCode,
     createdDate: this.userData.createdDate,
     roleId: this.userData.roleId,
     ...(this.userData.id ? {updateDate: new Date().toISOString() } : {})
