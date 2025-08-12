@@ -46,16 +46,16 @@ export class AppLayoutComponent {
     this.pages = [
       { name: 'Kullanıcı Yönetimi', code: 'users', icon: 'pi-user-edit' },
       { name: 'Üye Yönetimi', code: '/', icon: 'pi-user' },
-      { name: 'Gön. Kul. E-Mail Lis.', code: 'mailList/1', icon: 'pi-send' },
-      { name: 'Gön. Üye E-Mail Lis.', code: 'mailList/2', icon: 'pi-send' },
-      { name: 'Gön. Kul. Mesaj Lis.', code: 'messageList/1', icon: 'pi-bell' },
-      { name: 'Gön. Üye Mesaj Lis.', code: 'messageList/2', icon: 'pi-bell' },
+      // { name: 'Gön. Kul. E-Mail Lis.', code: 'mailList/1', icon: 'pi-send' }, // Kullanıcı gonderilen
+      { name: 'Gön. Mail Lis.', code: 'mailList/2', icon: 'pi-send' }, // Üyelere gonderilen
+      // { name: 'Gön. Kul. Mesaj Lis.', code: 'messageList/1', icon: 'pi-bell' }, // Kullanıcı gonderilen
+      { name: 'Gön. Mesaj Lis.', code: 'messageList/2', icon: 'pi-bell' }, // Üyelere gonderilen
     ];
   }
 
   onPageSelect(route: any): void {
 
-    if (this.isOnlyJunior && route.code === 'users') {
+    if (this.isOnlyJunior && route?.code === 'users') {
       this.messageService.add({
         severity: 'warn',
         summary: 'Uyarı',
