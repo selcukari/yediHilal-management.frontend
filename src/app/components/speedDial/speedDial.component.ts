@@ -30,12 +30,21 @@ export class SpeedDialComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
-        label: 'Rapor',
+        label: 'Rapor-Pdf',
         icon: 'pi pi-book',
         command: () => {
 
           this.exportPdf(this.pdfTitle);
-          this.messageService.add({ severity: 'info', summary: 'Rapor', detail: 'Rapor Oluşturuldu' });
+          this.messageService.add({ severity: 'info', summary: 'Rapor-Pdf', detail: 'Rapor Oluşturuldu' });
+        }
+      },
+      {
+        label: 'Rapor-Excel',
+        icon: 'pi pi-file-excel',
+        command: () => {
+
+          this.exportPdf(this.pdfTitle);
+          this.messageService.add({ severity: 'info', summary: 'Rapor-Excel', detail: 'Rapor Oluşturuldu' });
         }
       },
       {
