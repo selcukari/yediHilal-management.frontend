@@ -24,6 +24,7 @@ import { SpeedDialComponent } from '../../components/speedDial/speedDial.compone
 import { TableColumn } from '../../helpers/repor/pdfHelper';
 import { calculateColumnWidthMember } from '../../helpers/repor/calculateColumnWidth';
 import { FormatDatePipe } from '../../helpers'
+import { ColumnDefinition } from '../../helpers/repor/exportToExcel'
 
 interface Column {
   field: string;
@@ -109,17 +110,18 @@ export class MemberPageComponent implements OnInit {
   }
 
   get pdfTitle(): string {
-    if(this.selectedAreaName && this.selectedProvinceName) {
+    if(this.selectedCountryName === 'Türkiye' && this.selectedAreaName && this.selectedProvinceName) {
       return `${this.selectedCountryName}/${this.selectedAreaName}/${this.selectedProvinceName} Üye Raporu`;
     }
 
-    if(this.selectedAreaName) {
+    if(this.selectedAreaName && !this.selectedProvince) {
       return `${this.selectedCountryName}/${this.selectedAreaName} Üye Raporu`;
     }
 
-    if(this.selectedProvinceName) {
+    if(this.selectedProvinceName && !this.selectedAreaName) {
       return `${this.selectedCountryName}/${this.selectedProvinceName} Üye Raporu`;
     }
+
     return `${this.selectedCountryName}/Tüm İller Üye Raporu`;
   }
 
@@ -133,6 +135,19 @@ export class MemberPageComponent implements OnInit {
       title: col.header,
       // İsteğe bağlı olarak genişlik ayarları ekleyebilirsiniz
       width: calculateColumnWidthMember(col.field) // Özel genişlik hesaplama fonksiyonu
+    }));
+  }
+
+  get excelTableColumns(): ColumnDefinition[] {
+
+    const newCols = this.cols.filter(col =>
+      col.field != 'updateDate' && col.field != 'areaName' && col.field != 'countryCode');
+
+    return newCols.map(col => ({
+      key: col.field as keyof ValueData,
+      header: col.header,
+      // İsteğe bağlı olarak genişlik ayarları ekleyebilirsiniz
+      // format: // Özel genişlik hesaplama fonksiyonu
     }));
   }
 
@@ -264,6 +279,9 @@ export class MemberPageComponent implements OnInit {
 
   onCountrySelectedName(countryName: string): void {
     this.selectedCountryName = countryName;
+
+    this.selectedAreaName = "";
+    this.selectedProvinceName = "";
   }
 
   onProvinceSelectedName(provinceName: string): void {
@@ -272,6 +290,8 @@ export class MemberPageComponent implements OnInit {
 
   onAreaSelectedName(areaName: string): void {
     this.selectedAreaName = areaName;
+
+    this.selectedProvinceName = "";
   }
 
   async onProvinceSelected(provinceCode: any): Promise<void> {

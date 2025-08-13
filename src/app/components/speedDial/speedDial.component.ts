@@ -6,6 +6,7 @@ import { PdfHelperService, PdfConfig, TableColumn } from '../../helpers/repor/pd
 import { ValueData } from '../../pages/member/member.component';
 import { SendMailComponent } from '../sendMail/sendMail.component';
 import { SendMessageComponent } from '../sendMessage/sendMessage.component'
+import { exportToExcel, ColumnDefinition } from '../../helpers/repor/exportToExcel'
 
 @Component({
   selector: 'app-component-speedDial',
@@ -20,7 +21,8 @@ export class SpeedDialComponent implements OnInit {
   @Input() pdfTitle: string = '';
   @Input() type: number = 2;
   @Input() valueData: ValueData[] = [];
-  @Input() tableColumns: TableColumn[] = [];
+  @Input() pdfColumns: TableColumn[] = [];
+  @Input() excelColumns: ColumnDefinition[] = [];
 
   @ViewChild(SendMailComponent) sendMailComponentRef!: SendMailComponent;
   @ViewChild(SendMessageComponent) sendMessageComponent!: SendMessageComponent;
@@ -43,7 +45,7 @@ export class SpeedDialComponent implements OnInit {
         icon: 'pi pi-file-excel',
         command: () => {
 
-          this.exportPdf(this.pdfTitle);
+          this.exportExcel(this.pdfTitle);
           this.messageService.add({ severity: 'info', summary: 'Rapor-Excel', detail: 'Rapor Oluşturuldu' });
         }
       },
@@ -79,23 +81,18 @@ export class SpeedDialComponent implements OnInit {
       textColor: '#2c3e50' // Koyu gri
     };
 
-    const modifiedCols = this.tableColumns.map(col => {
-      if (col.key === 'identificationNumber') {
-        return { ...col, title: 'Kimlik Numarası' };
-      }
-      if (col.key === 'createdDate') {
-        return { ...col, title: 'İlk Kayıt Tarihi' };
-      }
-      return col;
-    });
-
     const newValueData = this.valueData.map(item => ({
       ...item,
       isMail: item.isMail ? "Evet" : "Hayır",
       isMessage: item.isMessage ? "Evet" : "Hayır"
     }));
 
-    this.pdfHelperService.generatePdf(newValueData, modifiedCols, config);
+    this.pdfHelperService.generatePdf(newValueData, this.pdfColumns, config);
+  }
+
+  exportExcel(excelTitle: string) {
+
+    exportToExcel(this.valueData, this.excelColumns, `yediHilal-${excelTitle.toLocaleLowerCase().replace(/\//g,'-').replace(/ /g, '-')}`);
   }
 
   sendMail(type: number) {
