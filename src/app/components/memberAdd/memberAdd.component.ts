@@ -117,13 +117,13 @@ private isFormDataValid(): boolean {
     }
     const result = await this.memberService.addMember(newMemberValue);
     if (result) {
-      this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Yeni Kullanıcı Eklendi' });
+      this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Yeni Üye Eklendi' });
       this.onSaveSuccess.emit();
       this.visible = false;
 
       return;
     } else {
-      this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Yeni Kullanıcı Eklenirken hata oluştu' });
+      this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Yeni Üye Eklenirken hata oluştu' });
     }
   }
 

@@ -25,7 +25,7 @@
             </p-iconfield>
             <label for="fullName">Ad Soyad</label>
           </p-floatlabel>
-          @if (fullName.invalid && (fullName.touched || userEditForm.submitted)) {
+          @if ((!userData.fullName || !userData.fullName.trim()) && (fullName.touched || userEditForm.submitted)) {
             <p-message severity="error" variant="simple" class="mt-1">Ad Soyad gereklidir.</p-message>
           }
         </div>
@@ -125,10 +125,17 @@
       <p-floatlabel variant="on">
         <p-iconfield>
           <p-inputicon class="pi pi-calendar" />
-          <input pInputText id="dateOfBirth" name="dateOfBirth"  [(ngModel)]="userData.dateOfBirth" #dateOfBirth="ngModel" pSize="large"/>
+          <input pInputText id="dateOfBirth" name="dateOfBirth" pattern="^[0-9]+$"  [(ngModel)]="userData.dateOfBirth" #dateOfBirth="ngModel" pSize="large"/>
         </p-iconfield>
         <label for="dateOfBirth">Doğum Tarih</label>
       </p-floatlabel>
+      @if (dateOfBirth.invalid && (dateOfBirth.touched || userEditForm.submitted)) {
+        <p-message severity="error" variant="simple" class="mt-1">
+          @if (dateOfBirth.errors?.['pattern']) {
+            Geçerli bir sayı giriniz.
+          }
+        </p-message>
+      }
     </div>
     <!-- <div class=" col-offset-3"></div> -->
 
