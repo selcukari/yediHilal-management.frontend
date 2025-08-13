@@ -41,7 +41,7 @@
             <td *ngFor="let col of columns">
               @switch (col.field) {
                 @case ('createdDate') {
-                  {{ formatDate(rowData[col.field]) }}
+                  {{ rowData[col.field] | formatDate }}
                 }
                 @case ('subject') {
                   {{rowData[col.field].length > 30 ? rowData[col.field].substring(0, 30) + "..." : rowData[col.field]}}

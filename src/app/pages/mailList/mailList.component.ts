@@ -13,6 +13,7 @@ import { ProgressSpinner } from 'primeng/progressspinner';
 import { MailService, MailsType } from '../../../services/mail.service';
 import { StripHtmlPipe } from '../../helpers/stripHtml.pipe';
 import { Subscription } from 'rxjs';
+import { FormatDatePipe } from '../../helpers'
 interface Column {
   field: string;
   header: string;
@@ -21,8 +22,9 @@ interface Column {
   selector: 'app-pages-mailList',
   standalone: true,
   imports: [TableModule, StripHtmlPipe, ToastModule, CommonModule, FormsModule, InputIconModule, InputTextModule,
-    IconFieldModule, ProgressSpinner],
+    IconFieldModule, ProgressSpinner, FormatDatePipe],
   providers: [MessageService],
+
   templateUrl: './mailList.component.html',
   styleUrl: './mailList.component.scss'
 })
@@ -106,7 +108,7 @@ export class MailListPageComponent implements OnInit, OnDestroy {
           toUsers: mail.toUsers,
           body: mail.body,
           count: mail.count,
-          createdDate: this.formatDate(mail.createdDate)
+          createdDate: mail.createdDate
         }));
 
         this.messageService.add({
@@ -148,15 +150,6 @@ export class MailListPageComponent implements OnInit, OnDestroy {
       { field: 'toEmails', header: 'Alıcı E-Postaları' },
       { field: 'createdDate', header: 'Gönderim Tarihi' },
     ];
-  }
-
-  // Utility fonksiyonlar
-  formatDate(dateString: string): string {
-    try {
-      return new Date(dateString).toLocaleDateString('tr-TR');
-    } catch {
-      return dateString;
-    }
   }
 
   // Arama fonksiyonu

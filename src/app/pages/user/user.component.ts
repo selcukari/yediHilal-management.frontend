@@ -25,6 +25,7 @@ import { AuthService } from '../../../services/auth.service';
 import { SpeedDialComponent } from '../../components/speedDial/speedDial.component';
 import { TableColumn } from '../../helpers/repor/pdfHelper';
 import { calculateColumnWidthUser } from '../../helpers/repor/calculateColumnWidth';
+import { FormatDatePipe } from '../../helpers'
 
 interface Column {
   field: string;
@@ -38,13 +39,15 @@ interface UserParams {
   roleId?: number;
 }
 interface ValueData {
- id: number;
+  id: number;
   fullName: string;
   identificationNumber?: string;
   telephone: string;
   countryCode?: string;
 	dateOfBirth?: number;
   email: string;
+  isMessage?: boolean;
+  isMail?: boolean;
   createdDate: string;
   updateDate?: string;
   countryName: string;
@@ -58,7 +61,7 @@ interface ValueData {
   standalone: true,
   imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
     ConfirmDialog, SpeedDialComponent, RoleComponent, UserAddComponent, CountryComponent, AreaComponent, Tooltip,
-    UserEditComponent, IconFieldModule, ProvinceComponent, ProgressSpinner],
+    UserEditComponent, IconFieldModule, ProvinceComponent, ProgressSpinner, FormatDatePipe],
   providers: [MessageService, ConfirmationService],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
@@ -242,7 +245,7 @@ export class UserPageComponent implements OnInit {
           provinceName: user.provinceName,
           areaName: user.areaName,
           roleName: user.roleName,
-          createdDate: this.formatDate(user.createdDate)
+          createdDate: user.createdDate
         }));
 
         this.messageService.add({
@@ -341,15 +344,6 @@ export class UserPageComponent implements OnInit {
       { field: 'createdDate', header: 'İlk Kayıt Tarih' },
       { field: 'updateDate', header: 'Güncelleme Tarih' },
     ];
-  }
-
-  // Utility fonksiyonlar
-  formatDate(dateString: string): string {
-    try {
-      return new Date(dateString).toLocaleDateString('tr-TR');
-    } catch {
-      return dateString;
-    }
   }
 
   onPageSelect(route: any): void {

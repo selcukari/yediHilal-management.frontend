@@ -23,6 +23,7 @@ import { MemberAddComponent } from '../../components/memberAdd/memberAdd.compone
 import { SpeedDialComponent } from '../../components/speedDial/speedDial.component';
 import { TableColumn } from '../../helpers/repor/pdfHelper';
 import { calculateColumnWidthMember } from '../../helpers/repor/calculateColumnWidth';
+import { FormatDatePipe } from '../../helpers'
 
 interface Column {
   field: string;
@@ -46,8 +47,8 @@ export interface ValueData {
   updateDate?: string;
   countryName: string;
   provinceName: string;
-  isMessage: boolean;
-  isMail: boolean;
+  isMessage?: boolean;
+  isMail?: boolean;
   areaName: string;
 	roleName?: string;
 }
@@ -55,7 +56,7 @@ export interface ValueData {
 @Component({
   selector: 'app-pages-member',
   standalone: true,
-  imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule,
+  imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule, FormatDatePipe,
     ConfirmDialog, SpeedDialComponent, MemberAddComponent, CountryComponent, AreaComponent, Tooltip, MemberEditComponent, IconFieldModule, ProvinceComponent, ProgressSpinner],
   providers: [MessageService, ConfirmationService],
   templateUrl: './member.component.html',
@@ -202,7 +203,7 @@ export class MemberPageComponent implements OnInit {
           areaName: member.areaName,
           isMessage: member.isMessage,
           isMail: member.isMail,
-          createdDate: this.formatDate(member.createdDate)
+          createdDate: member.createdDate
         }));
 
         this.messageService.add({
@@ -295,15 +296,6 @@ export class MemberPageComponent implements OnInit {
       { field: 'createdDate', header: 'İlk Kayıt Tarih' },
       { field: 'updateDate', header: 'Güncelleme Tarih' },
     ];
-  }
-
-  // Utility fonksiyonlar
-  formatDate(dateString: string): string {
-    try {
-      return new Date(dateString).toLocaleDateString('tr-TR');
-    } catch {
-      return dateString;
-    }
   }
 
   onPageSelect(route: any): void {

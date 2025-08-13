@@ -80,10 +80,10 @@
                 <td *ngFor="let col of columns">
                   @switch (col.field) {
                     @case ('createdDate') {
-                      {{ formatDate(rowData[col.field]) }}
+                      {{ rowData[col.field] | formatDate }}
                     }
                     @case ('updateDate') {
-                      {{rowData[col.field] ? formatDate(rowData[col.field]) : "-" }}
+                      {{ rowData[col.field] | formatDate }}
                     }
 
                     @default {
