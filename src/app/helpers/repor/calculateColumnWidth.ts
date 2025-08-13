@@ -4,13 +4,13 @@ export const calculateColumnWidthMember = (field: string): number | undefined =>
     'fullName': 50,
     'telephone': 30,
     'email': 40,
-    'isMessage': 10,
-    'isMail': 10,
-    'identificationNumber': 30,
+    'isMessage': 18,
+    'isMail': 18,
+    'identificationNumber': 25,
     'dateOfBirth': 20,
-    'countryName': 25,
-    'provinceName': 30,
-    'createdDate': 35
+    'countryName': 23,
+    'provinceName': 25,
+    'createdDate': 30
   };
 
   return widthMap[field] || undefined;
