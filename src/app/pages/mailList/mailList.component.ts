@@ -143,9 +143,9 @@ export class MailListPageComponent implements OnInit, OnDestroy {
       { field: 'id', header: 'id' },
       { field: 'subject', header: 'Konu' },
       { field: 'body', header: 'İçerik' },
-      { field: 'count', header: 'Alıçı Sayısı' },
-      { field: 'toUsers', header: 'Alıçı İsimleri' },
-      { field: 'toEmails', header: 'Alıçı E-Postaları' },
+      { field: 'count', header: 'Alıcı Sayısı' },
+      { field: 'toUsers', header: 'Alıcı İsimleri' },
+      { field: 'toEmails', header: 'Alıcı E-Postaları' },
       { field: 'createdDate', header: 'Gönderim Tarihi' },
     ];
   }

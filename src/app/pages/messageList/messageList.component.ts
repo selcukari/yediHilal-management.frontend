@@ -143,9 +143,9 @@ export class MessageListPageComponent implements OnInit, OnDestroy {
     this.cols = [
       { field: 'id', header: 'id' },
       { field: 'message', header: 'Mesaj' },
-      { field: 'toUsers', header: 'Alıçı İsimleri' },
-      { field: 'toPhoneNumbers', header: 'Alıçı Tel. Num.' },
-      { field: 'count', header: 'Alıçı Sayısı' },
+      { field: 'toUsers', header: 'Alıcı İsimleri' },
+      { field: 'toPhoneNumbers', header: 'Alıcı Tel. Num.' },
+      { field: 'count', header: 'Alıcı Sayısı' },
       { field: 'createdDate', header: 'Gönderim Tarihi' },
     ];
   }
