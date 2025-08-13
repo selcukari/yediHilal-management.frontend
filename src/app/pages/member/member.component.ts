@@ -41,7 +41,7 @@ export interface ValueData {
   telephone: string;
 	dateOfBirth?: number;
   email: string;
-  countryCode?: number;
+  countryCode?: string;
   createdDate: string;
   updateDate?: string;
   countryName: string;

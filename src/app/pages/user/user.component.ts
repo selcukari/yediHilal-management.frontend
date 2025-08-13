@@ -42,7 +42,7 @@ interface ValueData {
   fullName: string;
   identificationNumber?: string;
   telephone: string;
-  countryCode?: number;
+  countryCode?: string;
 	dateOfBirth?: number;
   email: string;
   createdDate: string;
