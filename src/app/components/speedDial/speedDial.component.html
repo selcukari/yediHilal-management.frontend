@@ -1,10 +1,12 @@
-<div class="mr-6 mt-5">
+<div class="mr-6">
   <p-toast />
   <div [style]="{ position: 'relative' }">
-    <p-speeddial [model]="items" direction="up" mask [style]="{ position: 'absolute', left: 0, bottom: 0 }"
-      [tooltipOptions]="{ tooltipPosition: 'top' }" />
+    <p-speeddial [model]="items" mask [style]="{ position: 'absolute', left: 0, top: 0 }"
+      [tooltipOptions]="{ tooltipPosition: 'top' }" direction="up-left" [radius]="120" type="quarter-circle" />
   </div>
-  <label for="actions" class="mt-4">Actionlar</label>
+  <div [style]="{position: 'relative', 'padding-top': '40px' }">
+    <label for="actions">Actionlar</label>
+  </div>
 </div>
 <app-component-sendMail></app-component-sendMail>
 <app-component-sendMessage></app-component-sendMessage>
