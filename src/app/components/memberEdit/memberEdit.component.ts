@@ -43,10 +43,12 @@ export class MemberEditComponent {
     countryId: undefined,
     areaId: undefined,
     provinceId: undefined,
-    identificationNumber: null,
-    telephone: null,
-    email: null,
-    dateOfBirth: null
+    isMessage: true,
+    isMail: true,
+    identificationNumber: undefined,
+    telephone: undefined,
+    email: undefined,
+    dateOfBirth: undefined
   };
 
   constructor(private memberService: MemberService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
@@ -108,6 +110,8 @@ export class MemberEditComponent {
       provinceId: this.memberData.provinceId,
       countryCode: this.memberData.countryCode,
       isActive: this.memberData.isActive,
+      isMail: this.memberData.isMail,
+      isMessage: this.memberData.isMessage,
       createdDate: this.memberData.createdDate,
       ...(this.memberData.id ? {updateDate: new Date().toISOString() } : {})
     }

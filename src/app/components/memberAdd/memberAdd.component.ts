@@ -65,10 +65,12 @@ export class MemberAddComponent {
       countryId: undefined,
       areaId: undefined,
       provinceId: undefined,
-      identificationNumber: null,
+      identificationNumber: undefined,
       telephone: undefined,
+      isMessage: true,
+      isMail: true,
       email: null,
-      dateOfBirth: null
+      dateOfBirth: undefined
     };
   }
 
@@ -113,6 +115,8 @@ private isFormDataValid(): boolean {
       countryId: this.memberData.countryId,
       provinceId: this.memberData.provinceId,
       isActive: this.memberData.isActive,
+      isMessage: this.memberData.isMessage,
+      isMail: this.memberData.isMail,
       areaId: (this.memberData.areaId || 8)
     }
     const result = await this.memberService.addMember(newMemberValue);

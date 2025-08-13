@@ -85,6 +85,14 @@
                       {{rowData[col.field] ? formatDate(rowData[col.field]) : "-" }}
                     }
 
+                    @case ('isMessage') {
+                      {{rowData[col.field] ? "Evet" : "Hayır" }}
+                    }
+
+                    @case ('isMail') {
+                      {{rowData[col.field] ? "Evet" : "Hayır" }}
+                    }
+
                     @default {
                       {{ rowData[col.field] || '-' }}
                     }

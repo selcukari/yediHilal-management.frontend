@@ -144,6 +144,16 @@
       </div>
     }
 
+    <div class="field col-12 md:col-4">
+      <label for="isMessage" class="ml-4 mr-2">Mesaj Durumu:</label>
+      <p-toggleswitch id="isMessage" name="isMessage" [(ngModel)]="memberData.isMessage" />
+    </div>
+
+    <div class="field col-12 md:col-4">
+      <label for="isMail" class="mr-2">Mail Durumu:</label>
+      <p-toggleswitch id="isMail" name="isMail" [(ngModel)]="memberData.isMail" />
+    </div>
+
     <div class="field col-12 md:col-6">
       <label for="isActive" class="mr-2">Aktif Durumu:</label>
       <p-toggleswitch id="isActive" name="isActive" [(ngModel)]="memberData.isActive" />

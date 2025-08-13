@@ -85,7 +85,7 @@ export class SpeedDialComponent implements OnInit {
 
   sendMail(type: number) {
 
-    const newUserData = this.valueData?.filter(value => value.email) || []
+    const newUserData = this.valueData?.filter(value => value.isMail && value.email) || []
 
     this.sendMailComponentRef.openDialog(
       newUserData.map(value => value.fullName),
@@ -94,10 +94,10 @@ export class SpeedDialComponent implements OnInit {
 
   sendMessage(type: number) {
 
-    const newUserData = this.valueData?.filter(value => value.telephone) || []
+    const newUserData = this.valueData?.filter(value => value.isMessage && value.telephone && value.countryCode) || []
 
     this.sendMessageComponent.openDialog(
       newUserData.map(value => value.fullName),
-      newUserData.map(value => value.telephone), type);
+      newUserData.map(({ telephone, countryCode }) => ({ telephone, countryCode: countryCode ?? '' })), type);
   }
 }

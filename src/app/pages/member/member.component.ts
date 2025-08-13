@@ -46,6 +46,8 @@ export interface ValueData {
   updateDate?: string;
   countryName: string;
   provinceName: string;
+  isMessage: boolean;
+  isMail: boolean;
   areaName: string;
 	roleName?: string;
 }
@@ -198,6 +200,8 @@ export class MemberPageComponent implements OnInit {
           countryName: member.countryName,
           provinceName: member.provinceName,
           areaName: member.areaName,
+          isMessage: member.isMessage,
+          isMail: member.isMail,
           createdDate: this.formatDate(member.createdDate)
         }));
 
@@ -243,7 +247,7 @@ export class MemberPageComponent implements OnInit {
 
     if (countryCode == 1) {
       // Türkiye için alan kodunu ekle
-      this.cols.splice(7, 0, { field: 'areaName', header: 'Bölge' });
+      this.cols.splice(9, 0, { field: 'areaName', header: 'Bölge' });
     }
 
     this.selectedArea = undefined;
@@ -282,6 +286,8 @@ export class MemberPageComponent implements OnInit {
       { field: 'countryCode', header: 'Ülke Kodu' },
       { field: 'telephone', header: 'Telefon' },
       { field: 'email', header: 'E-mail' },
+      { field: 'isMessage', header: 'Mesaj Durumu'},
+      { field: 'isMail', header: 'Mail Durumu'},
       { field: 'identificationNumber', header: 'Kimlik Numarası' },
       { field: 'dateOfBirth', header: 'Doğum Yılı' },
       { field: 'countryName', header: 'Ülke' },
@@ -305,7 +311,6 @@ export class MemberPageComponent implements OnInit {
     if(route && route.code) {
       this.router.navigate([`/${route.code}`]);
     }
-
   }
 
   // Arama fonksiyonu

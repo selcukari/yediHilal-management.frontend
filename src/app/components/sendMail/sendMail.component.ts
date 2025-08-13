@@ -127,11 +127,9 @@ export class SendMailComponent {
         },
 
         accept: async () => {
-
           this.messageService.add({ severity: 'info', summary: 'Onaylandı', detail: 'Değişiklikler iptal edildi' });
           this.visible = false;
           this.valueData = { subject: "", content: ""};
-
         },
         reject: () => {
           this.messageService.add({ severity: 'error', summary: 'Reddedilmiş', detail: 'Reddettin' });

@@ -64,10 +64,10 @@ export class UserEditComponent {
       areaId: undefined,
       countryCode: undefined,
       provinceId: undefined,
-      identificationNumber: null,
-      telephone: null,
-      email: null,
-      dateOfBirth: null
+      identificationNumber: undefined,
+      telephone: undefined,
+      email: undefined,
+      dateOfBirth: undefined
     };
   }
 

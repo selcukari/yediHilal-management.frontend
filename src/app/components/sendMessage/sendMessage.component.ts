@@ -22,8 +22,14 @@ interface MessageParams {
 interface MessageRequestType
 {
   toUsers: Array<string>;
-  toPhoneNumbers: Array<string>;
+  toPhoneNumbersWithCountryCode: Array<PhoneNumberWithTypes>;
   type: number;
+}
+
+interface PhoneNumberWithTypes
+{
+  telephone: string;
+  countryCode: string;
 }
 
 @Component({
@@ -39,15 +45,15 @@ export class SendMessageComponent {
   isLoading: boolean = false;
   content: string = "";
 
-  messageRequest: MessageRequestType = { toPhoneNumbers: [], toUsers: [], type: 2};
+  messageRequest: MessageRequestType = { toPhoneNumbersWithCountryCode: [], toUsers: [], type: 2};
 
   constructor(private messageServiceApi: MessageServiceApi, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
-  openDialog(toUsers: Array<string>, toPhoneNumbers: Array<string>, type: number) {
+  openDialog(toUsers: Array<string>, toPhoneNumbersWithCountryCode: Array<PhoneNumberWithTypes>, type: number) {
     this.visible = true;
 
     this.messageRequest = {
-      toPhoneNumbers,
+      toPhoneNumbersWithCountryCode,
       toUsers,
       type
     }
@@ -62,7 +68,7 @@ export class SendMessageComponent {
       const messageRequest: MessageParams = {
         ...this.messageRequest,
         message: this.content,
-        count: this.messageRequest.toPhoneNumbers.length
+        count: this.messageRequest.toPhoneNumbersWithCountryCode.length
       }
       const result = await this.messageServiceApi.sendMessage(messageRequest);
       if (result) {
