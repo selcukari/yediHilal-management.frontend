@@ -16,7 +16,7 @@ interface UserData {
   areaId: number;
   provinceId: number;
   identificationNumber?: string;
-  telephone?: string;
+  telephone: bigint;
   email?: string;
   dateOfBirth?: Date;
   createdDate?: string;

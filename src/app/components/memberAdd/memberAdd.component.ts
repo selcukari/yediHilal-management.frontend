@@ -66,7 +66,7 @@ export class MemberAddComponent {
       areaId: undefined,
       provinceId: undefined,
       identificationNumber: null,
-      telephone: null,
+      telephone: undefined,
       email: null,
       dateOfBirth: null
     };

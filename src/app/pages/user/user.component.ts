@@ -42,6 +42,7 @@ interface ValueData {
   fullName: string;
   identificationNumber?: string;
   telephone: string;
+  countryCode?: number;
 	dateOfBirth?: number;
   email: string;
   createdDate: string;
@@ -233,7 +234,7 @@ export class UserPageComponent implements OnInit {
         this.sendValueData = this.resultData.map(user => ({
           id: user.id,
           fullName: user.fullName,
-          telephone: user.telephone,
+          telephone: `${user.countryCode}${user.telephone}`,
           email: user.email,
           identificationNumber: user.identificationNumber,
           dateOfBirth: user.dateOfBirth,

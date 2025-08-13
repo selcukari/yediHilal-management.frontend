@@ -20,7 +20,7 @@ interface UserData {
   provinceId: number;
   roleId: number;
   identificationNumber?: string;
-  telephone: number;
+  telephone: bigint;
   email?: string;
   countryCode: number;
   dateOfBirth?: Date;

@@ -41,6 +41,7 @@ export interface ValueData {
   telephone: string;
 	dateOfBirth?: number;
   email: string;
+  countryCode?: number;
   createdDate: string;
   updateDate?: string;
   countryName: string;
@@ -106,17 +107,17 @@ export class MemberPageComponent implements OnInit {
 
   get pdfTitle(): string {
     if(this.selectedAreaName && this.selectedProvinceName) {
-      return `${this.selectedCountryName}/${this.selectedAreaName}/${this.selectedProvinceName} Kullanıcı Raporu`;
+      return `${this.selectedCountryName}/${this.selectedAreaName}/${this.selectedProvinceName} Üye Raporu`;
     }
 
     if(this.selectedAreaName) {
-      return `${this.selectedCountryName}/${this.selectedAreaName} Kullanıcı Raporu`;
+      return `${this.selectedCountryName}/${this.selectedAreaName} Üye Raporu`;
     }
 
     if(this.selectedProvinceName) {
-      return `${this.selectedCountryName}/${this.selectedProvinceName} Kullanıcı Raporu`;
+      return `${this.selectedCountryName}/${this.selectedProvinceName} Üye Raporu`;
     }
-    return `${this.selectedCountryName}/Tüm İller Kullanıcı Raporu`;
+    return `${this.selectedCountryName}/Tüm İller Üye Raporu`;
   }
 
   get pdfTableColumns(): TableColumn[] {
@@ -190,7 +191,7 @@ export class MemberPageComponent implements OnInit {
         this.sendValueData = this.resultData.map(member => ({
           id: member.id,
           fullName: member.fullName,
-          telephone: member.telephone,
+          telephone: `${member.countryCode}${member.telephone}`,
           email: member.email,
           identificationNumber: member.identificationNumber,
           dateOfBirth: member.dateOfBirth,
