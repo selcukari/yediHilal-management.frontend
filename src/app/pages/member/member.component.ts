@@ -31,7 +31,7 @@ interface Column {
 interface MemberParams {
   countryId: number;
   areaId?: number;
-  fullName?: string;
+  searchName?: string;
   provinceId?: number;
 }
 export interface ValueData {
@@ -79,7 +79,7 @@ export class MemberPageComponent implements OnInit {
   selectedAreaName: string = '';
   selectedArea?: number = undefined;
   selectedProvince?: number = undefined;
-  searchFullName: string = '';
+  searchName: string = '';
 
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
@@ -181,7 +181,7 @@ export class MemberPageComponent implements OnInit {
       countryId: this.selectedCountry || 1,
       areaId: this.selectedArea,
       provinceId: this.selectedProvince, // İl kodu henüz kullanılmıyor
-      fullName: this.searchFullName || undefined
+      searchName: this.searchName || undefined
     }
      try {
 
@@ -229,7 +229,7 @@ export class MemberPageComponent implements OnInit {
   async onSearchChange(value: string) {
     if (value.length > 3) {
       // burada API çağrısı vs. yapılabilir
-      this.searchFullName = value;
+      this.searchName = value;
       await this.fetchMemberData();
     }
   }

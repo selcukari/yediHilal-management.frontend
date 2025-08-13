@@ -5,7 +5,7 @@ import { EnvironmentService } from './environment.service';
 interface MemberParams {
   countryId: number;
   areaId?: number;
-  fullName?: string;
+  searchName?: string;
   provinceId?: number;
 }
 interface UserData {
@@ -34,13 +34,13 @@ export class MemberService {
 
   async members(params: MemberParams): Promise<any| null> {
     try {
-      const { countryId, areaId, provinceId, fullName } = params;
+      const { countryId, areaId, provinceId, searchName } = params;
 
       const getMembers: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/management/getMembersBy`,{
         params: {
           countryId ,
           ...(provinceId !== undefined ? {provinceId } : {}),
-          ...((fullName == undefined || fullName?.length < 2) ? {} : {fullName}),
+          ...((searchName == undefined || searchName?.length < 2) ? {} : {searchName}),
           ...((areaId == undefined || countryId != 1) ? { } : {areaId})
         }}));
       if (getMembers?.errors) {
