@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { Listbox } from 'primeng/listbox';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Image } from 'primeng/image';
 import { InputIconModule } from 'primeng/inputicon';
 
 interface PageType {
@@ -17,7 +18,7 @@ interface PageType {
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, InputIconModule, FormsModule, ToastModule, Listbox, ButtonModule, CommonModule],
+  imports: [RouterOutlet, RouterLink, InputIconModule, Image, FormsModule, ToastModule, Listbox, ButtonModule, CommonModule],
   providers: [MessageService],
   templateUrl: './app-layout.component.html',
   styleUrl: './app-layout.component.scss'
