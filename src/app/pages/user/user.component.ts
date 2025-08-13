@@ -3,7 +3,7 @@ import { clone } from 'ramda';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
 import { Button } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
@@ -141,7 +141,7 @@ export class UserPageComponent implements OnInit {
   get pdfTableColumns(): TableColumn[] {
 
     const newCols: Column[] = this.cols.filter(col =>
-      col.field != 'updateDate' && col.field != 'areaName');
+      col.field != 'updateDate' && col.field != 'areaName' && col.field != 'countryCode');
 
     return newCols.map(col => ({
       key: col.field,
@@ -237,7 +237,7 @@ export class UserPageComponent implements OnInit {
         this.sendValueData = this.resultData.map(user => ({
           id: user.id,
           fullName: user.fullName,
-          telephone: `${user.countryCode}${user.telephone}`,
+          telephone: `+${user.countryCode}${user.telephone}`,
           email: user.email,
           identificationNumber: user.identificationNumber,
           dateOfBirth: user.dateOfBirth,
@@ -245,7 +245,7 @@ export class UserPageComponent implements OnInit {
           provinceName: user.provinceName,
           areaName: user.areaName,
           roleName: user.roleName,
-          createdDate: user.createdDate
+          createdDate: formatDate(user.createdDate, 'yyyy-MM-dd', 'tr-TR')
         }));
 
         this.messageService.add({

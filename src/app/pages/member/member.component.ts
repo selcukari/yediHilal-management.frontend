@@ -3,7 +3,7 @@ import { clone } from 'ramda';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
 import { Button } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
@@ -126,7 +126,7 @@ export class MemberPageComponent implements OnInit {
   get pdfTableColumns(): TableColumn[] {
 
     const newCols: Column[] = this.cols.filter(col =>
-      col.field != 'updateDate' && col.field != 'areaName');
+      col.field != 'updateDate' && col.field != 'areaName' && col.field != 'countryCode');
 
     return newCols.map(col => ({
       key: col.field,
@@ -194,7 +194,7 @@ export class MemberPageComponent implements OnInit {
         this.sendValueData = this.resultData.map(member => ({
           id: member.id,
           fullName: member.fullName,
-          telephone: `${member.countryCode}${member.telephone}`,
+          telephone: `+${member.countryCode}${member.telephone}`,
           email: member.email,
           identificationNumber: member.identificationNumber,
           dateOfBirth: member.dateOfBirth,
@@ -203,7 +203,7 @@ export class MemberPageComponent implements OnInit {
           areaName: member.areaName,
           isMessage: member.isMessage,
           isMail: member.isMail,
-          createdDate: member.createdDate
+          createdDate: formatDate(member.createdDate, 'yyyy-MM-dd', 'tr-TR')
         }));
 
         this.messageService.add({

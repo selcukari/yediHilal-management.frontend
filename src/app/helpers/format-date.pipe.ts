@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FormatDatePipe implements PipeTransform {
 
-  transform(dateString: string): string {
+  transform(dateString?: string): string {
     if (!dateString) return ''; // null/undefined/boş kontrolü
 
     const date = new Date(dateString);

@@ -80,7 +80,13 @@ export class SpeedDialComponent implements OnInit {
       return col;
     });
 
-    this.pdfHelperService.generatePdf(this.valueData, modifiedCols, config);
+    const newValueData = this.valueData.map(item => ({
+      ...item,
+      isMail: item.isMail ? "Evet" : "Hayır",
+      isMessage: item.isMessage ? "Evet" : "Hayır"
+    }));
+
+    this.pdfHelperService.generatePdf(newValueData, modifiedCols, config);
   }
 
   sendMail(type: number) {
