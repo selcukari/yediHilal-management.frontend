@@ -12,7 +12,7 @@ export interface ValueData {
   updateDate?: string;
   countryName: string;
   provinceName: string;
-  isMessage?: boolean;
+  isSms?: boolean;
   isMail?: boolean;
   areaName: string;
 	roleName?: string;

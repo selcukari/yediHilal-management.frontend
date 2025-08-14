@@ -67,7 +67,7 @@ export class MemberAddComponent {
       provinceId: undefined,
       identificationNumber: null,
       telephone: null,
-      isMessage: true,
+      isSms: true,
       isMail: true,
       email: null,
       dateOfBirth: null
@@ -115,7 +115,7 @@ private isFormDataValid(): boolean {
       countryId: this.memberData.countryId,
       provinceId: this.memberData.provinceId,
       isActive: this.memberData.isActive,
-      isMessage: this.memberData.isMessage,
+      isSms: this.memberData.isSms,
       isMail: this.memberData.isMail,
       areaId: (this.memberData.areaId || 8)
     }

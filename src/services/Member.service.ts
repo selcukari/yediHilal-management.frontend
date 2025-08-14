@@ -17,7 +17,7 @@ interface UserDataParams {
   provinceId: number;
   identificationNumber?: string;
   telephone: bigint;
-  isMessage: boolean;
+  isSms: boolean;
   isMail: boolean;
   email?: string;
   dateOfBirth?: Date;

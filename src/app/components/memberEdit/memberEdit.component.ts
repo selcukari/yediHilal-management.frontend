@@ -43,7 +43,7 @@ export class MemberEditComponent {
     countryId: undefined,
     areaId: undefined,
     provinceId: undefined,
-    isMessage: true,
+    isSms: true,
     isMail: true,
     identificationNumber: undefined,
     telephone: undefined,
@@ -111,7 +111,7 @@ export class MemberEditComponent {
       countryCode: this.memberData.countryCode.toString().trim(),
       isActive: this.memberData.isActive,
       isMail: this.memberData.isMail,
-      isMessage: this.memberData.isMessage,
+      isSms: this.memberData.isSms,
       createdDate: this.memberData.createdDate,
       ...(this.memberData.id ? {updateDate: new Date().toISOString() } : {})
     }

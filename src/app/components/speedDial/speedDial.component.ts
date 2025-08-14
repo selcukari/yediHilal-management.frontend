@@ -84,7 +84,7 @@ export class SpeedDialComponent implements OnInit {
     const newValueData = this.valueData.map(item => ({
       ...item,
       isMail: item.isMail ? "Evet" : "Hayır",
-      isMessage: item.isMessage ? "Evet" : "Hayır"
+      isSms: item.isSms ? "Evet" : "Hayır"
     }));
 
     this.pdfHelperService.generatePdf(newValueData, this.pdfColumns, config);
@@ -106,7 +106,7 @@ export class SpeedDialComponent implements OnInit {
 
   sendMessage(type: number) {
 
-    const newUserData = this.valueData?.filter(value => value.isMessage && value.telephone && value.countryCode) || []
+    const newUserData = this.valueData?.filter(value => value.isSms && value.telephone && value.countryCode) || []
 
     this.sendMessageComponent.openDialog(
       newUserData.map(value => value.fullName),

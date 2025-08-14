@@ -48,7 +48,7 @@ export interface ValueData {
   updateDate?: string;
   countryName: string;
   provinceName: string;
-  isMessage?: boolean;
+  isSms?: boolean;
   isMail?: boolean;
   areaName: string;
 	roleName?: string;
@@ -216,7 +216,7 @@ export class MemberPageComponent implements OnInit {
           countryName: member.countryName,
           provinceName: member.provinceName,
           areaName: member.areaName,
-          isMessage: member.isMessage,
+          isSms: member.isSms,
           isMail: member.isMail,
           createdDate: formatDate(member.createdDate, 'yyyy-MM-dd', 'tr-TR')
         }));
@@ -307,14 +307,14 @@ export class MemberPageComponent implements OnInit {
       { field: 'countryCode', header: 'Ülke Kodu' },
       { field: 'telephone', header: 'Telefon' },
       { field: 'email', header: 'E-mail' },
-      { field: 'isMessage', header: 'Mesaj Durumu'},
+      { field: 'isSms', header: 'Mesaj Durumu'},
       { field: 'isMail', header: 'Mail Durumu'},
-      { field: 'identificationNumber', header: 'Kimlik Numarası' },
+      { field: 'identificationNumber', header: 'Kimlik' },
       { field: 'dateOfBirth', header: 'Doğum Yılı' },
       { field: 'countryName', header: 'Ülke' },
       { field: 'provinceName', header: 'İl' },
-      { field: 'createdDate', header: 'İlk Kayıt Tarih' },
-      { field: 'updateDate', header: 'Güncelleme Tarih' },
+      { field: 'createdDate', header: 'İlk Kayıt' },
+      { field: 'updateDate', header: 'Güncelleme' },
     ];
   }
 

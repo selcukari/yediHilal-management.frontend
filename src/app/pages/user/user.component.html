@@ -85,6 +85,9 @@
                     @case ('updateDate') {
                       {{ rowData[col.field] | formatDate }}
                     }
+                    @case ('email') {
+                      {{ rowData[col.field]?.length > 50 ? rowData[col.field].substring(0, 50) + "..." : rowData[col.field] }}
+                    }
 
                     @default {
                       {{ rowData[col.field] || '-' }}

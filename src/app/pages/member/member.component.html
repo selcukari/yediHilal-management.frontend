@@ -86,12 +86,15 @@
                       {{ rowData[col.field] | formatDate }}
                     }
 
-                    @case ('isMessage') {
+                    @case ('isSms') {
                       {{rowData[col.field] ? "Evet" : "Hayır" }}
                     }
 
                     @case ('isMail') {
                       {{rowData[col.field] ? "Evet" : "Hayır" }}
+                    }
+                    @case ('email') {
+                      {{ rowData[col.field]?.length > 20 ? rowData[col.field].substring(0, 20) + "..." : rowData[col.field] }}
                     }
 
                     @default {

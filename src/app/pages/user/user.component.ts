@@ -46,7 +46,7 @@ interface ValueData {
   countryCode?: string;
 	dateOfBirth?: number;
   email: string;
-  isMessage?: boolean;
+  isSms?: boolean;
   isMail?: boolean;
   createdDate: string;
   updateDate?: string;
@@ -337,12 +337,12 @@ export class UserPageComponent implements OnInit {
       { field: 'countryCode', header: 'Ülke Kodu' },
       { field: 'telephone', header: 'Telefon' },
       { field: 'email', header: 'E-mail' },
-      { field: 'identificationNumber', header: 'Kimlik Numarası' },
+      { field: 'identificationNumber', header: 'Kimlik' },
       { field: 'dateOfBirth', header: 'Doğum Yılı' },
       { field: 'countryName', header: 'Ülke' },
       { field: 'provinceName', header: 'İl' },
-      { field: 'createdDate', header: 'İlk Kayıt Tarih' },
-      { field: 'updateDate', header: 'Güncelleme Tarih' },
+      { field: 'createdDate', header: 'İlk Kayıt' },
+      { field: 'updateDate', header: 'Güncelleme' },
     ];
   }
 
