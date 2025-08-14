@@ -5,13 +5,16 @@
       <div class="toolbar-container">
         <h2>Üye Sayfası/Toolbar Filtreleme Alanı</h2>
         <div class="toolbar-row">
-          <app-component-country (countrySelected)="onCountrySelected($event)" (countrySelectedName)="onCountrySelectedName($event)" [model]="1">
+          <app-component-country (countrySelected)="onCountrySelected($event)" (countrySelectedName)="onCountrySelectedName($event)" [isRequired]="true">
           </app-component-country>
           @if (selectedCountry == 1) {
-            <app-component-area (areaSelected)="onAreaSelected($event)" (areaSelectedName)="onAreaSelectedName($event)"></app-component-area>
+            <app-component-area (areaSelected)="onAreaSelected($event)" (areaSelectedName)="onAreaSelectedName($event)" [isRequired]="true"></app-component-area>
           }
           <app-component-province [countryCode]="selectedCountry" [areaCode]="selectedArea" (provinceSelectedName)="onProvinceSelectedName($event)"
             (provinceSelected)="onProvinceSelected($event)"></app-component-province>
+
+          <p-button icon="pi pi-refresh" class="mr-1" icon="pi pi-refresh" (click)="refreshData()"
+            [disabled]="isLoading" label="Filtrele" rounded raised />
 
           <p-button
             pButton
@@ -51,8 +54,6 @@
                   <p-inputicon class="pi pi-search" />
                   <input pInputText id="on_label" (ngModelChange)="onSearchChange($event)"  [(ngModel)]="searchName" placeholder="Üye Ara..." pSize="large" autocomplete="off" />
                 </p-iconfield>
-
-                <p-button icon="pi pi-refresh" class="mr-1" icon="pi pi-refresh" (click)="refreshData()" [disabled]="isLoading" pTooltip="Yenile" tooltipPosition="top" rounded raised />
 
                 <app-component-speedDial
                   [pdfTitle]="pdfTitle"

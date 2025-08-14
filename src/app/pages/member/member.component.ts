@@ -77,7 +77,8 @@ export class MemberPageComponent implements OnInit {
   cols: Column[] = [];
   sendValueData: ValueData[] = [];
   isLoading = false;
-  selectedCountry?: number = 1;
+  turkishCountryCode = 1;
+  selectedCountry?: number
   selectedCountryName: string = 'Türkiye';
   selectedProvinceName: string = '';
   selectedAreaName: string = '';
@@ -88,25 +89,12 @@ export class MemberPageComponent implements OnInit {
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   async ngOnInit() {
-    this.isLoading = true;
 
-    try {
-      await this.fetchMemberData();
+      // await this.fetchMemberData();
 
       // Tablo kolonlarını tanımla
       this.initializeColumns();
 
-    } catch (error) {
-      console.error('Initialization error:', error);
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Hata',
-        detail: 'Sayfa yüklenirken bir hata oluştu.',
-        life: 3000
-      });
-    } finally {
-      this.isLoading = false;
-    }
   }
 
   get pdfTitle(): string {
@@ -195,6 +183,8 @@ export class MemberPageComponent implements OnInit {
   }
 
   private async fetchMemberData(): Promise<void> {
+    this.isLoading = true;
+
     const params: MemberParams = {
       countryId: this.selectedCountry || 1,
       areaId: this.selectedArea,
@@ -228,6 +218,7 @@ export class MemberPageComponent implements OnInit {
           life: 3000
         });
       }
+      this.isLoading = false;
     } catch (error: any) {
       console.error('Error fetching getMembers:', error.message);
       this.messageService.add({
@@ -243,11 +234,10 @@ export class MemberPageComponent implements OnInit {
     if (value.length > 3) {
       // burada API çağrısı vs. yapılabilir
       this.searchName = value;
-      await this.fetchMemberData();
     }
   }
 
-   async onCountrySelected(countryCode: any): Promise<void> {
+   onCountrySelected(countryCode: any): void {
     this.selectedCountry = countryCode;
     this.selectedArea = undefined;
 
@@ -261,13 +251,9 @@ export class MemberPageComponent implements OnInit {
 
     this.selectedArea = undefined;
     this.selectedProvince = undefined;
-
-    await this.fetchMemberData();
   }
-  async onAreaSelected(areaCode: any): Promise<void> {
+  onAreaSelected(areaCode: any): void {
     this.selectedArea = areaCode;
-
-    await this.fetchMemberData();
   }
 
   onCountrySelectedName(countryName: string): void {
@@ -287,10 +273,8 @@ export class MemberPageComponent implements OnInit {
     this.selectedProvinceName = "";
   }
 
-  async onProvinceSelected(provinceCode: any): Promise<void> {
+  onProvinceSelected(provinceCode: any): void {
     this.selectedProvince = provinceCode;
-
-    await this.fetchMemberData();
   }
 
   private initializeColumns(): void {
@@ -326,6 +310,23 @@ export class MemberPageComponent implements OnInit {
 
   // Refresh fonksiyonu
   async refreshData(): Promise<void> {
-    await this.fetchMemberData();
+
+    if (this.selectedCountry == this.turkishCountryCode && this.selectedArea) {
+      console.log("1")
+      await this.fetchMemberData();
+    } else if (this.selectedCountry && this.selectedCountry != this.turkishCountryCode) {
+      console.log("2")
+
+      await this.fetchMemberData();
+    } else {
+      console.log("3")
+
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Uyarı',
+        detail: 'Ülke ve bölge seçimini yapınız!',
+        life: 3000
+      });
+    }
   }
 }
