@@ -58,7 +58,7 @@ export class SpeedDialComponent implements OnInit {
         }
       },
       {
-        label: 'Mesaj',
+        label: 'Sms',
         icon: 'pi pi-bell',
         command: () => {
           this.sendMessage(this.type);
