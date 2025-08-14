@@ -12,7 +12,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { Table } from 'primeng/table';
 // import { Tooltip } from 'primeng/tooltip';
 import { ProgressSpinner } from 'primeng/progressspinner';
-import { MessageService as MessageServiceApi, MessagesType } from '../../../services/message.service';
+import { MessageService as MessageServiceApi, SmssType } from '../../../services/sms.service';
 import { StripHtmlPipe } from '../../helpers/stripHtml.pipe';
 import { Subscription } from 'rxjs';
 import { FormatDatePipe } from '../../helpers'
@@ -22,18 +22,18 @@ interface Column {
   header: string;
 }
 @Component({
-  selector: 'app-pages-messageList',
+  selector: 'app-pages-smsList',
   standalone: true,
   imports: [TableModule, StripHtmlPipe, ToastModule, CommonModule, FormsModule, InputIconModule, InputTextModule,
     IconFieldModule, ProgressSpinner, FormatDatePipe],
   providers: [MessageService],
-  templateUrl: './messageList.component.html',
-  styleUrl: './messageList.component.scss'
+  templateUrl: './smsList.component.html',
+  styleUrl: './smsList.component.scss'
 })
-export class MessageListPageComponent implements OnInit, OnDestroy {
+export class SmsListPageComponent implements OnInit, OnDestroy {
   @ViewChild('dt') dt!: Table;
 
-  resultData: MessagesType[] = [];
+  resultData: SmssType[] = [];
   cols: Column[] = [];
   isLoading = false;
   typeId: number = 2;
@@ -101,7 +101,7 @@ export class MessageListPageComponent implements OnInit, OnDestroy {
 
     try {
 
-      const getMessages = await this.messageServiceApi.messages(type);
+      const getMessages = await this.messageServiceApi.smss(type);
       if (getMessages) {
         this.resultData = getMessages.map(message => ({
           id: message.id,

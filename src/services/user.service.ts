@@ -48,24 +48,24 @@ export class UserService {
           ...((areaId == undefined || countryId != 1) ? { } : {areaId}),
           ...(roleId !== undefined ? {roleId } : {}),
         }}));
-      if (getUsers?.errors) {
-        throw new Error('getUsers bulunamadı.');
-      }
+
       return getUsers.data;
     } catch (error: any) {
       this.envService.logDebug('getUsers error', error);
+
+      return error.error;
     }
   }
 
   async deleteUser(userId: number): Promise<any | null> {
     try {
       const deleteUser: any = await firstValueFrom(this.http.put(`${this.envService.apiUrl}/managementUser/deleteUser?id=${userId}`, null));
-      if (deleteUser?.errors) {
-        throw new Error('Kullanıcı silinemedi.');
-      }
+
       return deleteUser.data;
     } catch (error: any) {
       this.envService.logDebug('deleteUser error', error);
+
+      return error.error;
     }
   }
 

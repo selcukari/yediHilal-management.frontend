@@ -44,8 +44,8 @@ export class AppLayoutComponent {
       { name: 'Üye Yönetimi', code: '/', icon: 'pi-user' },
       // { name: 'Gön. Kul. E-Mail Lis.', code: 'mailList/1', icon: 'pi-send' }, // Kullanıcı gonderilen
       { name: 'Gön. Mail Lis.', code: 'mailList/2', icon: 'pi-send' }, // Üyelere gonderilen
-      // { name: 'Gön. Kul. Mesaj Lis.', code: 'messageList/1', icon: 'pi-bell' }, // Kullanıcı gonderilen
-      { name: 'Gön. Mesaj Lis.', code: 'messageList/2', icon: 'pi-bell' }, // Üyelere gonderilen
+      // { name: 'Gön. Kul. Mesaj Lis.', code: 'smsList/1', icon: 'pi-bell' }, // Kullanıcı gonderilen
+      { name: 'Gön. Sms Lis.', code: 'smsList/2', icon: 'pi-bell' }, // Üyelere gonderilen
     ];
   }
 

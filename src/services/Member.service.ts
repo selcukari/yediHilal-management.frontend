@@ -45,24 +45,24 @@ export class MemberService {
           ...((searchName == undefined || searchName?.length < 2) ? {} : {searchName}),
           ...((areaId == undefined || countryId != 1) ? { } : {areaId})
         }}));
-      if (getMembers?.errors) {
-        throw new Error('getMembers bulunamadı.');
-      }
+
       return getMembers.data;
     } catch (error: any) {
       this.envService.logDebug('getMembers error', error);
+
+      return error.error;
     }
   }
 
   async deleteMember(userId: number): Promise<any | null> {
     try {
       const deleteUser: any = await firstValueFrom(this.http.put(`${this.envService.apiUrl}/management/deleteMember?id=${userId}`, null));
-      if (deleteUser?.errors) {
-        throw new Error('Üye silinemedi.');
-      }
+
       return deleteUser.data;
     } catch (error: any) {
       this.envService.logDebug('deleteMember error', error);
+
+      return error.error;
     }
   }
 

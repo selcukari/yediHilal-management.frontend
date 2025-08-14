@@ -14,12 +14,12 @@ export class CountryService {
   async countries(): Promise<any| null> {
     try {
       const getCountries: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/management/getCountries`));
-      if (getCountries?.errors) {
-        throw new Error('getCountries bulunamadı.');
-      }
+
       return getCountries.data;
     } catch (error: any) {
       this.envService.logDebug('getCountries error', error);
+
+      return error.error;
     }
   }
 }

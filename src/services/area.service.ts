@@ -14,13 +14,12 @@ export class AreaService {
   async areas(): Promise<any| null> {
     try {
       const getAreas: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/management/getAreas`));
-      if (getAreas?.errors) {
-        throw new Error('getAreas bulunamadı.');
-      }
 
       return getAreas.data;
     } catch (error: any) {
       this.envService.logDebug('getAreas error', error);
+
+      return error.error;
     }
   }
 }

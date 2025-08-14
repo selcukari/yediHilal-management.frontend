@@ -14,12 +14,12 @@ export class RoleService {
   async roles(): Promise<any| null> {
     try {
       const getRoles: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementUser/getRoles`));
-      if (getRoles?.errors) {
-        throw new Error('getRoles bulunamadı.');
-      }
+
       return getRoles.data;
     } catch (error: any) {
       this.envService.logDebug('getRoles error', error);
+
+      return error.error;
     }
   }
 }

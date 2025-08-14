@@ -11,15 +11,15 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { FloatLabel } from 'primeng/floatlabel';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { MessageService as MessageServiceApi } from '../../../services/message.service';
+import { MessageService as MessageServiceApi } from '../../../services/sms.service';
 
-interface MessageParams {
+interface SmsParams {
   message: string;
   toUsers: Array<string>;
   count: number;
   type: number;
 }
-interface MessageRequestType
+interface SmsRequestType
 {
   toUsers: Array<string>;
   toPhoneNumbersWithCountryCode: Array<PhoneNumberWithTypes>;
@@ -33,19 +33,19 @@ interface PhoneNumberWithTypes
 }
 
 @Component({
-  selector: 'app-component-sendMessage',
+  selector: 'app-component-sendSms',
   standalone: true,
   imports: [Dialog, ProgressSpinner, FloatLabel, ConfirmDialog, ToastModule, MessageModule, TextareaModule, ButtonModule, FormsModule, InputIconModule, InputTextModule],
   providers: [MessageService, ConfirmationService],
-  templateUrl: './sendMessage.component.html'
+  templateUrl: './sendSms.component.html'
 })
 
-export class SendMessageComponent {
+export class SendSmsComponent {
   visible: boolean = false;
   isLoading: boolean = false;
   content: string = "";
 
-  messageRequest: MessageRequestType = { toPhoneNumbersWithCountryCode: [], toUsers: [], type: 2};
+  messageRequest: SmsRequestType = { toPhoneNumbersWithCountryCode: [], toUsers: [], type: 2};
 
   constructor(private messageServiceApi: MessageServiceApi, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
@@ -65,12 +65,12 @@ export class SendMessageComponent {
 
       this.isLoading = true;
 
-      const messageRequest: MessageParams = {
+      const messageRequest: SmsParams = {
         ...this.messageRequest,
         message: this.content,
         count: this.messageRequest.toPhoneNumbersWithCountryCode.length
       }
-      const result = await this.messageServiceApi.sendMessage(messageRequest);
+      const result = await this.messageServiceApi.sendSms(messageRequest);
       if (result) {
         this.messageService.add({ severity: 'info', summary: 'E-Mail', detail: 'Mesajlar Gönderildi' });
 

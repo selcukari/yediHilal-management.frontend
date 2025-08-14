@@ -5,14 +5,14 @@ import { ToastModule } from 'primeng/toast';
 import { PdfHelperService, PdfConfig, TableColumn } from '../../helpers/repor/pdfHelper';
 import { ValueData } from '../../pages/member/member.component';
 import { SendMailComponent } from '../sendMail/sendMail.component';
-import { SendMessageComponent } from '../sendMessage/sendMessage.component'
+import { SendSmsComponent } from '../sendSms/sendSms.component'
 import { exportToExcel, ColumnDefinition } from '../../helpers/repor/exportToExcel'
 
 @Component({
   selector: 'app-component-speedDial',
   templateUrl: './speedDial.component.html',
   standalone: true,
-  imports: [SpeedDial, ToastModule, SendMailComponent, SendMessageComponent],
+  imports: [SpeedDial, ToastModule, SendMailComponent, SendSmsComponent],
   providers: [MessageService, PdfHelperService]
 })
 export class SpeedDialComponent implements OnInit {
@@ -25,7 +25,7 @@ export class SpeedDialComponent implements OnInit {
   @Input() excelColumns: ColumnDefinition[] = [];
 
   @ViewChild(SendMailComponent) sendMailComponentRef!: SendMailComponent;
-  @ViewChild(SendMessageComponent) sendMessageComponent!: SendMessageComponent;
+  @ViewChild(SendSmsComponent) SendSmsComponent!: SendSmsComponent;
 
   constructor(private messageService: MessageService, private pdfHelperService: PdfHelperService) {}
 
@@ -108,7 +108,7 @@ export class SpeedDialComponent implements OnInit {
 
     const newUserData = this.valueData?.filter(value => value.isSms && value.telephone && value.countryCode) || []
 
-    this.sendMessageComponent.openDialog(
+    this.SendSmsComponent.openDialog(
       newUserData.map(value => value.fullName),
       newUserData.map(({ telephone, countryCode }) => ({ telephone, countryCode: countryCode ?? '' })), type);
   }

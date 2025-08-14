@@ -26,12 +26,12 @@ export class ProvinceService {
           countryId,
         ...(areaId == undefined || areaId == 8 ? {} : {areaId})
         }}));
-      if (getProvinces?.errors) {
-        throw new Error('getProvinces bulunamadı.');
-      }
+
       return getProvinces.data;
     } catch (error: any) {
       this.envService.logDebug('getProvinces error', error);
+
+      return error.error;
     }
   }
 }

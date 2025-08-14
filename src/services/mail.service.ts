@@ -36,25 +36,24 @@ export class MailService {
       const getMails: any = await firstValueFrom(this.http.get(`${this.envService.apiUrl}/managementUser/getMails`,{
         params: {type}
       }));
-      if (getMails?.errors) {
-        throw new Error('getMails bulunamadı.');
-      }
+
       return getMails.data;
     } catch (error: any) {
       this.envService.logDebug('getMails error', error);
-      return [];
+
+      return error.error;
     }
   }
 
   async sendMail(params: EmailParams): Promise<any| null> {
     try {
       const sendMail: any = await firstValueFrom(this.http.post(`${this.envService.apiUrl}/managementUser/sendMail`, params));
-      if (sendMail?.errors) {
-        throw new Error('sendMail gonderilemedi.');
-      }
+
       return sendMail.data;
     } catch (error: any) {
       this.envService.logDebug('sendMail error', error);
+
+      return error.error;
     }
   }
 }
