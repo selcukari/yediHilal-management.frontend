@@ -88,7 +88,7 @@
               @if (email.invalid && (email.touched || userAddForm.submitted)) {
                 <p-message severity="error" variant="simple">
                   @if (email.hasError('required')) {
-                    Email is Required.
+                    Email is gereklidir.
                   }
 
                   @if (email.hasError('email')) {
@@ -108,7 +108,7 @@
           <input pInputText id="password" name="password"  [(ngModel)]="userData.password" #password="ngModel" pSize="large" required
             [class.ng-invalid]="password.invalid && (password.touched || userAddForm.submitted)"autocomplete="off" />
             @if (password.invalid && (password.touched || userAddForm.submitted)) {
-              <p-message severity="error" variant="simple">password is required.</p-message>
+              <p-message severity="error" variant="simple">password is gereklidir.</p-message>
             }
         </p-iconfield>
         <label for="password">password</label>

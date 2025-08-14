@@ -22,7 +22,7 @@
         <input pInputText id="subject" name="subject" class="w-full"  [(ngModel)]="valueData.subject" #subject="ngModel" pSize="large" required
           [class.ng-invalid]="subject.invalid && (subject.touched || sendMailForm.submitted)" autocomplete="off" />
           @if (subject.invalid && (subject.touched || sendMailForm.submitted)) {
-            <p-message severity="error" variant="simple">Konu is required.</p-message>
+            <p-message severity="error" variant="simple">Konu is gereklidir.</p-message>
           }
         <label for="subject">Konu</label>
       </p-floatlabel>
@@ -60,7 +60,7 @@
         </ng-template>
       </p-editor>
       @if (content.invalid && (content.touched || sendMailForm.submitted)) {
-        <p-message severity="error" size="small" variant="simple">İçerik is required.</p-message>
+        <p-message severity="error" size="small" variant="simple">İçerik is gereklidir.</p-message>
       }
     </div>
 
