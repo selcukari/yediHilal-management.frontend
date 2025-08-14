@@ -220,13 +220,6 @@ export class MemberPageComponent implements OnInit {
           isMail: member.isMail,
           createdDate: formatDate(member.createdDate, 'yyyy-MM-dd', 'tr-TR')
         }));
-
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Başarılı',
-          detail: `${getMembers.length} üye yüklendi.`,
-          life: 3000
-        });
       } else {
         this.messageService.add({
           severity: 'info',

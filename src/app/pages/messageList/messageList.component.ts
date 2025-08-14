@@ -111,13 +111,6 @@ export class MessageListPageComponent implements OnInit, OnDestroy {
           count: message.count,
           createdDate: message.createdDate
         }));
-
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Başarılı',
-          detail: `${getMessages.length} message yüklendi.`,
-          life: 3000
-        });
       } else {
         this.resultData = [];
         this.messageService.add({

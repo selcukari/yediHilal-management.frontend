@@ -110,13 +110,6 @@ export class MailListPageComponent implements OnInit, OnDestroy {
           count: mail.count,
           createdDate: mail.createdDate
         }));
-
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Başarılı',
-          detail: `${getMails.length} mail yüklendi.`,
-          life: 3000
-        });
       } else {
         this.resultData = [];
         this.messageService.add({

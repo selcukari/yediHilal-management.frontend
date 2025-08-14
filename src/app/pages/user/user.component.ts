@@ -247,13 +247,6 @@ export class UserPageComponent implements OnInit {
           roleName: user.roleName,
           createdDate: formatDate(user.createdDate, 'yyyy-MM-dd', 'tr-TR')
         }));
-
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Başarılı',
-          detail: `${getUser.length} Kullanıcı yüklendi.`,
-          life: 3000
-        });
       } else {
         this.messageService.add({
           severity: 'info',
