@@ -105,26 +105,30 @@ private isFormDataValid(): boolean {
 
 
     const newUserValue = {
-      fullName: this.userData.fullName,
-      identificationNumber: this.userData.identificationNumber,
-      telephone: this.userData.telephone,
-      email: this.userData.email,
+      fullName: this.userData.fullName.trim(),
+      identificationNumber: this.userData.identificationNumber?.trim(),
+      telephone: this.userData.telephone.trim(),
+      email: this.userData.email.trim(),
       password: this.userData.password,
       roleId: this.userData.roleId,
-      countryCode: this.userData.countryCode,
-      dateOfBirth: this.userData.dateOfBirth,
+      countryCode: this.userData.countryCode.toString().trim(),
+      dateOfBirth: this.userData.dateOfBirth?.trim(),
       countryId: this.userData.countryId,
       provinceId: this.userData.provinceId,
       isActive: this.userData.isActive,
       areaId: (this.userData.areaId || 8)
     }
     const result = await this.userService.addUser(newUserValue);
-    if (result) {
+    if (result === true) {
       this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Yeni Üye Eklendi' });
       this.onSaveSuccess.emit();
       this.visible = false;
 
       return;
+    }
+    if (result?.data === false && result?.errors) {
+      this.messageService.add({ severity: 'warn', summary: 'Uyarı', detail: result.errors[0] });
+
     } else {
       this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Yeni Üye Eklenirken ha oluştu' });
     }

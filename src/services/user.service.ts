@@ -72,24 +72,24 @@ export class UserService {
    async updateUser(params: UserData): Promise<any | null> {
     try {
       const updatedUser: any = await firstValueFrom(this.http.put(`${this.envService.apiUrl}/managementUser/updateUser`, params));
-      if (updatedUser?.errors) {
-        throw new Error('Kullanıcı güncellenemedi.');
-      }
+
       return updatedUser.data;
     } catch (error: any) {
       this.envService.logDebug('updatedUser error', error);
+
+      return error.error;
     }
   }
 
   async addUser(params: UserData): Promise<any | null> {
     try {
       const addedUser: any = await firstValueFrom(this.http.post(`${this.envService.apiUrl}/managementUser/addUser`, params));
-      if (addedUser?.errors) {
-        throw new Error('Kullanıcı eklenemedi.');
-      }
+
       return addedUser.data;
     } catch (error: any) {
       this.envService.logDebug('addedUser error', error);
+
+      return error.error;
     }
   }
 }

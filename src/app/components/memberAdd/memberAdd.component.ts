@@ -65,12 +65,12 @@ export class MemberAddComponent {
       countryId: undefined,
       areaId: undefined,
       provinceId: undefined,
-      identificationNumber: undefined,
-      telephone: undefined,
+      identificationNumber: null,
+      telephone: null,
       isMessage: true,
       isMail: true,
       email: null,
-      dateOfBirth: undefined
+      dateOfBirth: null
     };
   }
 
@@ -106,12 +106,12 @@ private isFormDataValid(): boolean {
 
 
     const newMemberValue = {
-      fullName: this.memberData.fullName,
-      identificationNumber: this.memberData.identificationNumber,
-      telephone: this.memberData.telephone,
-      countryCode: this.memberData.countryCode,
-      email: this.memberData.email,
-      dateOfBirth: this.memberData.dateOfBirth,
+      fullName: this.memberData.fullName.trim(),
+      identificationNumber: this.memberData.identificationNumber?.trim(),
+      telephone: this.memberData.telephone.trim(),
+      countryCode: this.memberData.countryCode.toString().trim(),
+      email: this.memberData.email?.trim(),
+      dateOfBirth: this.memberData.dateOfBirth?.trim(),
       countryId: this.memberData.countryId,
       provinceId: this.memberData.provinceId,
       isActive: this.memberData.isActive,
@@ -120,12 +120,16 @@ private isFormDataValid(): boolean {
       areaId: (this.memberData.areaId || 8)
     }
     const result = await this.memberService.addMember(newMemberValue);
-    if (result) {
+    if (result === true) {
       this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Yeni Üye Eklendi' });
       this.onSaveSuccess.emit();
       this.visible = false;
 
       return;
+    }
+    if (result?.data === false && result?.errors) {
+      this.messageService.add({ severity: 'warn', summary: 'Uyarı', detail: result.errors[0] });
+
     } else {
       this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Yeni Üye Eklenirken hata oluştu' });
     }

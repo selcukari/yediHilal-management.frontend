@@ -103,29 +103,33 @@ async onSave(form: any) {
 
   const updateUserValue = {
     Id: this.userData.id,
-    fullName: this.userData.fullName,
+    fullName: this.userData.fullName.trim(),
     password: this.userData.password,
-    identificationNumber: this.userData.identificationNumber,
-    telephone: this.userData.telephone,
-    email: this.userData.email,
-    dateOfBirth: this.userData.dateOfBirth,
+    identificationNumber: this.userData.identificationNumber?.trim(),
+    telephone: this.userData.telephone.trim(),
+    email: this.userData.email.trim(),
+    dateOfBirth: this.userData.dateOfBirth?.trim(),
     countryId: this.userData.countryId,
     areaId: this.userData.areaId,
     provinceId: this.userData.provinceId,
     isActive: this.userData.isActive,
-    countryCode: this.userData.countryCode,
+    countryCode: this.userData.countryCode.toString().trim(),
     createdDate: this.userData.createdDate,
     roleId: this.userData.roleId,
     ...(this.userData.id ? {updateDate: new Date().toISOString() } : {})
   }
    const result = await this.userService.updateUser(updateUserValue);
-   if (result) {
+   if (result === true) {
      this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Kullanıcı Güncellendi' });
       this.onSaveSuccess.emit();
      this.visible = false;
 
      return;
-   } else {
+   }
+   if (result?.data === false && result?.errors) {
+      this.messageService.add({ severity: 'warn', summary: 'Uyarı', detail: result.errors[0] });
+
+    } else {
      this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kullanıcı Güncellenemedi' });
    }
   }

@@ -8,11 +8,11 @@ interface MemberParams {
   searchName?: string;
   provinceId?: number;
 }
-interface UserData {
+interface UserDataParams {
   fullName: string;
   countryCode: number;
   isActive: boolean;
-  countryId: number;
+  countryId: string;
   areaId: number;
   provinceId: number;
   identificationNumber?: string;
@@ -66,27 +66,27 @@ export class MemberService {
     }
   }
 
-   async updateMember(params: UserData): Promise<any | null> {
+   async updateMember(params: UserDataParams): Promise<any | null> {
     try {
       const getUpdateMember: any = await firstValueFrom(this.http.put(`${this.envService.apiUrl}/management/updateMember`, params));
-      if (getUpdateMember?.errors) {
-        throw new Error('Kullanıcı güncellenemedi.');
-      }
+
       return getUpdateMember.data;
     } catch (error: any) {
       this.envService.logDebug('getUpdateMember error', error);
+
+      return error.error;
     }
   }
 
-  async addMember(params: UserData): Promise<any | null> {
+  async addMember(params: UserDataParams): Promise<any | null> {
     try {
       const addeddMember: any = await firstValueFrom(this.http.post(`${this.envService.apiUrl}/management/addMember`, params));
-      if (addeddMember?.errors) {
-        throw new Error('Üye eklenemedi.');
-      }
-      return addeddMember.data;
+
+      return addeddMember.data
     } catch (error: any) {
       this.envService.logDebug('addeddMember error', error);
+
+      return error.error;
     }
   }
 }

@@ -100,15 +100,15 @@ export class MemberEditComponent {
 
     const updateMemberValue = {
       Id: this.memberData.id,
-      fullName: this.memberData.fullName,
-      identificationNumber: this.memberData.identificationNumber,
-      telephone: this.memberData.telephone,
-      email: this.memberData.email,
-      dateOfBirth: this.memberData.dateOfBirth,
+      fullName: this.memberData.fullName.trim(),
+      identificationNumber: this.memberData.identificationNumber?.trim(),
+      telephone: this.memberData.telephone.trim(),
+      email: this.memberData.email?.trim(),
+      dateOfBirth: this.memberData.dateOfBirth?.trim(),
       countryId: this.memberData.countryId,
       areaId: this.memberData.areaId,
       provinceId: this.memberData.provinceId,
-      countryCode: this.memberData.countryCode,
+      countryCode: this.memberData.countryCode.toString().trim(),
       isActive: this.memberData.isActive,
       isMail: this.memberData.isMail,
       isMessage: this.memberData.isMessage,
@@ -117,12 +117,16 @@ export class MemberEditComponent {
     }
 
     const result = await this.memberService.updateMember(updateMemberValue);
-    if (result) {
+    if (result === true) {
       this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Kullanıcı Güncellendi' });
       this.onSaveSuccess.emit();
       this.visible = false;
 
       return;
+    }
+    if (result?.data === false && result?.errors) {
+      this.messageService.add({ severity: 'warn', summary: 'Uyarı', detail: result.errors[0] });
+
     } else {
       this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kullanıcı Güncellenemedi' });
     }
