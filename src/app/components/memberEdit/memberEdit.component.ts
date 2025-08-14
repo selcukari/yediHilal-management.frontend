@@ -104,7 +104,7 @@ export class MemberEditComponent {
       identificationNumber: this.memberData.identificationNumber?.trim(),
       telephone: this.memberData.telephone.trim(),
       email: this.memberData.email?.trim(),
-      dateOfBirth: this.memberData.dateOfBirth?.trim(),
+      dateOfBirth: this.memberData.dateOfBirth,
       countryId: this.memberData.countryId,
       areaId: this.memberData.areaId,
       provinceId: this.memberData.provinceId,

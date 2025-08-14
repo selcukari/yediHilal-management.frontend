@@ -108,7 +108,7 @@ async onSave(form: any) {
     identificationNumber: this.userData.identificationNumber?.trim(),
     telephone: this.userData.telephone.trim(),
     email: this.userData.email.trim(),
-    dateOfBirth: this.userData.dateOfBirth?.trim(),
+    dateOfBirth: this.userData.dateOfBirth,
     countryId: this.userData.countryId,
     areaId: this.userData.areaId,
     provinceId: this.userData.provinceId,

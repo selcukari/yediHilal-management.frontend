@@ -112,7 +112,7 @@ private isFormDataValid(): boolean {
       password: this.userData.password,
       roleId: this.userData.roleId,
       countryCode: this.userData.countryCode.toString().trim(),
-      dateOfBirth: this.userData.dateOfBirth?.trim(),
+      dateOfBirth: this.userData.dateOfBirth,
       countryId: this.userData.countryId,
       provinceId: this.userData.provinceId,
       isActive: this.userData.isActive,

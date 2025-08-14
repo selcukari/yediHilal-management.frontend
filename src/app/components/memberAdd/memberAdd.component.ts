@@ -111,7 +111,7 @@ private isFormDataValid(): boolean {
       telephone: this.memberData.telephone.trim(),
       countryCode: this.memberData.countryCode.toString().trim(),
       email: this.memberData.email?.trim(),
-      dateOfBirth: this.memberData.dateOfBirth?.trim(),
+      dateOfBirth: this.memberData.dateOfBirth,
       countryId: this.memberData.countryId,
       provinceId: this.memberData.provinceId,
       isActive: this.memberData.isActive,
