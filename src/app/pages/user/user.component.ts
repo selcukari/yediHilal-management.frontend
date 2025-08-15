@@ -276,7 +276,6 @@ export class UserPageComponent implements OnInit {
 
    async onCountrySelected(countryCode: any): Promise<void> {
     this.selectedCountry = countryCode;
-    this.selectedArea = undefined;
 
       // Önce varsa alanları çıkar
     this.cols = this.cols.filter(col => col.field !== 'areaName');
@@ -288,6 +287,7 @@ export class UserPageComponent implements OnInit {
 
     this.selectedArea = undefined;
     this.selectedProvince = undefined;
+    this.selectedRole = undefined;
 
     await this.fetchUserData();
   }

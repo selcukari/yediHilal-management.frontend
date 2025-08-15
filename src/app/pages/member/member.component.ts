@@ -232,8 +232,6 @@ export class MemberPageComponent implements OnInit {
 
    onCountrySelected(countryCode: any): void {
     this.selectedCountry = countryCode;
-    this.selectedArea = undefined;
-
       // Önce varsa alanları çıkar
     this.cols = this.cols.filter(col => col.field !== 'areaName');
 

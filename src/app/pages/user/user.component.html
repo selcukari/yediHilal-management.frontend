@@ -14,7 +14,7 @@
           <app-component-province [countryCode]="selectedCountry" [areaCode]="selectedArea"
             (provinceSelected)="onProvinceSelected($event)" (provinceSelectedName)="onProvinceSelectedName($event)"></app-component-province>
 
-          <app-component-role (roleSelected)="onRoleSelected($event)"></app-component-role>
+          <app-component-role (roleSelected)="onRoleSelected($event)" [model]="selectedRole"></app-component-role>
 
           <p-button
             pButton
