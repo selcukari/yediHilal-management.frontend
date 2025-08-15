@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { clone } from 'ramda';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialog } from 'primeng/confirmdialog';
@@ -63,6 +63,7 @@ interface ValueData {
     ConfirmDialog, SpeedDialComponent, RoleComponent, UserAddComponent, CountryComponent, AreaComponent, Tooltip,
     UserEditComponent, IconFieldModule, ProvinceComponent, ProgressSpinner, FormatDatePipe],
   providers: [MessageService, ConfirmationService],
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })

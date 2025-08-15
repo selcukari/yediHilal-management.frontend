@@ -5,7 +5,7 @@ import { MessageModule } from 'primeng/message';
 import { ProvinceService } from '../../../services/province.service';
 interface Province {
   name: string;
-  code: string;
+  code?: string;
 }
 interface ProvinceParams {
   countryId: number;
@@ -98,6 +98,8 @@ export class ProvinceComponent implements OnInit {
           name: country.name,
           code: country.id
         }));
+
+        this.provinces.push({ name: "Tüm İller", code: undefined })
       } else {
         console.error('No getProvinces data found');
       }
