@@ -11,7 +11,7 @@
             <app-component-area (areaSelected)="onAreaSelected($event)" (areaSelectedName)="onAreaSelectedName($event)"></app-component-area>
           }
 
-          <app-component-province [countryCode]="selectedCountry" [areaCode]="selectedArea"
+          <app-component-province [countryCode]="selectedCountry" [areaCode]="selectedArea" [model]="selectedProvince"
             (provinceSelected)="onProvinceSelected($event)" (provinceSelectedName)="onProvinceSelectedName($event)"></app-component-province>
 
           <app-component-role (roleSelected)="onRoleSelected($event)" [model]="selectedRole"></app-component-role>

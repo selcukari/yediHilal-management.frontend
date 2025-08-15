@@ -10,7 +10,7 @@
           @if (selectedCountry == 1) {
             <app-component-area (areaSelected)="onAreaSelected($event)" (areaSelectedName)="onAreaSelectedName($event)" [isRequired]="true"></app-component-area>
           }
-          <app-component-province [countryCode]="selectedCountry" [areaCode]="selectedArea" (provinceSelectedName)="onProvinceSelectedName($event)"
+          <app-component-province [countryCode]="selectedCountry" [areaCode]="selectedArea" (provinceSelectedName)="onProvinceSelectedName($event)" [model]="selectedProvince"
             (provinceSelected)="onProvinceSelected($event)"></app-component-province>
 
           <p-button icon="pi pi-refresh" class="mr-1" icon="pi pi-refresh" (click)="refreshData()"

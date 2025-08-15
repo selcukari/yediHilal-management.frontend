@@ -239,6 +239,7 @@ export class MemberPageComponent implements OnInit {
   }
   onAreaSelected(areaCode: any): void {
     this.selectedArea = areaCode;
+    this.selectedProvince = undefined;
   }
 
   onCountrySelectedName(countryName: string): void {

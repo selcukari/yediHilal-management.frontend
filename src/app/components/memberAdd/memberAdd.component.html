@@ -133,13 +133,13 @@
 
     @if (memberData.countryId == 1) {
       <div class="field col-12 md:col-6">
-        <app-component-area (areaSelected)="onAreaSelected($event)" [isRequired]="!!(memberData.countryId == 1)"></app-component-area>
+        <app-component-area (areaSelected)="onAreaSelected($event)" [isRequired]="!!(memberData.countryId == 1)" [model]="changeAreaCode"></app-component-area>
       </div>
     }
 
     @if ((memberData.countryId == 1 && memberData.areaId) || (memberData.countryId && memberData.countryId !=1)) {
       <div class="field col-12 md:col-6">
-        <app-component-province [areaCode]="changeAreaCode" [countryCode]="changeCountryCode" [isRequired]="true"
+        <app-component-province [areaCode]="changeAreaCode" [countryCode]="changeCountryCode" [isRequired]="true" [model]="changeProvinceCode"
           (provinceSelected)="onProvinceSelected($event)"></app-component-province>
       </div>
     }

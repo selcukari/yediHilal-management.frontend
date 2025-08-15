@@ -108,10 +108,10 @@
           <input pInputText id="password" name="password"  [(ngModel)]="userData.password" #password="ngModel" pSize="large" required
             [class.ng-invalid]="password.invalid && (password.touched || userAddForm.submitted)"autocomplete="off" />
             @if (password.invalid && (password.touched || userAddForm.submitted)) {
-              <p-message severity="error" variant="simple">password is gereklidir.</p-message>
+              <p-message severity="error" variant="simple">Şifre is gereklidir.</p-message>
             }
         </p-iconfield>
-        <label for="password">password</label>
+        <label for="password">Şifre</label>
       </p-floatlabel>
     </div>
 
@@ -153,14 +153,14 @@
 
     @if (userData.countryId == 1) {
       <div class="field col-12 md:col-5">
-        <app-component-area (areaSelected)="onAreaSelected($event)" [isRequired]="!(userData.countryId == 1)"></app-component-area>
+        <app-component-area (areaSelected)="onAreaSelected($event)" [isRequired]="!!(userData.countryId == 1)" [model]="changeAreaCode"></app-component-area>
       </div>
     }
 
     @if ((userData.countryId == 1 && userData.areaId) || (userData.countryId && userData.countryId !=1)) {
       <div class="field col-12 md:col-4">
         <app-component-province [areaCode]="changeAreaCode" [countryCode]="changeCountryCode" [isRequired]="true"
-          (provinceSelected)="onProvinceSelected($event)"></app-component-province>
+          [model]="changeProvinceCode" (provinceSelected)="onProvinceSelected($event)"></app-component-province>
       </div>
     }
 

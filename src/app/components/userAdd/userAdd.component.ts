@@ -186,6 +186,9 @@ private isFormDataValid(): boolean {
   onCountrySelected(countryCode: any): void {
     this.userData.countryId = countryCode;
     this.changeCountryCode = countryCode;
+
+    this.changeAreaCode = undefined;
+    this.changeProvinceCode = undefined;
   }
 
   onRoleSelected(roleCode: any): void {

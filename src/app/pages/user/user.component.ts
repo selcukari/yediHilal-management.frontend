@@ -298,6 +298,7 @@ export class UserPageComponent implements OnInit {
 
   async onAreaSelected(areaCode: any): Promise<void> {
     this.selectedArea = areaCode;
+    this.selectedProvince = undefined;
 
     await this.fetchUserData();
   }
