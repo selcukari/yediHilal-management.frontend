@@ -189,7 +189,7 @@ export class MemberPageComponent implements OnInit {
       countryId: this.selectedCountry || 1,
       areaId: this.selectedArea,
       provinceId: this.selectedProvince, // İl kodu henüz kullanılmıyor
-      searchName: this.searchName || undefined
+      ...(this.searchName?.length > 3 ? { searchName: this.searchName }: {})
     }
      try {
 
@@ -227,13 +227,6 @@ export class MemberPageComponent implements OnInit {
         detail: `Üye yüklenirken hata: ${error.message}`,
         life: 5000
       });
-    }
-  }
-
-  async onSearchChange(value: string) {
-    if (value.length > 3) {
-      // burada API çağrısı vs. yapılabilir
-      this.searchName = value;
     }
   }
 
