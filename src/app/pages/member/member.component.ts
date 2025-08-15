@@ -117,7 +117,7 @@ export class MemberPageComponent implements OnInit {
   get pdfTableColumns(): TableColumn[] {
 
     const newCols: Column[] = this.cols.filter(col =>
-      col.field != 'updateDate' && col.field != 'areaName' && col.field != 'countryCode');
+      col.field != 'updateDate' && col.field != 'countryCode');
 
     return newCols.map(col => ({
       key: col.field,
@@ -130,7 +130,7 @@ export class MemberPageComponent implements OnInit {
   get excelTableColumns(): ColumnDefinition[] {
 
     const newCols = this.cols.filter(col =>
-      col.field != 'updateDate' && col.field != 'areaName' && col.field != 'countryCode');
+      col.field != 'updateDate' && col.field != 'countryCode');
 
     return newCols.map(col => ({
       key: col.field as keyof ValueData,
@@ -233,13 +233,6 @@ export class MemberPageComponent implements OnInit {
 
    onCountrySelected(countryCode: any): void {
     this.selectedCountry = countryCode;
-      // Önce varsa alanları çıkar
-    this.cols = this.cols.filter(col => col.field !== 'areaName');
-
-    if (countryCode == 1) {
-      // Türkiye için alan kodunu ekle
-      this.cols.splice(8, 0, { field: 'areaName', header: 'Bölge' });
-    }
 
     this.selectedArea = undefined;
     this.selectedProvince = undefined;
@@ -302,6 +295,14 @@ export class MemberPageComponent implements OnInit {
 
   // Refresh fonksiyonu
   async refreshData(): Promise<void> {
+
+     // Önce varsa alanları çıkar
+    this.cols = this.cols.filter(col => col.field !== 'areaName');
+
+    if (this.selectedCountry == this.turkishCountryCode) {
+      // Türkiye için alan kodunu ekle
+      this.cols.splice(10, 0, { field: 'areaName', header: 'Bölge' });
+    }
 
     if (this.selectedCountry == this.turkishCountryCode && this.selectedArea) {
 
