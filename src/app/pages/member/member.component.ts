@@ -312,15 +312,12 @@ export class MemberPageComponent implements OnInit {
   async refreshData(): Promise<void> {
 
     if (this.selectedCountry == this.turkishCountryCode && this.selectedArea) {
-      console.log("1")
+
       await this.fetchMemberData();
     } else if (this.selectedCountry && this.selectedCountry != this.turkishCountryCode) {
-      console.log("2")
 
       await this.fetchMemberData();
     } else {
-      console.log("3")
-
       this.messageService.add({
         severity: 'warn',
         summary: 'Uyarı',

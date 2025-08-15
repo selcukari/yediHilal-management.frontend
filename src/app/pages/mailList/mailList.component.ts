@@ -45,46 +45,31 @@ export class MailListPageComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit() {
-    this.isLoading = true;
+    // Route parametrelerini dinle
+    this.routeSubscription = this.route.paramMap.subscribe(async (params) => {
+      const typeParam = params.get('type');
+      if (typeParam) {
+        const newTypeId = +typeParam;
 
-    try {
-      // Route parametrelerini dinle
-      this.routeSubscription = this.route.paramMap.subscribe(async (params) => {
-        const typeParam = params.get('type');
-        if (typeParam) {
-          const newTypeId = +typeParam;
+        // TypeId değişti mi kontrol et
+        if (this.typeId !== newTypeId) {
 
-          // TypeId değişti mi kontrol et
-          if (this.typeId !== newTypeId) {
+          this.typeId = newTypeId;
 
-            this.typeId = newTypeId;
-
-            // Yeni type ile veri yükle
-            await this.fetchMemberData(this.typeId);
-          }
-        } else {
-
-          // Parametre yoksa default değer ile yükle
+          // Yeni type ile veri yükle
           await this.fetchMemberData(this.typeId);
         }
+      } else {
 
+        // Parametre yoksa default değer ile yükle
         await this.fetchMemberData(this.typeId);
+      }
 
-      });
+      await this.fetchMemberData(this.typeId);
 
-      this.initializeColumns();
+    });
 
-    } catch (error) {
-      console.error('Initialization error:', error);
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Hata',
-        detail: 'Sayfa yüklenirken bir hata oluştu.',
-        life: 3000
-      });
-    } finally {
-      this.isLoading = false;
-    }
+    this.initializeColumns();
   }
 
   ngOnDestroy(): void {
