@@ -20,7 +20,7 @@
         [globalFilterFields]="['message', 'toUsers', 'toPhoneNumbers']">
         <ng-template #caption>
           <div class="flex">
-            <span class="table-title">Gönderilmiş Mesajlar ({{ resultData.length }})</span>
+            <span class="table-title">Gönderilmiş Smsler ({{ resultData.length }})</span>
             <p-iconfield iconPosition="left" class="ml-auto mr-2">
               <p-inputicon class="pi pi-search" />
               <input pInputText id="on_label" (input)="onGlobalFilter($event)" placeholder="Mail Ara..." pSize="large" autocomplete="off" />

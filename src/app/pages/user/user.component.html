@@ -53,7 +53,7 @@
 
                 <p-iconfield iconPosition="left" class="flex ml-auto mr-2">
                   <p-inputicon class="pi pi-search" />
-                  <input pInputText id="on_label" (ngModelChange)="onSearchChange($event)"  [(ngModel)]="searchFullName" pSize="large" placeholder="Kullanıcı Ara..." autocomplete="off" />
+                  <input pInputText id="on_label" (ngModelChange)="onSearchChange($event)"  [(ngModel)]="searchFullName" pSize="large" placeholder="Kullanıcı (Ad veya telefon) Ara..." autocomplete="off" />
                 </p-iconfield>
 
                 <p-button icon="pi pi-refresh" class="mr-1" icon="pi pi-refresh" (click)="refreshData()" [disabled]="isLoading" pTooltip="Yenile" tooltipPosition="top" rounded raised />
@@ -86,7 +86,7 @@
                       {{ rowData[col.field] | formatDate }}
                     }
                     @case ('email') {
-                      {{ rowData[col.field]?.length > 50 ? rowData[col.field].substring(0, 50) + "..." : rowData[col.field] }}
+                      {{ rowData[col.field]?.length > 20 ? rowData[col.field].substring(0, 20) + "..." : rowData[col.field] }}
                     }
 
                     @default {
