@@ -115,6 +115,9 @@ export class UserPageComponent implements OnInit {
     } finally {
       this.isLoading = false;
     }
+
+     // ilk olarak init oldugunda head ekle
+    this.cols.splice(9, 0, { field: 'areaName', header: 'Bölge' });
   }
 
   get isDisabledOnlySenior(): boolean {
@@ -283,7 +286,7 @@ export class UserPageComponent implements OnInit {
 
     if (countryCode == 1) {
       // Türkiye için alan kodunu ekle
-      this.cols.splice(8, 0, { field: 'areaName', header: 'Bölge' });
+      this.cols.splice(9, 0, { field: 'areaName', header: 'Bölge' });
     }
 
     this.selectedArea = undefined;

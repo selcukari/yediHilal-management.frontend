@@ -238,7 +238,7 @@ export class MemberPageComponent implements OnInit {
 
     if (countryCode == 1) {
       // Türkiye için alan kodunu ekle
-      this.cols.splice(9, 0, { field: 'areaName', header: 'Bölge' });
+      this.cols.splice(8, 0, { field: 'areaName', header: 'Bölge' });
     }
 
     this.selectedArea = undefined;
