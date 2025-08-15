@@ -23,6 +23,7 @@ export class SpeedDialComponent implements OnInit {
   @Input() valueData: ValueData[] = [];
   @Input() pdfColumns: TableColumn[] = [];
   @Input() excelColumns: ColumnDefinition[] = [];
+  @Input() isDisabled: boolean = false;
 
   @ViewChild(SendMailComponent) sendMailComponentRef!: SendMailComponent;
   @ViewChild(SendSmsComponent) SendSmsComponent!: SendSmsComponent;

@@ -1,7 +1,7 @@
 <div class="mr-6">
   <p-toast />
   <div [style]="{ position: 'relative' }">
-    <p-speeddial [model]="items" mask [style]="{ position: 'absolute', left: 0, top: 0 }"
+    <p-speeddial [model]="items" mask [style]="{ position: 'absolute', left: 0, top: 0 }" [disabled]="isDisabled"
       [tooltipOptions]="{ tooltipPosition: 'top' }" direction="up-left" [radius]="120" type="quarter-circle" />
   </div>
   <div [style]="{position: 'relative', 'padding-top': '40px' }">
