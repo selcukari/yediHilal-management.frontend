@@ -25,6 +25,7 @@ import { isEquals } from '../../helpers';
   imports: [Dialog, ToggleSwitch, ConfirmDialog, ToastModule, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
   providers: [MessageService, ConfirmationService],
   templateUrl: './memberEdit.component.html',
+  styleUrl: './memberEdit.component.scss'
 })
 
 export class MemberEditComponent {

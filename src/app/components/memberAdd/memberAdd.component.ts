@@ -25,6 +25,7 @@ import { MemberService } from '../../../services/member.service';
   imports: [Dialog, ToggleSwitch, ConfirmDialog, ToastModule, MessageModule, AreaComponent, ProvinceComponent, CountryComponent, ButtonModule, FormsModule, FloatLabel, IconFieldModule, InputIconModule, InputTextModule, AvatarModule],
   providers: [MessageService, ConfirmationService],
   templateUrl: './memberAdd.component.html',
+  styleUrl: './memberAdd.component.scss'
 })
 
 export class MemberAddComponent {
