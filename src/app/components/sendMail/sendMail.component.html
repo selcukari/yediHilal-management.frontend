@@ -57,6 +57,12 @@
               <option value="justify"></option>
             </select>
           </span>
+          <span class="ql-formats">
+            <button type="button" class="ql-link" aria-label="Insert Link"></button>
+          </span>
+          <span class="ql-formats">
+            <button type="button" class="ql-image" aria-label="Insert Image"></button>
+          </span>
         </ng-template>
       </p-editor>
       @if (content.invalid && (content.touched || sendMailForm.submitted)) {
@@ -66,8 +72,8 @@
 
     </form>
     <ng-template #footer>
-        <p-button label="Cancel" [text]="true" severity="secondary" [raised]="true" severity="danger" (click)="onCancel(sendMailForm)" />
-        <p-button label="Save" [outlined]="true" severity="secondary" [raised]="true" severity="success" icon="pi pi-check" iconPos="left" (click)="onSent(sendMailForm)" />
+        <p-button label="İptal" [text]="true" severity="secondary" [raised]="true" severity="danger" (click)="onCancel(sendMailForm)" />
+        <p-button label="Gönder" [outlined]="true" severity="secondary" [raised]="true" severity="success" icon="pi pi-check" iconPos="left" (click)="onSent(sendMailForm)" />
     </ng-template>
 </p-dialog>
 
