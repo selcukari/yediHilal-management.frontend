@@ -42,7 +42,7 @@ export class AppLayoutComponent {
     this.pages = [
       { name: 'Kullanıcı Yönetimi', code: 'users', icon: 'pi-user-edit' },
       { name: 'Üye Yönetimi', code: '/', icon: 'pi-user' },
-      // { name: 'Gön. Kul. E-Mail Lis.', code: 'mailList/1', icon: 'pi-send' }, // Kullanıcı gonderilen
+      // { name: 'Gön. Kul. Mail Lis.', code: 'mailList/1', icon: 'pi-send' }, // Kullanıcı gonderilen
       { name: 'Gön. Mail Lis.', code: 'mailList/2', icon: 'pi-send' }, // Üyelere gonderilen
       // { name: 'Gön. Kul. Mesaj Lis.', code: 'smsList/1', icon: 'pi-bell' }, // Kullanıcı gonderilen
       { name: 'Gön. Sms Lis.', code: 'smsList/2', icon: 'pi-bell' }, // Üyelere gonderilen

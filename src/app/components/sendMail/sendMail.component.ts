@@ -74,7 +74,7 @@ export class SendMailComponent {
       }
       const result = await this.mailService.sendMail(mailRequest);
       if (result) {
-        this.messageService.add({ severity: 'info', summary: 'E-Mail', detail: 'E-Mailler Gönderildi' });
+        this.messageService.add({ severity: 'info', summary: 'Mail', detail: 'Mailler Gönderildi' });
 
         this.visible = false;
         this.valueData = { subject: "", content: ""};
@@ -84,7 +84,7 @@ export class SendMailComponent {
         return;
       } else {
         this.isLoading = false;
-        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'E-Mailler gönderilirken hata oluştu' });
+        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Mailler gönderilirken hata oluştu' });
       }
     } else {
 

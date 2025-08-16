@@ -269,7 +269,7 @@ export class MemberPageComponent implements OnInit {
       { field: 'fullName', header: 'Ad Soyad' },
       { field: 'countryCode', header: 'Ülke Kodu' },
       { field: 'telephone', header: 'Telefon' },
-      { field: 'email', header: 'E-mail' },
+      { field: 'email', header: 'Mail' },
       { field: 'isSms', header: 'Sms'},
       { field: 'isMail', header: 'Mail'},
       { field: 'identificationNumber', header: 'Kimlik' },

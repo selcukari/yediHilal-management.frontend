@@ -334,7 +334,7 @@ export class UserPageComponent implements OnInit {
       { field: 'roleName', header: 'Rolü' },
       { field: 'countryCode', header: 'Ülke Kodu' },
       { field: 'telephone', header: 'Telefon' },
-      { field: 'email', header: 'E-mail' },
+      { field: 'email', header: 'Mail' },
       { field: 'identificationNumber', header: 'Kimlik' },
       { field: 'dateOfBirth', header: 'Doğum Yılı' },
       { field: 'countryName', header: 'Ülke' },

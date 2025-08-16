@@ -72,7 +72,7 @@ export class SendSmsComponent {
       }
       const result = await this.messageServiceApi.sendSms(messageRequest);
       if (result) {
-        this.messageService.add({ severity: 'info', summary: 'E-Mail', detail: 'Mesajlar Gönderildi' });
+        this.messageService.add({ severity: 'info', summary: 'Mail', detail: 'Mesajlar Gönderildi' });
 
         this.visible = false;
         this.content = "";

@@ -6,14 +6,14 @@
   <div class="global-loading-overlay">
     <div class="loading-content">
       <p-progressSpinner></p-progressSpinner>
-      <p>E-mailler gönderiliyor...</p>
+      <p>mailler gönderiliyor...</p>
     </div>
   </div>
 }
 
 <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '40rem' }">
     <ng-template #header>
-        <span class="text-surface-500 dark:text-surface-400 block mb-8">E-Mail Gönder</span>
+        <span class="text-surface-500 dark:text-surface-400 block mb-8">Mail Gönder</span>
     </ng-template>
   <form #sendMailForm="ngForm"  class="formgrid grid">
 
@@ -22,7 +22,7 @@
         <input pInputText id="subject" name="subject" class="w-full"  [(ngModel)]="valueData.subject" #subject="ngModel" pSize="large" required
           [class.ng-invalid]="subject.invalid && (subject.touched || sendMailForm.submitted)" autocomplete="off" />
           @if (subject.invalid && (subject.touched || sendMailForm.submitted)) {
-            <p-message severity="error" variant="simple">Konu is gereklidir.</p-message>
+            <p-message severity="error" variant="simple">Konu gereklidir.</p-message>
           }
         <label for="subject">Konu</label>
       </p-floatlabel>
@@ -66,7 +66,7 @@
         </ng-template>
       </p-editor>
       @if (content.invalid && (content.touched || sendMailForm.submitted)) {
-        <p-message severity="error" size="small" variant="simple">İçerik is gereklidir.</p-message>
+        <p-message severity="error" size="small" variant="simple">İçerik gereklidir.</p-message>
       }
     </div>
 
