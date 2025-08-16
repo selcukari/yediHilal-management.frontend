@@ -88,7 +88,7 @@ export class SendSmsComponent {
 
       this.confirmationService.confirm({
         target: form.target as EventTarget,
-        message: 'Lütfen Zorunlu Alanları Doldurunuz',
+        message: 'Lütfen zorunlu alanı doldurunuz!',
         header: 'Uyarı',
         icon: 'pi pi-info-circle',
         rejectVisible: false,
