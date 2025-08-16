@@ -12,9 +12,9 @@
 
 <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '40rem' }">
     <ng-template #header>
-        <span class="text-surface-500 dark:text-surface-400 block mb-1">Mesaj Gönder</span>
+        <span class="text-surface-500 dark:text-surface-400 block mb-1">Sms Gönder</span>
     </ng-template>
-    <form #sendMessageForm="ngForm" class="flex flex-col gap-4 mt-2">
+    <form #sendSmsForm="ngForm" class="flex flex-col gap-4 mt-2">
       <div class="card flex justify-center">
         <p-floatlabel variant="on">
           <textarea
@@ -26,19 +26,19 @@
             required
             #contentRef="ngModel"
             pTextarea
-            [class.ng-invalid]="contentRef.invalid && (contentRef.touched || sendMessageForm.submitted)">
+            [class.ng-invalid]="contentRef.invalid && (contentRef.touched || sendSmsForm.submitted)">
           </textarea>
           <label for="content">Mesaj</label>
 
-          @if (contentRef.invalid && (contentRef.touched || sendMessageForm.submitted)) {
+          @if (contentRef.invalid && (contentRef.touched || sendSmsForm.submitted)) {
             <p-message severity="error" size="small" variant="simple">Mesaj alanı zorunludur</p-message>
           }
         </p-floatlabel>
       </div>
     </form>
     <ng-template #footer>
-        <p-button label="İptal" [text]="true" severity="secondary" [raised]="true" severity="danger" (click)="onCancel(sendMessageForm)" />
-        <p-button label="Gönder" [outlined]="true" severity="secondary" [raised]="true" severity="success" icon="pi pi-check" iconPos="left" (click)="onSent(sendMessageForm)" />
+        <p-button label="İptal" [text]="true" severity="secondary" [raised]="true" severity="danger" (click)="onCancel(sendSmsForm)" />
+        <p-button label="Gönder" [outlined]="true" severity="secondary" [raised]="true" severity="success" icon="pi pi-check" iconPos="left" (click)="onSent(sendSmsForm)" />
     </ng-template>
 </p-dialog>
 
