@@ -2,6 +2,7 @@ import { Component, inject, OnInit, ViewChild, ViewEncapsulation  } from '@angul
 import { clone } from 'ramda';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialog } from 'primeng/confirmdialog';
+import { TagModule } from 'primeng/tag';
 import { TableModule } from 'primeng/table';
 import { CommonModule, formatDate } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
@@ -57,7 +58,7 @@ export interface ValueData {
 @Component({
   selector: 'app-pages-member',
   standalone: true,
-  imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule, FormatDatePipe,
+  imports: [TableModule, CommonModule, Button, FormsModule, ToastModule, InputIconModule, InputTextModule, FormatDatePipe, TagModule,
     ConfirmDialog, SpeedDialComponent, MemberAddComponent, CountryComponent, AreaComponent, Tooltip, MemberEditComponent, IconFieldModule, ProvinceComponent, ProgressSpinner],
   providers: [MessageService, ConfirmationService],
   encapsulation: ViewEncapsulation.None,
@@ -139,6 +140,30 @@ export class MemberPageComponent implements OnInit {
       // format: // Özel genişlik hesaplama fonksiyonu
     }));
   }
+
+  getStatusOrSeverity = (isStatus: boolean) => {
+
+    const status = () => {
+      if (isStatus) {
+        return "Evet";
+      }
+
+      return "Hayır";
+    };
+
+    const severity = () => {
+      if (isStatus) {
+        return "success";
+      }
+
+      return "danger";
+    };
+
+    return {
+      status,
+      severity,
+    };
+};
 
 
   async onEdit (value: any) {

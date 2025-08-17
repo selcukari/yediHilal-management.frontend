@@ -168,6 +168,16 @@ private addTable(
     body: data,
     startY: 35, // Tablonun başlangıç pozisyonu
     tableWidth: 'auto', // Tablo genişliği ayarı
+    willDrawCell: (data: any) => {
+      console.log("data:", data)
+     if (data.section === 'body') {
+        if (data.cell.raw === 'Evet') {
+          doc.setTextColor(0, 128, 0); // Yeşil
+        } else if (data.cell.raw === 'Hayir') {
+          doc.setTextColor(255, 0, 0); // Kırmızı
+        }
+    }
+    },
     margin: {
       top: 35,
       left: 0,
@@ -197,7 +207,7 @@ private addTable(
     },
     bodyStyles: {
       cellPadding: 3, // Gövde hücre içi boşluğu
-      minCellHeight: 7 // Gövde minimum yüksekliği
+      minCellHeight: 7, // Gövde minimum yüksekliği
     },
     alternateRowStyles: {
       fillColor: config.alternateRowColor ? this.hexToRgb(config.alternateRowColor) : [245, 245, 245]
