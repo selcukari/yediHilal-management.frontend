@@ -44,7 +44,7 @@
         @if (countryCode.invalid && (countryCode.touched || memberEditForm.submitted)) {
           <p-message severity="error" variant="simple" class="mt-1">
             @if (countryCode.errors?.['required']) {
-              Kod gereklidir.
+              Ülke Kodu gereklidir.
             }
             @if (countryCode.errors?.['pattern']) {
               Geçerli bir sayı giriniz.
@@ -68,7 +68,7 @@
         @if (telephone.invalid && (telephone.touched || memberEditForm.submitted)) {
           <p-message severity="error" variant="simple" class="mt-1">
             @if (telephone.errors?.['required']) {
-              Telefon gereklidir.
+              Telefon alanı gereklidir.
             }
             @if (telephone.errors?.['pattern']) {
               Geçerli bir sayı giriniz.

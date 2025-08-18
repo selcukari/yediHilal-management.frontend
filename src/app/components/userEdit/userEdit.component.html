@@ -26,7 +26,7 @@
             <label for="fullName">Ad Soyad</label>
           </p-floatlabel>
           @if ((!userData.fullName || !userData.fullName.trim()) && (fullName.touched || userEditForm.submitted)) {
-            <p-message severity="error" variant="simple" class="mt-1">Ad Soyad gereklidir.</p-message>
+            <p-message severity="error" variant="simple" class="mt-1">Ad Soyad alanı gereklidir.</p-message>
           }
         </div>
 
@@ -44,7 +44,7 @@
           @if (countryCode.invalid && (countryCode.touched || userEditForm.submitted)) {
             <p-message severity="error" variant="simple" class="mt-1">
               @if (countryCode.errors?.['required']) {
-                Kod gereklidir.
+                Ülke Kodu gereklidir.
               }
               @if (countryCode.errors?.['pattern']) {
                 Geçerli bir sayı giriniz.
@@ -68,7 +68,7 @@
           @if (telephone.invalid && (telephone.touched || userEditForm.submitted)) {
             <p-message severity="error" variant="simple" class="mt-1">
               @if (telephone.errors?.['required']) {
-                Telefon gereklidir.
+                Telefon alanı gereklidir.
               }
               @if (telephone.errors?.['pattern']) {
                 Geçerli bir sayı giriniz.
@@ -104,7 +104,7 @@
           <input pInputText id="password" name="password"  [(ngModel)]="userData.password" #password="ngModel" pSize="large" required
             [class.ng-invalid]="password.invalid && (password.touched || userEditForm.submitted)"autocomplete="off" />
             @if (password.invalid && (password.touched || userEditForm.submitted)) {
-              <p-message severity="error" variant="simple">Şifre is gereklidir.</p-message>
+              <p-message severity="error" variant="simple">Şifre alanı gereklidir.</p-message>
             }
         </p-iconfield>
         <label for="password">Şifre</label>
